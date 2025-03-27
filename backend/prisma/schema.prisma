@@ -30,7 +30,7 @@ model User {
   surname    String
   email      String
   password   String
-  role       Role
+  role       Role         @default(User)
   QuizResult QuizResult[]
 }
 

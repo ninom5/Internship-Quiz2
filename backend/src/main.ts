@@ -10,9 +10,12 @@ async function bootstrap() {
     .setDescription('Nest, prisma orm')
     .setVersion('1.0')
     .addTag('quiz')
+    .addTag('user')
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, documentFactory);
+  SwaggerModule.setup('api/swagger', app, documentFactory);
+
+  app.setGlobalPrefix('api');
 
   await app.listen(process.env.PORT ?? 3000);
 }
