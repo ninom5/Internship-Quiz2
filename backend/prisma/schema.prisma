@@ -1,0 +1,74 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  id      String @id @default(uuid(4))
+  title   String @unique
+  quizzes Quiz[]
+}
+
+model Quiz {
+  id          String       @id @default(uuid(4))
+  title       String
+  imgUrl      String
+  description String
+  categoryId  String
+  category    Category     @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  results     QuizResult[]
+  questions   Question[]
+}
+
+model User {
+  id         String       @id @default(uuid(4))
+  name       String
+  surname    String
+  email      String
+  password   String
+  role       Role
+  QuizResult QuizResult[]
+}
+
+model QuizResult {
+  id     String @id @default(uuid(4))
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  score  Int
+  quizId String
+  Quiz   Quiz   @relation(fields: [quizId], references: [id], onDelete: Cascade)
+}
+
+model Question {
+  id      Int          @id @default(autoincrement())
+  text    String
+  type    QuestionType
+  quizId  String
+  quiz    Quiz         @relation(fields: [quizId], references: [id])
+  answers Answer[]
+}
+
+model Answer {
+  id         Int      @id @default(autoincrement())
+  text       String
+  isCorrect  Boolean  @default(false)
+  questionId Int
+  question   Question @relation(fields: [questionId], references: [id])
+}
+
+enum Role {
+  Admin
+  User
+}
+
+enum QuestionType {
+  ABC
+  INPUT
+  MATCH
+  ORDER
+  SLIDER
+}
