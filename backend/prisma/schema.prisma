@@ -18,7 +18,7 @@ model Quiz {
   title       String
   imgUrl      String
   description String
-  categoryId  String
+  // categoryId  String
   // category    Category     @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   category    QuizCategory
   results     QuizResult[]
