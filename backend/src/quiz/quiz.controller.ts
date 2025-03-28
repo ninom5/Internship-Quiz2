@@ -1,4 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Query,
+} from '@nestjs/common';
 import {
   ApiCreatedResponse,
   ApiOperation,
@@ -19,7 +27,7 @@ export class QuizController {
     status: 200,
     description: 'Returns all quizzes',
   })
-  async getAllQuizes() {
+  async getAllQuizzes() {
     const quizzes = await this.quizService.getAll();
     return quizzes;
   }
@@ -31,6 +39,18 @@ export class QuizController {
   async getQuizById(@Param('id') id: string) {
     const quiz = await this.quizService.getQuizById(id);
     return quiz;
+  }
+
+  @Get()
+  @ApiOperation({ summary: 'Get quiz by title ' })
+  @ApiResponse({ status: 200, description: 'Returns quiz by title if found' })
+  @ApiResponse({
+    status: 404,
+    description: 'No quizzes found with provided title',
+  })
+  async getQuizzesByTitle(@Query('title') title: string) {
+    const quizzes = await this.quizService.getQuizByTitle(title);
+    return quizzes;
   }
 
   @Post()

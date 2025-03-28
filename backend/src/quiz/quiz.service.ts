@@ -19,6 +19,19 @@ export class QuizService {
     return quiz;
   }
 
+  async getQuizByTitle(title: string) {
+    const quiz = await this.prisma.quiz.findMany({
+      where: {
+        title: {
+          contains: title,
+          mode: 'insensitive',
+        },
+      },
+    });
+
+    return quiz;
+  }
+
   async createQuiz(quiz: CreateQuizDto) {
     const response = await this.prisma.quiz.create({
       data: {
