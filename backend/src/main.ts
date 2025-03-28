@@ -11,6 +11,7 @@ async function bootstrap() {
     .setVersion('1.0')
     .addTag('quiz')
     .addTag('user')
+    .addTag('question')
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api/swagger', app, documentFactory);
