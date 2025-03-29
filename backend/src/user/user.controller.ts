@@ -2,6 +2,7 @@ import { Controller, Get, Param, Post, Body, Delete } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/createUser.dto';
+import { emitWarning } from 'process';
 
 @Controller('user')
 @ApiTags('user')
@@ -35,17 +36,29 @@ export class UserController {
     return user;
   }
 
-  @Post()
+  @Post('register')
   @ApiOperation({ summary: 'Create new user' })
   @ApiResponse({
     status: 200,
     description: 'Returns response',
   })
-  async createUser(@Body() user: CreateUserDto) {
-    const response = await this.userService.createUser(user);
+  async register(@Body() user: CreateUserDto) {
+    const response = await this.userService.register(user);
     return response;
   }
 
+  @Post('login')
+  @ApiOperation({ summary: 'Login in' })
+  @ApiResponse({
+    status: 200,
+    description: 'Successfully logs in and gets token',
+  })
+  async login(@Body() email: string, password: string) {
+    const response = await this.userService.login(email, password);
+    return response;
+  }
+
+  @Post()
   @Delete(':id')
   @ApiOperation({ summary: 'Delete user' })
   @ApiResponse({ status: 200, description: 'Returns response' })
