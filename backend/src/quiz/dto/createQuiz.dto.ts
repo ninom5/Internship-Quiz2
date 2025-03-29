@@ -1,11 +1,9 @@
 import {
   ArrayMinSize,
   IsArray,
-  IsEnum,
   IsString,
   MinLength,
 } from 'class-validator';
-import {Question, QuizCategory} from '@prisma/client';
 
 export class CreateQuizDto {
   @IsString()
@@ -18,8 +16,8 @@ export class CreateQuizDto {
   @IsString()
   description: string;
 
-  @IsEnum(QuizCategory)
-  category: QuizCategory;
+  @IsString()
+  category: string;
 
   @IsArray()
   @ArrayMinSize(5)

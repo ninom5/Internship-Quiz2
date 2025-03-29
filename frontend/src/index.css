@@ -1,4 +1,5 @@
-@import url("pages/NoutFoundPage/notFoundPage.css");
+@import url("pages/NotFoundPage/notFoundPage.css");
+@import "tailwindcss";
 
 * {
   margin: 0;

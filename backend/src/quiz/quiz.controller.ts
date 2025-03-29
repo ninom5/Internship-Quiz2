@@ -67,10 +67,10 @@ export class QuizController {
     return response;
   }
 
-  @Delete()
+  @Delete(':id')
   @ApiOperation({ summary: 'Delete quiz ' })
   @ApiResponse({ status: 200, description: 'Successfully deleted quiz' })
-  @ApiResponse({ status: 400, description: 'Quiz not found' })
+  @ApiResponse({ status: 404, description: 'Quiz not found' })
   async deleteQuiz(@Param('id') id: string) {
     const response = await this.quizService.deleteQuiz(id);
     return response;

@@ -6,9 +6,16 @@ import { UserModule } from './user/user.module';
 import { QuestionModule } from './question/question.module';
 import { QuizResultModule } from './quizResult/quizResult.module';
 import { QuizModule } from './quiz/quiz.module';
+import { CategoryModule } from './category/category.module';
 
 @Module({
-  imports: [UserModule, QuestionModule, QuizResultModule, QuizModule],
+  imports: [
+    UserModule,
+    QuestionModule,
+    QuizResultModule,
+    QuizModule,
+    CategoryModule,
+  ],
   controllers: [AppController],
   providers: [AppService, PrismaService],
 })

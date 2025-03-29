@@ -1,11 +1,8 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { routes } from "./routes/routes";
-import { HomePage } from "./pages/HomePage";
-import { QuizPage } from "./pages/QuizPage";
-import { NotFoundPage } from "./pages/NoutFoundPage/NotFoundPage";
-import { QuizzesPage } from "./pages/QuizzesPage";
-import { HeaderLayout } from "./pages/HeaderLayout";
-import { NavigationLayout } from "./pages/NavigationLayout";
+import { HomePage, QuizPage, NotFoundPage, QuizzesPage } from "./pages";
+import { HeaderLayout } from "./layouts/HeaderLayout";
+import { NavigationLayout } from "./layouts/NavigationLayout";
 
 export const Router = () => {
   return (

@@ -7,20 +7,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// model Category {
-//   id      String @id @default(uuid(4))
-//   title   String @unique
-//   quizzes Quiz[]
-// }
+model Category {
+  id      String @id @default(uuid(4))
+  title   String @unique
+  quizzes Quiz[]
+}
 
 model Quiz {
   id          String       @id @default(uuid(4))
   title       String
   imgUrl      String
   description String
-  // categoryId  String
-  // category    Category     @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  category    QuizCategory
+  categoryId  String
+  category    Category     @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  // category    QuizCategory
   results     QuizResult[]
   questions   Question[]
 }
@@ -63,11 +63,11 @@ model Question {
 //   question   Question @relation(fields: [questionId], references: [id])
 // }
 
-enum QuizCategory {
-  History
-  Geo
-  Language
-}
+// enum QuizCategory {
+//   History
+//   Geo
+//   Language
+// }
 
 enum Role {
   Admin
