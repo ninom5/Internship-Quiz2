@@ -17,7 +17,7 @@ export class CreateQuizDto {
   description: string;
 
   @IsString()
-  category: string;
+  categoryId: string;
 
   @IsArray()
   @ArrayMinSize(5)

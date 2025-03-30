@@ -8,8 +8,6 @@ import { PrismaService } from '../prisma.service';
 import { CreateUserDto } from './dto/createUser.dto';
 import { compare, hash } from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
-import { NotFoundError } from 'rxjs';
-import { Role } from '@prisma/client';
 
 @Injectable()
 export class UserService {
@@ -78,7 +76,8 @@ export class UserService {
     if (!user)
       throw new NotFoundException('User with provided email not found');
 
-    if (!compare(password, user))
+    const isValidPassword = await compare(password, user.password);
+    if (!isValidPassword)
       throw new ForbiddenException('Invalid password or email');
 
     const payload = {

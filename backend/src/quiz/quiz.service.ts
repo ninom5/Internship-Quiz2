@@ -38,7 +38,9 @@ export class QuizService {
         title: quiz.title,
         imgUrl: quiz.imgUrl,
         description: quiz.description,
-        category: quiz.category,
+        category: {
+          connect: { id: quiz.categoryId },
+        },
         questions: {
           connect: quiz.questions.map((questionId) => ({
             id: Number(questionId),

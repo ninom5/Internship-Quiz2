@@ -1,4 +1,5 @@
 @import url("pages/NotFoundPage/notFoundPage.css");
+@import url("components/RegisterForm/registerForm.css");
 @import "tailwindcss";
 
 * {
