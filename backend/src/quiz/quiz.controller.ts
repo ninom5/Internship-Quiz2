@@ -1,20 +1,17 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Delete,
   Get,
+  NotFoundException,
   Param,
   Post,
   Query,
 } from '@nestjs/common';
-import {
-  ApiCreatedResponse,
-  ApiOperation,
-  ApiResponse,
-  ApiTags,
-} from '@nestjs/swagger';
-import { QuizService } from './quiz.service';
-import { CreateQuizDto } from './dto/createQuiz.dto';
+import {ApiCreatedResponse, ApiOperation, ApiResponse, ApiTags,} from '@nestjs/swagger';
+import {QuizService} from './quiz.service';
+import {CreateQuizDto} from './dto/createQuiz.dto';
 
 @Controller('quiz')
 @ApiTags('quiz')
@@ -41,17 +38,26 @@ export class QuizController {
     return quiz;
   }
 
-  @Get()
+  @Get('by-title/:title')
   @ApiOperation({ summary: 'Get quiz by title ' })
   @ApiResponse({ status: 200, description: 'Returns quiz by title if found' })
   @ApiResponse({
     status: 404,
     description: 'No quizzes found with provided title',
   })
-  async getQuizzesByTitle(@Query('title') title: string) {
+  async getQuizzesByTitle(@Param(':title') title: string) {
     const quizzes = await this.quizService.getQuizByTitle(title);
+
+    if (quizzes.length === 0)
+      throw new NotFoundException('No quizzes found with the provided title');
+
     return quizzes;
   }
+
+  // async getQuizzesByTitle(@Query('title') title: string) {
+  //   const quizzes = await this.quizService.getQuizByTitle(title);
+  //   return quizzes;
+  // }
 
   @Post()
   @ApiOperation({ summary: 'Create new quiz' })

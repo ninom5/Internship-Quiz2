@@ -2,7 +2,6 @@ import { Controller, Get, Param, Post, Body, Delete } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/createUser.dto';
-import { emitWarning } from 'process';
 
 @Controller('user')
 @ApiTags('user')
@@ -28,10 +27,10 @@ export class UserController {
     return user;
   }
 
-  @Get()
+  @Get('/email/:email')
   @ApiOperation({ summary: 'Get user by email' })
   @ApiResponse({ status: 200, description: 'Returns user with same email' })
-  async getByEmail(@Body() email: string) {
+  async getByEmail(@Param('email') email: string) {
     const user = await this.userService.getByEmail(email);
     return user;
   }

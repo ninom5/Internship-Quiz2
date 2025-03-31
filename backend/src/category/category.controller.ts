@@ -20,7 +20,7 @@ export class CategoryController {
   @ApiOperation({ summary: 'Get category by id' })
   @ApiResponse({ status: 200, description: 'Returns category by id if found' })
   @ApiResponse({ status: 404, description: 'category not found' })
-  async getCategoryById(@Param() id: string) {
+  async getCategoryById(@Param('id') id: string) {
     const category = await this.categoryService.getById(id);
     return category;
   }

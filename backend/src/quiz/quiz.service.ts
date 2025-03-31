@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { CreateQuizDto } from './dto/createQuiz.dto';
 
@@ -20,7 +20,7 @@ export class QuizService {
   }
 
   async getQuizByTitle(title: string) {
-    const quiz = await this.prisma.quiz.findMany({
+    const quizzes = await this.prisma.quiz.findMany({
       where: {
         title: {
           contains: title,
@@ -29,7 +29,10 @@ export class QuizService {
       },
     });
 
-    return quiz;
+    if (quizzes.length === 0)
+      throw new NotFoundException('No quizzes found with the provided title');
+
+    return quizzes;
   }
 
   async createQuiz(quiz: CreateQuizDto) {
@@ -41,11 +44,11 @@ export class QuizService {
         category: {
           connect: { id: quiz.categoryId },
         },
-        questions: {
-          connect: quiz.questions.map((questionId) => ({
-            id: Number(questionId),
-          })),
-        },
+        // questions: {
+        //   connect: quiz.questions.map((questionId) => ({
+        //     id: Number(questionId),
+        //   })),
+        // },
       },
     });
     return response;

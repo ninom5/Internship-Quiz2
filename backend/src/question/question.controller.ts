@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {BadRequestException, Body, Controller, Delete, Get, Param, Post} from '@nestjs/common';
 import {
   ApiCreatedResponse,
   ApiOperation,
@@ -32,7 +32,12 @@ export class QuestionController {
   })
   @ApiResponse({ status: 404, description: 'Question not found ' })
   async getQuestionById(@Param('id') id: string) {
-    const question = await this.questionService.getById(Number(id));
+    const questionId = parseInt(id, 10);
+
+    if (isNaN(questionId))
+      throw new BadRequestException('Invalid question ID format');
+
+    const question = await this.questionService.getById(questionId);
     return question;
   }
 
@@ -51,7 +56,7 @@ export class QuestionController {
     return response;
   }
 
-  @Delete()
+  @Delete(':id')
   @ApiOperation({ summary: 'Delete question' })
   @ApiResponse({ status: 200, description: 'Successfully deleted question' })
   @ApiResponse({ status: 404, description: 'Question not found' })
