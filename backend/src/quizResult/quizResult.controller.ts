@@ -1,5 +1,15 @@
-import {Body, Controller, Delete, Get, Param, Patch, Post} from '@nestjs/common';
 import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
+import {
+  ApiBearerAuth,
   ApiCreatedResponse,
   ApiOperation,
   ApiResponse,
@@ -7,14 +17,18 @@ import {
 } from '@nestjs/swagger';
 import { QuizResultService } from './quizResult.service';
 import { CreateQuizResultDto } from './dto/createQuizResult.dto';
-import {UpdateQuizResultDto} from "./dto/updateQuizResult.dto";
+import { UpdateQuizResultDto } from './dto/updateQuizResult.dto';
+import { AdminAuthGuard } from '../user/admin-auth.guard';
+import { UserAuthGuard } from '../user/user-auth.guard';
 
 @Controller('quizResult')
+@ApiBearerAuth()
 @ApiTags('quizResult')
 export class QuizResultController {
   constructor(private readonly quizResultService: QuizResultService) {}
 
   @Get()
+  @UseGuards(UserAuthGuard)
   @ApiOperation({ summary: 'Get all quiz results' })
   @ApiResponse({
     status: 200,
@@ -26,6 +40,7 @@ export class QuizResultController {
   }
 
   @Get(':id')
+  @UseGuards(UserAuthGuard)
   @ApiOperation({ summary: 'Get quiz result by id' })
   @ApiResponse({ status: 200, description: 'Get quiz result by id if found' })
   @ApiResponse({ status: 400, description: 'Result not found' })
@@ -35,6 +50,7 @@ export class QuizResultController {
   }
 
   @Post()
+  @UseGuards(UserAuthGuard)
   @ApiOperation({ summary: 'Create new result' })
   @ApiCreatedResponse({
     description: 'Successfully created new quiz result',
@@ -49,14 +65,22 @@ export class QuizResultController {
   }
 
   @Patch(':id')
+  @UseGuards(UserAuthGuard)
   @ApiOperation({ summary: 'Update quiz result' })
   @ApiResponse({ status: 200, description: 'Successfully updated quiz result' })
-  @ApiResponse({ status: 400, description: 'Invalid data provided or quiz result not found' })
-  async updateQuizResult(@Param('id') id: string, @Body() quizResult: UpdateQuizResultDto) {
+  @ApiResponse({
+    status: 400,
+    description: 'Invalid data provided or quiz result not found',
+  })
+  async updateQuizResult(
+    @Param('id') id: string,
+    @Body() quizResult: UpdateQuizResultDto,
+  ) {
     return await this.quizResultService.updateQuizResult(id, quizResult);
   }
 
   @Delete()
+  @UseGuards(AdminAuthGuard)
   @ApiOperation({ summary: 'Delete quiz result' })
   @ApiResponse({ status: 200, description: 'Successfully deleted question' })
   @ApiResponse({ status: 400, description: 'Quiz result not found' })

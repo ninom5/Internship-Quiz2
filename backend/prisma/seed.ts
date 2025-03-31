@@ -26,7 +26,7 @@ async function main() {
       name: 'John',
       surname: 'Doe',
       email: 'john.doe@example.com',
-      password: 'hashed_password',
+      password: '$2b$10$ilUIHEDBiFmGugSQlgEqP..crzGy0HRvm7qjZjkQWdlYNueKLCJO6',
       isAdmin: true,
     },
   });
@@ -36,7 +36,7 @@ async function main() {
       name: 'Jane',
       surname: 'Doe',
       email: 'jane.doe@example.com',
-      password: 'hashed_password',
+      password: '$2b$10$ilUIHEDBiFmGugSQlgEqP..crzGy0HRvm7qjZjkQWdlYNueKLCJO6',
       isAdmin: false,
     },
   });

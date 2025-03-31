@@ -7,8 +7,10 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import {
+  ApiBearerAuth,
   ApiCreatedResponse,
   ApiOperation,
   ApiResponse,
@@ -17,13 +19,17 @@ import {
 import { QuestionService } from './question.service';
 import { CreateQuestionDto } from './dto/createQuestion.dto';
 import { UpdateQuestionDto } from './dto/updateQuestion.dto';
+import { AdminAuthGuard } from '../user/admin-auth.guard';
+import { UserAuthGuard } from '../user/user-auth.guard';
 
 @Controller('question')
+@ApiBearerAuth()
 @ApiTags('question')
 export class QuestionController {
   constructor(private readonly questionService: QuestionService) {}
 
   @Get()
+  @UseGuards(UserAuthGuard)
   @ApiOperation({ summary: 'Get all questions' })
   @ApiResponse({
     status: 200,
@@ -34,6 +40,7 @@ export class QuestionController {
   }
 
   @Get(':id')
+  @UseGuards(UserAuthGuard)
   @ApiOperation({ summary: 'Get question by id' })
   @ApiResponse({
     status: 200,
@@ -50,6 +57,7 @@ export class QuestionController {
   }
 
   @Post()
+  @UseGuards(AdminAuthGuard)
   @ApiOperation({ summary: 'Create new question' })
   @ApiCreatedResponse({
     description: 'Successfully created a question',
@@ -63,6 +71,7 @@ export class QuestionController {
   }
 
   @Patch(':id')
+  @UseGuards(AdminAuthGuard)
   @ApiOperation({ summary: 'Update question by ID' })
   @ApiResponse({ status: 200, description: 'Successfully updated question' })
   @ApiResponse({ status: 404, description: 'Question not found' })
@@ -75,6 +84,7 @@ export class QuestionController {
   }
 
   @Delete(':id')
+  @UseGuards(AdminAuthGuard)
   @ApiOperation({ summary: 'Delete question' })
   @ApiResponse({ status: 200, description: 'Successfully deleted question' })
   @ApiResponse({ status: 404, description: 'Question not found' })

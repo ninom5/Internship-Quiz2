@@ -5,7 +5,7 @@ import { PrismaService } from './prisma.service';
 export class AppService {
   constructor(private readonly prisma: PrismaService) {}
   async healthCheck(): Promise<string> {
-    await this.prisma.$queryRaw`SELECT 1`; // check db connection
+    await this.prisma.$queryRaw`SELECT 1`;
 
     return 'ok';
   }
