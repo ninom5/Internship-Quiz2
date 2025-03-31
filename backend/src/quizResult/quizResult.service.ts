@@ -1,35 +1,78 @@
 import { PrismaService } from '../prisma.service';
 import { CreateQuizResultDto } from './dto/createQuizResult.dto';
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
+import { quizResultValidation } from './quizResult.validation';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class QuizResultService {
   constructor(private readonly prisma: PrismaService) {}
 
   async getAll() {
-    const results = await this.prisma.quizResult.findMany();
-    return results;
+    try {
+      return await this.prisma.quizResult.findMany();
+    } catch (error) {
+      throw error instanceof Error
+        ? new Error(`Error getting all users: ${error.message}`)
+        : new InternalServerErrorException(
+            `Unknown error getting all quiz results: ${error}`,
+          );
+    }
   }
 
   async getById(id: string) {
-    const result = await this.prisma.quizResult.findUnique({
-      where: { id },
-    });
-    return result;
+    try {
+      const result = await this.prisma.quizResult.findUnique({
+        where: { id },
+      });
+
+      if (!result)
+        throw new NotFoundException('Quiz result with provided id not found');
+
+      return result;
+    } catch (error) {
+      throw error instanceof NotFoundException
+        ? error
+        : new InternalServerErrorException(
+            `Unknown error getting quiz result by id: ${error}`,
+          );
+    }
   }
 
   async createQuizResult(quizResult: CreateQuizResultDto) {
-    const response = await this.prisma.quizResult.create({
-      data: quizResult,
-    });
-    return response;
+    try {
+      quizResultValidation(quizResult);
+
+      return await this.prisma.quizResult.create({
+        data: quizResult,
+      });
+    } catch (error) {
+      throw error instanceof BadRequestException
+        ? error
+        : new InternalServerErrorException(
+            `Unknown error happened while creating quiz result ${error}`,
+          );
+    }
   }
 
   async deleteQuizResult(id: string) {
-    const response = await this.prisma.quizResult.delete({
-      where: { id },
-    });
-
-    return response;
+    try {
+      return await this.prisma.quizResult.delete({
+        where: { id },
+      });
+    } catch (error) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError) {
+        if (error.code === 'P2025')
+          throw new NotFoundException(`Quiz result with provided id not found`);
+      }
+      throw new InternalServerErrorException(
+        `Something went wrong while deleting the user: ${error}`,
+      );
+    }
   }
 }
