@@ -10,7 +10,7 @@ export const useFetchAllQuizzes = () => {
   useEffect(() => {
     const fetchAllQuizzes = async () => {
       try {
-        const response = await axiosAPI.get<QuizType[]>("/quizzes");
+        const response = await axiosAPI.get<QuizType[]>("/quiz");
         if (response.status !== 200) throw new Error("Failed to fetch quizzes");
 
         setData(response.data);

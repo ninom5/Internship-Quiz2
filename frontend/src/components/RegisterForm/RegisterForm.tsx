@@ -26,7 +26,7 @@ export const RegisterForm = () => {
     }
 
     try {
-      const response = await axiosAPI.post("/register", formData);
+      const response = await axiosAPI.post("/user/register", formData);
 
       if (response.status !== 201) {
         toast.error("Error registering new user");
@@ -34,6 +34,14 @@ export const RegisterForm = () => {
         return;
       }
       toast.success("Successfully registered user");
+
+      setFormData({
+        name: "",
+        surname: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      });
     } catch (error) {
       console.error("Error registering user: ", error);
       toast.error("Error registering user");
@@ -62,6 +70,7 @@ export const RegisterForm = () => {
                   id="name"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="name"
+                  value={formData.name}
                   required
                   onChange={handleChange}
                 />
@@ -79,6 +88,7 @@ export const RegisterForm = () => {
                   id="surname"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="surname"
+                  value={formData.surname}
                   required
                   onChange={handleChange}
                 />
@@ -96,6 +106,7 @@ export const RegisterForm = () => {
                   id="email"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="name@company.com"
+                  value={formData.email}
                   required
                   onChange={handleChange}
                 />
@@ -113,6 +124,7 @@ export const RegisterForm = () => {
                   id="password"
                   placeholder="••••••••"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  value={formData.password}
                   required
                   onChange={handleChange}
                 />
@@ -125,11 +137,12 @@ export const RegisterForm = () => {
                   Confirm password
                 </label>
                 <input
-                  type="confirm-password"
-                  name="confirm-password"
+                  type="password"
+                  name="confirmPassword"
                   id="confirm-password"
                   placeholder="••••••••"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  value={formData.confirmPassword}
                   required
                   onChange={handleChange}
                 />

@@ -1,0 +1,8 @@
+.quiz-grid {
+  padding: 30px;
+}
+
+.quiz-grid__card {
+  text-align: center;
+  cursor: pointer;
+}

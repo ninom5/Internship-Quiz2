@@ -1,5 +1,7 @@
 @import url("pages/NotFoundPage/notFoundPage.css");
 @import url("components/RegisterForm/registerForm.css");
+@import url("components/Header/header.css");
+@import url("components/QuizGrid/quizGrid.css");
 @import "tailwindcss";
 
 * {

@@ -29,7 +29,7 @@ export class QuizController {
   constructor(private readonly quizService: QuizService) {}
 
   @Get()
-  @UseGuards(UserAuthGuard)
+  // @UseGuards(UserAuthGuard)
   @ApiOperation({ summary: 'Get all quizzes' })
   @ApiResponse({
     status: 200,
