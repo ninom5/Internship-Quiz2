@@ -8,6 +8,7 @@ import {
 } from '@nestjs/common';
 import { quizResultValidation } from './quizResult.validation';
 import { Prisma } from '@prisma/client';
+import { UpdateQuizResultDto } from './dto/updateQuizResult.dto';
 
 @Injectable()
 export class QuizResultService {
@@ -56,6 +57,30 @@ export class QuizResultService {
         ? error
         : new InternalServerErrorException(
             `Unknown error happened while creating quiz result ${error}`,
+          );
+    }
+  }
+
+  async updateQuizResult(id: string, updateDto: UpdateQuizResultDto) {
+    try {
+      const existingResult = await this.prisma.quizResult.findUnique({
+        where: { id },
+      });
+      if (!existingResult)
+        throw new NotFoundException(
+          'Quiz result with provided id does not exist',
+        );
+      const updateQuizResult = await this.prisma.quizResult.update({
+        where: { id },
+        data: { ...updateDto },
+      });
+
+      return updateQuizResult;
+    } catch (error) {
+      throw error instanceof NotFoundException
+        ? error
+        : new InternalServerErrorException(
+            `Unknown error happened while updating quiz result ${error}`,
           );
     }
   }

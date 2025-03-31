@@ -5,6 +5,7 @@ import {
   Get,
   NotFoundException,
   Param,
+  Patch,
   Post,
 } from '@nestjs/common';
 import {
@@ -15,6 +16,7 @@ import {
 } from '@nestjs/swagger';
 import { QuizService } from './quiz.service';
 import { CreateQuizDto } from './dto/createQuiz.dto';
+import { UpdateQuizDto } from './dto/updateQuiz.dto';
 
 @Controller('quiz')
 @ApiTags('quiz')
@@ -74,6 +76,15 @@ export class QuizController {
   async createNewQuiz(@Body() quiz: CreateQuizDto) {
     const response = await this.quizService.createQuiz(quiz);
     return response;
+  }
+
+  @Patch(':id')
+  @ApiOperation({ summary: 'Update quiz by ID' })
+  @ApiResponse({ status: 200, description: 'Successfully updated quiz' })
+  @ApiResponse({ status: 404, description: 'Quiz not found' })
+  @ApiResponse({ status: 400, description: 'Invalid data provided' })
+  async updateUser(@Param('id') id: string, @Body() updateDto: UpdateQuizDto) {
+    return await this.quizService.updateQuiz(id, updateDto);
   }
 
   @Delete(':id')

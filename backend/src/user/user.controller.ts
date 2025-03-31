@@ -1,7 +1,16 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/createUser.dto';
+import { UpdateUserDataDto } from './dto/updateUserData.dto';
 
 @Controller('user')
 @ApiTags('user')
@@ -66,6 +75,18 @@ export class UserController {
   })
   async login(@Body() email: string, password: string) {
     return await this.userService.login(email, password);
+  }
+
+  @Patch(':id')
+  @ApiOperation({ summary: 'Update user by ID' })
+  @ApiResponse({ status: 200, description: 'Successfully updated user' })
+  @ApiResponse({ status: 404, description: 'User not found' })
+  @ApiResponse({ status: 400, description: 'Invalid data provided' })
+  async updateUser(
+    @Param('id') id: string,
+    @Body() updateDto: UpdateUserDataDto,
+  ) {
+    return await this.userService.updateUser(id, updateDto);
   }
 
   @Delete(':id')

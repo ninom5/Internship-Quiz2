@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {Body, Controller, Delete, Get, Param, Patch, Post} from '@nestjs/common';
 import {
   ApiCreatedResponse,
   ApiOperation,
@@ -7,6 +7,7 @@ import {
 } from '@nestjs/swagger';
 import { QuizResultService } from './quizResult.service';
 import { CreateQuizResultDto } from './dto/createQuizResult.dto';
+import {UpdateQuizResultDto} from "./dto/updateQuizResult.dto";
 
 @Controller('quizResult')
 @ApiTags('quizResult')
@@ -45,6 +46,14 @@ export class QuizResultController {
   async createQuizResult(@Body() quizResult: CreateQuizResultDto) {
     const response = await this.quizResultService.createQuizResult(quizResult);
     return response;
+  }
+
+  @Patch(':id')
+  @ApiOperation({ summary: 'Update quiz result' })
+  @ApiResponse({ status: 200, description: 'Successfully updated quiz result' })
+  @ApiResponse({ status: 400, description: 'Invalid data provided or quiz result not found' })
+  async updateQuizResult(@Param('id') id: string, @Body() quizResult: UpdateQuizResultDto) {
+    return await this.quizResultService.updateQuizResult(id, quizResult);
   }
 
   @Delete()

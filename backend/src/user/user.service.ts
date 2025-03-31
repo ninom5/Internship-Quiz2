@@ -11,6 +11,7 @@ import { compare, hash } from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { validateUserRegisterData } from './user.validation';
 import { Prisma } from '@prisma/client';
+import { UpdateUserDataDto } from './dto/updateUserData.dto';
 
 @Injectable()
 export class UserService {
@@ -129,6 +130,26 @@ export class UserService {
       throw error instanceof BadRequestException ||
         NotFoundException ||
         ForbiddenException
+        ? error
+        : new InternalServerErrorException(
+            `Unknown error while trying to log in: ${error}`,
+          );
+    }
+  }
+
+  async updateUser(id: string, updateDto: UpdateUserDataDto) {
+    try {
+      const existingUser = await this.prisma.user.findUnique({ where: { id } });
+
+      if (!existingUser)
+        throw new NotFoundException(`User with ID ${id} not found`);
+
+      return this.prisma.user.update({
+        where: { id },
+        data: { ...updateDto },
+      });
+    } catch (error) {
+      throw error instanceof BadRequestException || NotFoundException
         ? error
         : new InternalServerErrorException(
             `Unknown error while trying to log in: ${error}`,

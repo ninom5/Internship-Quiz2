@@ -8,6 +8,7 @@ import { PrismaService } from '../prisma.service';
 import { CreateQuizDto } from './dto/createQuiz.dto';
 import { validateQuizData } from './quiz.validation';
 import { Prisma } from '@prisma/client';
+import { UpdateQuizDto } from './dto/updateQuiz.dto';
 
 @Injectable()
 export class QuizService {
@@ -90,6 +91,27 @@ export class QuizService {
         ? error
         : new InternalServerErrorException(
             `Unknown error happened while creating new quiz: ${error}`,
+          );
+    }
+  }
+
+  async updateQuiz(id: string, updateDto: UpdateQuizDto) {
+    try {
+      const existingQuiz = await this.prisma.quiz.findUnique({ where: { id } });
+      if (!existingQuiz)
+        throw new NotFoundException('Quiz with provided id not found');
+
+      const update = await this.prisma.quiz.update({
+        where: { id },
+        data: { ...updateDto, categoryId: updateDto.categoryId ?? undefined },
+      });
+
+      return update;
+    } catch (error) {
+      throw error instanceof BadRequestException || NotFoundException
+        ? error
+        : new InternalServerErrorException(
+            `Unknown error happened while updating quiz: ${error}`,
           );
     }
   }
