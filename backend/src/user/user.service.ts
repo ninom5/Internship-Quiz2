@@ -147,7 +147,7 @@ export class UserService {
           throw new NotFoundException(`User with provided id not found`);
       }
       throw new InternalServerErrorException(
-        'Something went wrong while deleting the user',
+        `Something went wrong while deleting the user: ${error}`,
       );
     }
   }

@@ -44,7 +44,6 @@ export class QuestionController {
   @Post()
   @ApiOperation({ summary: 'Create new question' })
   @ApiCreatedResponse({
-    // status: 200,
     description: 'Successfully created a question',
   })
   @ApiResponse({

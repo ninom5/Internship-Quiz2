@@ -1,38 +1,76 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { CreateQuestionDto } from './dto/createQuestion.dto';
+import { validateQuestionData } from './question.validation';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class QuestionService {
   constructor(private readonly prisma: PrismaService) {}
 
   async getAll() {
-    const questions = await this.prisma.question.findMany();
-
-    return questions;
+    try {
+      return await this.prisma.question.findMany();
+    } catch (error: unknown) {
+      throw error instanceof Error
+        ? new Error(`Error getting all questions: ${error.message}`)
+        : new InternalServerErrorException(
+            `Unknown error getting all questions`,
+          );
+    }
   }
 
   async getById(id: number) {
-    const question = await this.prisma.question.findUnique({
-      where: { id },
-    });
+    try {
+      const question = await this.prisma.question.findUnique({
+        where: { id },
+      });
 
-    return question;
+      if (!question)
+        throw new NotFoundException(`Question with that id does not exist`);
+
+      return question;
+    } catch (error) {
+      throw error instanceof NotFoundException
+        ? error
+        : new InternalServerErrorException(
+            `Unknown error getting question by id: ${error}`,
+          );
+    }
   }
 
   async createQuestion(question: CreateQuestionDto) {
-    const response = await this.prisma.question.create({
-      data: question,
-    });
-
-    return response;
+    try {
+      validateQuestionData(question);
+      const response = await this.prisma.question.create({
+        data: question,
+      });
+      return response;
+    } catch (error) {
+      throw error instanceof BadRequestException
+        ? error
+        : new InternalServerErrorException('Unknown error creating question');
+    }
   }
 
   async deleteQuestion(id: number) {
-    const response = await this.prisma.question.delete({
-      where: { id },
-    });
-
-    return response;
+    try {
+      return await this.prisma.question.delete({
+        where: { id },
+      });
+    } catch (error) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError) {
+        if (error.code === 'P2025')
+          throw new NotFoundException(`Question with provided id not found`);
+      }
+      throw new InternalServerErrorException(
+        `Something went wrong while deleting the question: ${error} `,
+      );
+    }
   }
 }
