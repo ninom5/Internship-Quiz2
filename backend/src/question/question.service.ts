@@ -6,8 +6,12 @@ import {
 } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { CreateQuestionDto } from './dto/createQuestion.dto';
-import { validateQuestionData } from './question.validation';
+import {
+  validateQuestionData,
+  validateUpdateQuestionData,
+} from './question.validation';
 import { Prisma } from '@prisma/client';
+import { UpdateQuestionDto } from './dto/updateQuestion.dto';
 
 @Injectable()
 export class QuestionService {
@@ -47,12 +51,33 @@ export class QuestionService {
   async createQuestion(question: CreateQuestionDto) {
     try {
       validateQuestionData(question);
-      const response = await this.prisma.question.create({
+
+      return await this.prisma.question.create({
         data: question,
       });
-      return response;
     } catch (error) {
       throw error instanceof BadRequestException
+        ? error
+        : new InternalServerErrorException('Unknown error creating question');
+    }
+  }
+
+  async updateQuestion(id: number, updateDto: UpdateQuestionDto) {
+    try {
+      const existingQuestion = await this.prisma.question.findUnique({
+        where: { id },
+      });
+      if (!existingQuestion)
+        throw new NotFoundException('Question with provided id not found');
+
+      validateUpdateQuestionData(updateDto);
+
+      return await this.prisma.question.update({
+        where: { id },
+        data: { ...updateDto },
+      });
+    } catch (error) {
+      throw error instanceof BadRequestException || NotFoundException
         ? error
         : new InternalServerErrorException('Unknown error creating question');
     }

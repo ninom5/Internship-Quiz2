@@ -1,7 +1,16 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CategoryService } from './category.service';
-import { CreateCategoryDto } from './dto/category.dto';
+import { CreateCategoryDto } from './dto/createCategory.dto';
+import { UpdateCategoryDto } from './dto/updateCategory.dto';
 
 @Controller('category')
 @ApiTags('category')
@@ -32,6 +41,18 @@ export class CategoryController {
   async createCategory(@Body() quiz: CreateCategoryDto) {
     const response = await this.categoryService.createCategory(quiz);
     return response;
+  }
+
+  @Patch(':id')
+  @ApiOperation({ summary: 'Update category by ID' })
+  @ApiResponse({ status: 200, description: 'Successfully updated category' })
+  @ApiResponse({ status: 404, description: 'Category not found' })
+  @ApiResponse({ status: 400, description: 'Invalid data provided' })
+  async updateUser(
+    @Param('id') id: string,
+    @Body() updateDto: UpdateCategoryDto,
+  ) {
+    return await this.categoryService.updateCategory(id, updateDto);
   }
 
   @Delete(':id')

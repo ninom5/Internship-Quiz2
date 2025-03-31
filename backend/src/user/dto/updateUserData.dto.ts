@@ -18,4 +18,8 @@ export class UpdateUserDataDto {
   @IsString()
   @ApiProperty({ example: 'password' })
   password?: string;
+
+  @IsString()
+  @ApiProperty({ example: 'password' })
+  confirmPassword?: string;
 }

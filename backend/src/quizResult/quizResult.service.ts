@@ -6,7 +6,10 @@ import {
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
-import { quizResultValidation } from './quizResult.validation';
+import {
+  quizResultValidation,
+  validateUpdateQuizResult,
+} from './quizResult.validation';
 import { Prisma } from '@prisma/client';
 import { UpdateQuizResultDto } from './dto/updateQuizResult.dto';
 
@@ -70,14 +73,15 @@ export class QuizResultService {
         throw new NotFoundException(
           'Quiz result with provided id does not exist',
         );
-      const updateQuizResult = await this.prisma.quizResult.update({
+
+      validateUpdateQuizResult(updateDto);
+
+      return await this.prisma.quizResult.update({
         where: { id },
         data: { ...updateDto },
       });
-
-      return updateQuizResult;
     } catch (error) {
-      throw error instanceof NotFoundException
+      throw error instanceof NotFoundException || BadRequestException
         ? error
         : new InternalServerErrorException(
             `Unknown error happened while updating quiz result ${error}`,

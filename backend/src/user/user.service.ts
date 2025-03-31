@@ -9,7 +9,10 @@ import { PrismaService } from '../prisma.service';
 import { CreateUserDto } from './dto/createUser.dto';
 import { compare, hash } from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
-import { validateUserRegisterData } from './user.validation';
+import {
+  validateUpdateUserData,
+  validateUserRegisterData,
+} from './user.validation';
 import { Prisma } from '@prisma/client';
 import { UpdateUserDataDto } from './dto/updateUserData.dto';
 
@@ -143,6 +146,8 @@ export class UserService {
 
       if (!existingUser)
         throw new NotFoundException(`User with ID ${id} not found`);
+
+      validateUpdateUserData(updateDto);
 
       return this.prisma.user.update({
         where: { id },

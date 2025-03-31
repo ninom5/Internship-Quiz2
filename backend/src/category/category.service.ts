@@ -7,8 +7,9 @@ import {
 } from '@nestjs/common';
 
 import { PrismaService } from '../prisma.service';
-import { CreateCategoryDto } from './dto/category.dto';
+import { CreateCategoryDto } from './dto/createCategory.dto';
 import { Prisma } from '@prisma/client';
+import { UpdateCategoryDto } from './dto/updateCategory.dto';
 
 @Injectable()
 export class CategoryService {
@@ -62,7 +63,35 @@ export class CategoryService {
         error instanceof ForbiddenException
         ? error
         : new InternalServerErrorException(
-            `Unknown error happened while creatin category ${error}`,
+            `Unknown error happened while creating category ${error}`,
+          );
+    }
+  }
+
+  async updateCategory(id: string, updateDto: UpdateCategoryDto) {
+    try {
+      const existingCategory = await this.prisma.category.findUnique({
+        where: { id },
+      });
+
+      if (!existingCategory)
+        throw new NotFoundException('Category with provided id not found');
+
+      if (!updateDto.title || updateDto.title.trim() === '')
+        throw new BadRequestException(
+          'Title can not be empty for category update',
+        );
+
+      return await this.prisma.category.update({
+        where: { id },
+        data: { ...updateDto },
+      });
+    } catch (error) {
+      throw error instanceof BadRequestException ||
+        error instanceof NotFoundException
+        ? error
+        : new InternalServerErrorException(
+            `Unknown error happened while creating category ${error}`,
           );
     }
   }

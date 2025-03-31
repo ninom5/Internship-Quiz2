@@ -1,4 +1,13 @@
-import {BadRequestException, Body, Controller, Delete, Get, Param, Post} from '@nestjs/common';
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import {
   ApiCreatedResponse,
   ApiOperation,
@@ -7,6 +16,7 @@ import {
 } from '@nestjs/swagger';
 import { QuestionService } from './question.service';
 import { CreateQuestionDto } from './dto/createQuestion.dto';
+import { UpdateQuestionDto } from './dto/updateQuestion.dto';
 
 @Controller('question')
 @ApiTags('question')
@@ -20,8 +30,7 @@ export class QuestionController {
     description: 'Returns all questions in database',
   })
   async getAllQuestions() {
-    const questions = await this.questionService.getAll();
-    return questions;
+    return await this.questionService.getAll();
   }
 
   @Get(':id')
@@ -37,8 +46,7 @@ export class QuestionController {
     if (isNaN(questionId))
       throw new BadRequestException('Invalid question ID format');
 
-    const question = await this.questionService.getById(questionId);
-    return question;
+    return await this.questionService.getById(questionId);
   }
 
   @Post()
@@ -51,8 +59,19 @@ export class QuestionController {
     description: 'Invalid data provided',
   })
   async createNewQustion(@Body() question: CreateQuestionDto) {
-    const response = await this.questionService.createQuestion(question);
-    return response;
+    return await this.questionService.createQuestion(question);
+  }
+
+  @Patch(':id')
+  @ApiOperation({ summary: 'Update question by ID' })
+  @ApiResponse({ status: 200, description: 'Successfully updated question' })
+  @ApiResponse({ status: 404, description: 'Question not found' })
+  @ApiResponse({ status: 400, description: 'Invalid data provided' })
+  async updateUser(
+    @Param('id') id: string,
+    @Body() updateDto: UpdateQuestionDto,
+  ) {
+    return await this.questionService.updateQuestion(Number(id), updateDto);
   }
 
   @Delete(':id')
@@ -60,7 +79,6 @@ export class QuestionController {
   @ApiResponse({ status: 200, description: 'Successfully deleted question' })
   @ApiResponse({ status: 404, description: 'Question not found' })
   async deleteQuestion(@Param('id') id: string) {
-    const response = await this.questionService.deleteQuestion(Number(id));
-    return response;
+    return await this.questionService.deleteQuestion(Number(id));
   }
 }
