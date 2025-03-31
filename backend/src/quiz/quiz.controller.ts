@@ -1,5 +1,4 @@
 import {
-  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -7,11 +6,15 @@ import {
   NotFoundException,
   Param,
   Post,
-  Query,
 } from '@nestjs/common';
-import {ApiCreatedResponse, ApiOperation, ApiResponse, ApiTags,} from '@nestjs/swagger';
-import {QuizService} from './quiz.service';
-import {CreateQuizDto} from './dto/createQuiz.dto';
+import {
+  ApiCreatedResponse,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { QuizService } from './quiz.service';
+import { CreateQuizDto } from './dto/createQuiz.dto';
 
 @Controller('quiz')
 @ApiTags('quiz')

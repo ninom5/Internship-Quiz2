@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Post, Body, Delete } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/createUser.dto';
@@ -12,8 +12,11 @@ export class UserController {
   @ApiOperation({ summary: 'Get all users' })
   @ApiResponse({ status: 200, description: 'Return all users in db' })
   async getAllUsers() {
-    const users = await this.userService.getAll();
-    return users;
+    try {
+      return await this.userService.getAll();
+    } catch (error) {
+      throw new Error(`Error fetching all users: ${error}`);
+    }
   }
 
   @Get(':id')
@@ -22,28 +25,37 @@ export class UserController {
     status: 200,
     description: 'Returns user with same id if it is in db',
   })
+  @ApiResponse({
+    status: 404,
+    description: 'User with that id not found',
+  })
   async getById(@Param('id') id: string) {
-    const user = await this.userService.getById(id);
-    return user;
+    return await this.userService.getById(id);
   }
 
   @Get('/email/:email')
   @ApiOperation({ summary: 'Get user by email' })
   @ApiResponse({ status: 200, description: 'Returns user with same email' })
+  @ApiResponse({
+    status: 404,
+    description: 'User with that email not found',
+  })
   async getByEmail(@Param('email') email: string) {
-    const user = await this.userService.getByEmail(email);
-    return user;
+    return await this.userService.getByEmail(email);
   }
 
   @Post('register')
   @ApiOperation({ summary: 'Create new user' })
   @ApiResponse({
     status: 200,
-    description: 'Returns response',
+    description: 'Returns token',
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Some data field is missing or is invalid',
   })
   async register(@Body() user: CreateUserDto) {
-    const response = await this.userService.register(user);
-    return response;
+    return await this.userService.register(user);
   }
 
   @Post('login')
@@ -53,16 +65,14 @@ export class UserController {
     description: 'Successfully logs in and gets token',
   })
   async login(@Body() email: string, password: string) {
-    const response = await this.userService.login(email, password);
-    return response;
+    return await this.userService.login(email, password);
   }
 
-  @Post()
   @Delete(':id')
   @ApiOperation({ summary: 'Delete user' })
-  @ApiResponse({ status: 200, description: 'Returns response' })
+  @ApiResponse({ status: 200, description: 'Returns response body' })
+  @ApiResponse({ status: 404, description: 'User not found' })
   async deleteUser(@Param('id') id: string) {
-    const response = await this.userService.deleteUser(id);
-    return response;
+    return await this.userService.deleteUser(id);
   }
 }
