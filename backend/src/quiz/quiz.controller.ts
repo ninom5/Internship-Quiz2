@@ -1,26 +1,10 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  NotFoundException,
-  Param,
-  Patch,
-  Post,
-  UseGuards,
-} from '@nestjs/common';
-import {
-  ApiBearerAuth,
-  ApiCreatedResponse,
-  ApiOperation,
-  ApiResponse,
-  ApiTags,
-} from '@nestjs/swagger';
-import { QuizService } from './quiz.service';
-import { CreateQuizDto } from './dto/createQuiz.dto';
-import { UpdateQuizDto } from './dto/updateQuiz.dto';
-import { AdminAuthGuard } from '../user/admin-auth.guard';
-import { UserAuthGuard } from '../user/user-auth.guard';
+import {Body, Controller, Delete, Get, NotFoundException, Param, Patch, Post, UseGuards,} from '@nestjs/common';
+import {ApiBearerAuth, ApiCreatedResponse, ApiOperation, ApiResponse, ApiTags,} from '@nestjs/swagger';
+import {QuizService} from './quiz.service';
+import {CreateQuizDto} from './dto/createQuiz.dto';
+import {UpdateQuizDto} from './dto/updateQuiz.dto';
+import {AdminAuthGuard} from '../user/admin-auth.guard';
+import {UserAuthGuard} from '../user/user-auth.guard';
 
 @Controller('quiz')
 @ApiBearerAuth()
@@ -83,8 +67,7 @@ export class QuizController {
     description: 'Invalid data provided',
   })
   async createNewQuiz(@Body() quiz: CreateQuizDto) {
-    const response = await this.quizService.createQuiz(quiz);
-    return response;
+    return await this.quizService.createQuiz(quiz);
   }
 
   @Patch(':id')

@@ -78,11 +78,14 @@ export class QuizService {
           category: {
             connect: { id: quiz.categoryId },
           },
-          // questions: {
-          //   connect: quiz.questions.map((questionId) => ({
-          //     id: Number(questionId),
-          //   })),
-          // },
+          questions: {
+            connect: quiz.questions.map((questionId) => ({
+              id: Number(questionId),
+            })),
+          },
+        },
+        include: {
+          questions: true,
         },
       });
       return response;

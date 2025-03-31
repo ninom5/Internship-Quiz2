@@ -16,11 +16,12 @@ export class CreateQuizDto {
   description: string;
 
   @IsString()
-  @ApiProperty({ example: 'a4f16b72-bcd3-488e-ba47-2e146946fb15' })
+  @ApiProperty({ example: 'de18536a-6238-42f2-88e9-e9533603e538' })
   categoryId: string;
 
   @IsArray()
   @ArrayMinSize(5)
   @IsString({ each: true })
+  @ApiProperty({ example: '["2"]' })
   questions: string[];
 }
