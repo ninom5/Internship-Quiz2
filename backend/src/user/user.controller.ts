@@ -96,7 +96,7 @@ export class UserController {
   @ApiOperation({ summary: 'Login in' })
   @ApiResponse({
     status: 200,
-    description: 'Successfully logs in and gets token',
+    description: 'Data is valid, reurns token',
   })
   @ApiBody({
     schema: {
