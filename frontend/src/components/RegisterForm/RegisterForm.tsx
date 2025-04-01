@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import { routes } from "../../routes/routes";
+import { routes } from "@routes/routes";
 import { useState } from "react";
-import { axiosAPI } from "../../constants/axiosAPI";
-import { validateRegisterData } from "../../utils/validateRegisterData";
+import { axiosAPI } from "@constants/index";
+import { validateRegisterData } from "@utils/validateRegisterData";
 import { toast } from "react-toastify";
 
 export const RegisterForm = () => {

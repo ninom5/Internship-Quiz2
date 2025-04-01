@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { axiosAPI } from "../../constants/axiosAPI";
+import { axiosAPI } from "@constants/index";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { routes } from "@routes/routes";
+import { Link } from "react-router-dom";
 
 export const LoginForm = () => {
   const navigate = useNavigate();
@@ -99,6 +101,7 @@ export const LoginForm = () => {
                   Submit
                 </button>
               </div>
+              <Link to={routes.REGISTER}>Don't have an account?</Link>
             </div>
           </div>
         </div>

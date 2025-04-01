@@ -1,4 +1,4 @@
-import { QuizType } from "../../types/quizType";
+import { QuizType } from "types/quizType";
 import { useNavigate } from "react-router-dom";
 
 export const QuizGrid = ({ data }: { data: QuizType[] }) => {

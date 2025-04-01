@@ -1,6 +1,6 @@
-import { axiosAPI } from "../constants/axiosAPI";
+import { axiosAPI } from "@constants/index";
 import { useEffect, useState } from "react";
-import { QuizType } from "../types/quizType";
+import { QuizType } from "types/quizType";
 
 export const useFetchAllQuizzes = () => {
   const [data, setData] = useState<QuizType[] | null>(null);

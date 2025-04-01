@@ -1,7 +1,6 @@
 import { useParams } from "react-router-dom";
-import { QuizGrid } from "../../components/QuizGrid/QuizGrid";
-import { useFetchAllQuizzes } from "../../hooks/useFetchAllQuizzes";
-import { useFetchQuizzesByTitle } from "../../hooks/useFetchQuizzesByTitle";
+import { QuizGrid } from "@components/index";
+import { useFetchAllQuizzes, useFetchQuizzesByTitle } from "@hooks/index";
 
 export const QuizzesPage = () => {
   const { title } = useParams<{ title?: string }>();

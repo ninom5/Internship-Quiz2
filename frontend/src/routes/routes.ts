@@ -1,4 +1,4 @@
-import { RouteType } from "../types/routeType";
+import { RouteType } from "types/routeType";
 
 export const routes: RouteType = {
   HOME: "/",
