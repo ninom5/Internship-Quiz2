@@ -3,5 +3,5 @@ import axios from "axios";
 
 export const axiosAPI = axios.create({
   baseURL: API_URL,
-  //   withCredentials: true,
+  withCredentials: true,
 });

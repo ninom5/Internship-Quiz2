@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { axiosAPI } from "../../constants/axiosAPI";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export const LoginForm = () => {
+  const navigate = useNavigate();
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
@@ -12,7 +14,7 @@ export const LoginForm = () => {
   };
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    // e.preventDefault();
+    e.preventDefault();
     try {
       const response = await axiosAPI.post("/user/login", loginData);
 
@@ -28,6 +30,8 @@ export const LoginForm = () => {
         email: "",
         password: "",
       });
+
+      navigate("/quizzes");
     } catch (error: any) {
       console.error("Error trying to log in:", error);
 

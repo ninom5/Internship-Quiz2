@@ -1,8 +1,14 @@
+import { useParams } from "react-router-dom";
 import { QuizGrid } from "../../components/QuizGrid/QuizGrid";
 import { useFetchAllQuizzes } from "../../hooks/useFetchAllQuizzes";
+import { useFetchQuizzesByTitle } from "../../hooks/useFetchQuizzesByTitle";
 
 export const QuizzesPage = () => {
-  const { data, error, isLoading } = useFetchAllQuizzes();
+  const { title } = useParams<{ title?: string }>();
+
+  const { data, error, isLoading } = title
+    ? useFetchQuizzesByTitle(title)
+    : useFetchAllQuizzes();
 
   if (isLoading) return <div className="text-center">Loading...</div>;
 
