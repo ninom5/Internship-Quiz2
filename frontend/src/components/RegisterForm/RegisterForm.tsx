@@ -43,7 +43,7 @@ export const RegisterForm = () => {
         confirmPassword: "",
       });
     } catch (error) {
-      console.error("Error registering user: ", error);
+      console.error(`Error registering user: ${error}`);
       toast.error("Error registering user");
     }
   };
