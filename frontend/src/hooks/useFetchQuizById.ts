@@ -7,15 +7,21 @@ export const useFetchQuizById = (quizId: string) => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  const token = sessionStorage.getItem("jwt");
+
   useEffect(() => {
     const fetchQuiz = async () => {
       try {
-        const quiz = await axiosAPI.get<QuizType>(`/quiz/${quizId}`);
+        const quiz = await axiosAPI.get<QuizType>(`/quiz/${quizId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         if (quiz.status !== 200) throw new Error("Failed to fetch quiz by id");
 
         setData(quiz.data);
       } catch (error: Error | any) {
-        console.error("Error fetching quiz by id:", error);
+        console.error(`Error fetching quiz by id: ${error}`);
         setError(error);
       } finally {
         setIsLoading(false);

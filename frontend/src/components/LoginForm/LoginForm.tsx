@@ -23,7 +23,7 @@ export const LoginForm = () => {
         return;
       }
 
-      const token = response.data;
+      const token = response.data.token;
       sessionStorage.setItem("jwt", token);
       toast.success("Successfully logged in");
       setLoginData({
