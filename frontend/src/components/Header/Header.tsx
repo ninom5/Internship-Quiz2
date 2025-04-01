@@ -8,6 +8,8 @@ export const Header = () => {
       <Link to={routes.QUIZZES_PAGE}>Quizzes</Link>
 
       <Link to={routes.LOGIN}>Login</Link>
+
+      <Link to={routes.REGISTER}>Register</Link>
     </nav>
   );
 };

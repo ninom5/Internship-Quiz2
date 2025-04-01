@@ -1,7 +1,19 @@
 import { useParams } from "react-router-dom";
 import { useFetchQuizById, useFetchAllQuestions } from "@hooks/index";
-
+import { routes } from "@routes/routes";
+import { Link } from "react-router-dom";
 export const QuizPage = () => {
+  const token = sessionStorage.getItem("jwt");
+  if (!token) {
+    return (
+      <div className="text-center">
+        <h1 className="text-2xl font-bold">Unauthorized</h1>
+        <p>Please login to access this page.</p>
+        <Link to={routes.LOGIN}>Login</Link>
+      </div>
+    );
+  }
+
   const { quizId } = useParams();
   const { data, error, isLoading } = useFetchQuizById(quizId as string);
   const {

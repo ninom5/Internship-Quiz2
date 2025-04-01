@@ -1,8 +1,22 @@
 import { useParams } from "react-router-dom";
 import { QuizGrid } from "@components/index";
 import { useFetchAllQuizzes, useFetchQuizzesByTitle } from "@hooks/index";
+import { routes } from "@routes/routes";
+import { Link } from "react-router-dom";
 
 export const QuizzesPage = () => {
+  const token = sessionStorage.getItem("jwt");
+  if (!token) {
+    return (
+      <div className="text-center">
+        <h1 className="text-2xl font-bold">Unauthorized</h1>
+        <p>Please login to access this page.</p>
+        <Link to={routes.LOGIN} className="underline">
+          Login
+        </Link>
+      </div>
+    );
+  }
   const { title } = useParams<{ title?: string }>();
 
   const { data, error, isLoading } = title
