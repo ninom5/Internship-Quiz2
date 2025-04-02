@@ -8,12 +8,16 @@ export const useFetchQuizzesByTitle = (title: string) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (title) return;
-
+    if (!title) return;
     const fetchQuizzes = async () => {
       try {
         const response = await axiosAPI.get<QuizType[]>(
-          `/quiz/by-title/${title}`
+          `/quiz/by-title/${title}`,
+          {
+            headers: {
+              Authorization: `Bearer ${sessionStorage.getItem("jwt")}`,
+            },
+          }
         );
         if (response.status !== 200)
           throw new Error("Failed to fetch quizzes by title");
@@ -28,6 +32,6 @@ export const useFetchQuizzesByTitle = (title: string) => {
     };
 
     fetchQuizzes();
-  }, [title]);
+  }, []);
   return { data, error, isLoading };
 };

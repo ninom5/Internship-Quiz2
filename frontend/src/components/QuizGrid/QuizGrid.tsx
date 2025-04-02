@@ -1,12 +1,32 @@
 import { QuizType } from "types/quizType";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { useFetchAllQuizzes, useFetchQuizzesByTitle } from "@hooks/index";
+import { useEffect, useState } from "react";
 
-export const QuizGrid = ({ data }: { data: QuizType[] }) => {
+export const QuizGrid = (/*{ data }: { data: QuizType[] }*/) => {
   const navigate = useNavigate();
 
   const handleQuizClick = (id: string) => {
     navigate(`/quiz/${id}`);
   };
+
+  const location = useLocation();
+
+  const queryParams = new URLSearchParams(location.search);
+  const titleParam = queryParams.get("title");
+
+  const { data, error, isLoading } = titleParam
+    ? useFetchQuizzesByTitle(titleParam as string)
+    : useFetchAllQuizzes();
+
+  if (isLoading) return <div className="text-center">Loading...</div>;
+
+  if (error)
+    return <div className="text-center text-red-500">Error: {error}</div>;
+
+  if (!data) return <div className="text-center">No quizzes available.</div>;
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 quiz-grid">
       {data.map((quiz: QuizType) => (
