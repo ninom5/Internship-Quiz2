@@ -1,13 +1,13 @@
 import { QuizGrid, Restricted } from "@components/index";
-import { useFetchAllQuizzes, useFetchQuizzesByTitle } from "@hooks/index";
-import { QuizType } from "types/quizType";
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+// import { useFetchAllQuizzes, useFetchQuizzesByTitle } from "@hooks/index";
+// import { QuizType } from "types/quizType";
+// import { useEffect, useState } from "react";
+// import { useLocation } from "react-router-dom";
 
 export const QuizzesPage = () => {
   const token = sessionStorage.getItem("jwt");
 
-  if (!token) <Restricted />;
+  if (!token) return <Restricted />;
 
   // if (isLoading) return <div className="text-center">Loading...</div>;
 

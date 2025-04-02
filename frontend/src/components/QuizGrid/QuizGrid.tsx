@@ -2,7 +2,7 @@ import { QuizType } from "types/quizType";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useFetchAllQuizzes, useFetchQuizzesByTitle } from "@hooks/index";
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 
 export const QuizGrid = (/*{ data }: { data: QuizType[] }*/) => {
   const navigate = useNavigate();

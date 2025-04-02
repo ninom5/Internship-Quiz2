@@ -2,7 +2,20 @@ import { useParams } from "react-router-dom";
 import { useFetchQuizById, useFetchAllQuestions } from "@hooks/index";
 import { routes } from "@routes/routes";
 import { Link } from "react-router-dom";
+import { useMemo } from "react";
 export const QuizPage = () => {
+  const { quizId } = useParams();
+  const { data, error, isLoading } = useFetchQuizById(quizId as string);
+  const {
+    data: questionData,
+    error: questionError,
+    isLoading: questionLoading,
+  } = useFetchAllQuestions();
+
+  const quizQuestions = useMemo(() => {
+    return questionData?.filter((question) => question.quizId === quizId) || [];
+  }, [quizId ?? "", questionData]);
+
   const token = sessionStorage.getItem("jwt");
   if (!token) {
     return (
@@ -14,23 +27,14 @@ export const QuizPage = () => {
     );
   }
 
-  const { quizId } = useParams();
-  const { data, error, isLoading } = useFetchQuizById(quizId as string);
-  const {
-    data: questionData,
-    error: questionError,
-    isLoading: questionLoading,
-  } = useFetchAllQuestions();
   if (isLoading || questionLoading) return <div>Loading...</div>;
 
   if (error || questionError) return <div>Error fetching quiz by id</div>;
 
   if (!data) return <div>Quiz data is empty</div>;
 
-  const quizQuestions = questionData?.filter(
-    (question) => question.quizId === quizId
-  );
-  if (!quizQuestions) return <div>There is no questions for this quiz</div>;
+  if (quizQuestions.length === 0)
+    return <div>There are no questions for this quiz</div>;
 
   return (
     <div>
@@ -40,12 +44,10 @@ export const QuizPage = () => {
       <h5>{data.description}</h5>
       <div>
         {quizQuestions.map((q) => (
-          <>
-            <div key={q.quizId}>
-              <p>{q.text}</p>
-              <h4>{q.answer}</h4>
-            </div>
-          </>
+          <div key={q.id}>
+            <p>{q.text}</p>
+            <h4>{q.answer}</h4>
+          </div>
         ))}
       </div>
     </div>
