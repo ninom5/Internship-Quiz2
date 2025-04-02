@@ -22,7 +22,7 @@ export const useFetchQuizById = (quizId: string) => {
         setData(quiz.data);
       } catch (error: Error | any) {
         console.error(`Error fetching quiz by id: ${error}`);
-        setError(error);
+        setError(error.response?.data?.message);
       } finally {
         setIsLoading(false);
       }

@@ -22,7 +22,7 @@ export const useFetchAllQuestions = () => {
         setData(response.data);
       } catch (error: Error | any) {
         console.error(`Error fetching all questions: ${error}`);
-        setError(error);
+        setError(error.response?.data?.message);
       } finally {
         setIsLoading(false);
       }

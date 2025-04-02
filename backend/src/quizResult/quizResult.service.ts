@@ -48,6 +48,25 @@ export class QuizResultService {
     }
   }
 
+  async getResultsByUser(id: string) {
+    try {
+      const user = await this.prisma.user.findUnique({ where: { id } });
+      if (!user)
+        throw new NotFoundException('User with provided id does not exist');
+      return await this.prisma.quizResult.findMany({
+        where: {
+          userId: { contains: id },
+        },
+      });
+    } catch (error) {
+      throw error instanceof NotFoundException
+        ? error
+        : new InternalServerErrorException(
+            'Unknown error getting results by user',
+          );
+    }
+  }
+
   async createQuizResult(quizResult: CreateQuizResultDto) {
     try {
       quizResultValidation(quizResult);

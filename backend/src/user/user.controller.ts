@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
-  ApiBody,
+  ApiBody, ApiCreatedResponse,
   ApiOperation,
   ApiResponse,
   ApiTags,
@@ -94,8 +94,7 @@ export class UserController {
 
   @Post('login')
   @ApiOperation({ summary: 'Login in' })
-  @ApiResponse({
-    status: 200,
+  @ApiCreatedResponse({
     description: 'Data is valid, returns token',
   })
   @ApiBody({

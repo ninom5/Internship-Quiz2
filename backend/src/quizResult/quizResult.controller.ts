@@ -45,8 +45,19 @@ export class QuizResultController {
   @ApiResponse({ status: 200, description: 'Get quiz result by id if found' })
   @ApiResponse({ status: 400, description: 'Result not found' })
   async getResultById(@Param('id') id: string) {
-    const result = await this.quizResultService.getById(id);
-    return result;
+    return await this.quizResultService.getById(id);
+  }
+
+  @Get('/user/:id')
+  @UseGuards(UserAuthGuard)
+  @ApiOperation({ summary: 'Get quiz results by user' })
+  @ApiResponse({
+    status: 200,
+    description: 'Returns all quizzes for chosen user',
+  })
+  @ApiResponse({ status: 404, description: 'User not found' })
+  async getResultsByUser(@Param('id') id: string) {
+    return await this.quizResultService.getResultsByUser(id);
   }
 
   @Post()

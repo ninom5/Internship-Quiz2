@@ -16,7 +16,7 @@ export const useFetchAllQuizzes = () => {
         setData(response.data);
       } catch (error: Error | any) {
         console.error("Error fetching quizzes:", error);
-        setError(error);
+        setError(error.response?.data?.message);
       } finally {
         setIsLoading(false);
       }
