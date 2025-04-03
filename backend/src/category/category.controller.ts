@@ -27,7 +27,6 @@ export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 
   @Get()
-  @UseGuards(UserAuthGuard)
   @ApiOperation({ summary: 'Get all categories ' })
   @ApiResponse({ status: 200, description: 'returns all categories' })
   async getAll() {
