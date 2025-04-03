@@ -2,17 +2,10 @@ import { useParams } from "react-router-dom";
 import { useFetchQuizById, useFetchAllQuestions } from "@hooks/index";
 import { routes } from "@routes/routes";
 import { Link } from "react-router-dom";
-import { useMemo, useState } from "react";
-import {
-  CheckboxTypeComponent,
-  RadioTypeComponent,
-  SelectTypeComponent,
-  SliderTypeComponent,
-  TextTypeComponent,
-} from "@components/QuestionComponents/QuestionComponents";
+import { useMemo } from "react";
+import { QuizQuestionForm } from "@components/QuizQuestionForm/QuizQuestionForm";
 
 export const QuizPage = () => {
-  const [questionIndex, setQuestionIndex] = useState(0);
   const { quizId } = useParams();
   const { data, error, isLoading } = useFetchQuizById(quizId as string);
   const {
@@ -45,41 +38,13 @@ export const QuizPage = () => {
   if (quizQuestions.length === 0)
     return <div>There are no questions for this quiz</div>;
 
-  const QuestionComponents = {
-    text: TextTypeComponent,
-    checkbox: CheckboxTypeComponent,
-    radio: RadioTypeComponent,
-    slider: SliderTypeComponent,
-    select: SelectTypeComponent,
-  };
-
-  const handleConfirm = () => {
-    if (questionIndex < quizQuestions.length - 1) {
-      setQuestionIndex((prevIndex) => prevIndex + 1);
-    } else {
-      alert("Quiz completed!");
-    }
-  };
-
-  const currentQuestion = quizQuestions[questionIndex];
-  const QuestionComponent =
-    QuestionComponents[
-      currentQuestion.type.toLowerCase() as keyof typeof QuestionComponents
-    ] || (() => <p>Unknown question type</p>);
-
   return (
-    <div>
-      <h1>Quiz Page</h1>
-      <h3>{data.title}</h3>
+    <section className="flex flex-col w-full h-auto items-center justify-center gap-[50px]">
+      <h1>Quiz: {data.title}</h1>
       <img src={data?.imageUrl} alt={data.title} />
-      <h5>{data.description}</h5>
-      <div>
-        <div key={currentQuestion.id}>
-          <h3>{currentQuestion.text}</h3>
-          <QuestionComponent question={currentQuestion} />
-          <button onClick={handleConfirm}>Confirm</button>
-        </div>
-      </div>
-    </div>
+      <h2 className="text-4xl">About quiz: {data.description}</h2>
+
+      <QuizQuestionForm quizQuestions={quizQuestions} />
+    </section>
   );
 };

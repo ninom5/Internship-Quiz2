@@ -1,6 +1,12 @@
 import { QuestionType } from "types/questionType";
 
-export const TextTypeComponent = ({ question }: { question: QuestionType }) => {
+export const TextTypeComponent = ({
+  question,
+  setUserAnswer,
+}: {
+  question: QuestionType;
+  setUserAnswer: (value: string) => void;
+}) => {
   return (
     <div>
       <h3>{question.text}</h3>
@@ -9,6 +15,7 @@ export const TextTypeComponent = ({ question }: { question: QuestionType }) => {
         name="userAnswer"
         id="user-answer"
         placeholder="Your answer..."
+        onChange={(e) => setUserAnswer(e.target.value)}
       />
     </div>
   );
@@ -16,9 +23,17 @@ export const TextTypeComponent = ({ question }: { question: QuestionType }) => {
 
 export const CheckboxTypeComponent = ({
   question,
+  setUserAnswer,
 }: {
   question: QuestionType;
+  setUserAnswer: (value: string[]) => void;
 }) => {
+  const handleChange = (option: string, checked: boolean) => {
+    // setUserAnswer((prev: string[] = []) =>
+    //   checked ? [...prev, option] : prev.filter((p) => p !== option)
+    // );
+  };
+
   return (
     <div>
       {question.options &&
@@ -29,6 +44,7 @@ export const CheckboxTypeComponent = ({
               name={question.id}
               id={`q-${question.id}-${index}`}
               value={option}
+              onChange={(e) => handleChange(option, e.target.checked)}
             />
             <label htmlFor={`q-${question.id}-${index}`}>{option}</label>
           </div>
@@ -39,8 +55,10 @@ export const CheckboxTypeComponent = ({
 
 export const RadioTypeComponent = ({
   question,
+  setUserAnswer,
 }: {
   question: QuestionType;
+  setUserAnswer: (value: string) => void;
 }) => {
   return (
     <div>
@@ -52,6 +70,7 @@ export const RadioTypeComponent = ({
               id={`q-${question.id}-${index}`}
               value={option}
               name={question.id}
+              onChange={() => setUserAnswer(option)}
             />
             <label htmlFor={`q-${question.id}-${index}`}> {option} </label>
           </div>
@@ -62,8 +81,10 @@ export const RadioTypeComponent = ({
 
 export const SliderTypeComponent = ({
   question,
+  setUserAnswer,
 }: {
   question: QuestionType;
+  setUserAnswer: (value: string) => void;
 }) => {
   return (
     <div>
@@ -73,6 +94,7 @@ export const SliderTypeComponent = ({
           min={question.minValue}
           max={question.maxValue}
           defaultValue={(question.maxValue + question.minValue) / 2}
+          onChange={(e) => setUserAnswer(e.target.value)}
         />
       )}
     </div>
@@ -81,12 +103,22 @@ export const SliderTypeComponent = ({
 
 export const SelectTypeComponent = ({
   question,
+  setUserAnswer,
 }: {
   question: QuestionType;
+  setUserAnswer: (value: string) => void;
 }) => {
   return (
-    <div>
-      <select name={question.id}>
+    <div className="flex flex-col mt-6 mb-6 w-auto">
+      <select
+        name={question.id}
+        className="bg-white rounded-lg p-3 text-black"
+        onChange={(e) => setUserAnswer(e.target.value)}
+        defaultValue=""
+      >
+        <option value="" disabled>
+          Select answer
+        </option>
         {question.options &&
           question.options.map((option) => (
             <option key={option} value={option}>

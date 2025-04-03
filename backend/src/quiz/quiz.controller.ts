@@ -3,7 +3,6 @@ import {
   Controller,
   Delete,
   Get,
-  NotFoundException,
   Param,
   Patch,
   Post,
@@ -22,7 +21,6 @@ import { CreateQuizDto } from './dto/createQuiz.dto';
 import { UpdateQuizDto } from './dto/updateQuiz.dto';
 import { AdminAuthGuard } from '../user/admin-auth.guard';
 import { UserAuthGuard } from '../user/user-auth.guard';
-import { title } from 'node:process';
 
 @Controller('quiz')
 @ApiBearerAuth()
@@ -54,28 +52,6 @@ export class QuizController {
     const quiz = await this.quizService.getQuizById(id);
     return quiz;
   }
-
-  @Get('by-title/:title')
-  @UseGuards(UserAuthGuard)
-  @ApiOperation({ summary: 'Get quiz by title ' })
-  @ApiResponse({ status: 200, description: 'Returns quiz by title if found' })
-  @ApiResponse({
-    status: 404,
-    description: 'No quizzes found with provided title',
-  })
-  async getQuizzesByTitle(@Param('title') title: string) {
-    const quizzes = await this.quizService.getQuizByTitle(title);
-
-    if (quizzes.length === 0)
-      throw new NotFoundException('No quizzes found with the provided title');
-
-    return quizzes;
-  }
-
-  // async getQuizzesByTitle(@Query('title') title: string) {
-  //   const quizzes = await this.quizService.getQuizByTitle(title);
-  //   return quizzes;
-  // }
 
   @Post()
   @UseGuards(AdminAuthGuard)

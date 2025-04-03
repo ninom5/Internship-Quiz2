@@ -6,3 +6,4 @@ export * from "./PopularCategories/PopularCategories";
 export * from "./QuizGrid/QuizGrid";
 export * from "./RegisterForm/RegisterForm";
 export * from "./Restricted";
+export * from "./QuizQuestionForm/QuizQuestionForm";
