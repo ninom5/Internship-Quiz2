@@ -12,7 +12,6 @@ export const Navigation = () => {
   };
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCategory(e.target.value);
-    console.log(category);
   };
   const handleSubmit = () => {
     navigate(`/quizzes?title=${title}&category=${category}`);

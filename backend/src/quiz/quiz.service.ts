@@ -7,20 +7,42 @@ import {
 import { PrismaService } from '../prisma.service';
 import { CreateQuizDto } from './dto/createQuiz.dto';
 import { validateQuizData, validateUpdateQuizData } from './quiz.validation';
-import { Prisma } from '@prisma/client';
+import { Prisma, Quiz } from '@prisma/client';
 import { UpdateQuizDto } from './dto/updateQuiz.dto';
 
 @Injectable()
 export class QuizService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async getAll() {
+  async getAll({
+    title,
+    category,
+  }: {
+    title?: string;
+    category?: string;
+  }): Promise<Quiz[]> {
     try {
-      return await this.prisma.quiz.findMany();
+      const whereClause: any = {};
+
+      if (title) {
+        whereClause.title = { contains: title, mode: 'insensitive' };
+      }
+
+      if (category) {
+        whereClause.category = {
+          title: { contains: category, mode: 'insensitive' },
+        };
+      }
+
+      return await this.prisma.quiz.findMany({
+        where: whereClause, // No filters if title and category are both missing
+      });
     } catch (error: unknown) {
       throw error instanceof Error
-        ? new Error(`Error getting all users: ${error.message}`)
-        : new InternalServerErrorException(`Unknown error getting all users`);
+        ? new InternalServerErrorException(
+            `Error getting quizzes: ${error.message}`,
+          )
+        : new InternalServerErrorException(`Unknown error getting quizzes`);
     }
   }
 

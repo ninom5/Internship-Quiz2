@@ -1,7 +1,7 @@
 import { QuizType } from "types/quizType";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import { useFetchAllQuizzes, useFetchQuizzesByTitle } from "@hooks/index";
+import { useFetchQuizzesByTitle } from "@hooks/index";
 
 export const QuizGrid = () => {
   const navigate = useNavigate();
@@ -13,11 +13,13 @@ export const QuizGrid = () => {
   const location = useLocation();
 
   const queryParams = new URLSearchParams(location.search);
-  const titleParam = queryParams.get("title");
+  const titleParam = queryParams.get("title") || "";
+  const categoryParam = queryParams.get("category") || "";
 
-  const { data, error, isLoading } = titleParam
-    ? useFetchQuizzesByTitle(titleParam as string)
-    : useFetchAllQuizzes();
+  const { data, error, isLoading } = useFetchQuizzesByTitle(
+    titleParam as string,
+    categoryParam as string
+  );
 
   if (isLoading) return <div className="text-center">Loading...</div>;
 

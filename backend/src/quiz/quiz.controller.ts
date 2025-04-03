@@ -7,6 +7,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import {
@@ -21,6 +22,7 @@ import { CreateQuizDto } from './dto/createQuiz.dto';
 import { UpdateQuizDto } from './dto/updateQuiz.dto';
 import { AdminAuthGuard } from '../user/admin-auth.guard';
 import { UserAuthGuard } from '../user/user-auth.guard';
+import { title } from 'node:process';
 
 @Controller('quiz')
 @ApiBearerAuth()
@@ -35,8 +37,11 @@ export class QuizController {
     status: 200,
     description: 'Returns all quizzes',
   })
-  async getAllQuizzes() {
-    const quizzes = await this.quizService.getAll();
+  async getAllQuizzes(
+    @Query('title') title?: string,
+    @Query('category') category?: string,
+  ) {
+    const quizzes = await this.quizService.getAll({ title, category });
     return quizzes;
   }
 

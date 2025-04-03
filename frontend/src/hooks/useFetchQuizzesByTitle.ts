@@ -2,17 +2,21 @@ import { useEffect, useState } from "react";
 import { QuizType } from "types/quizType";
 import { axiosAPI } from "@constants/index";
 
-export const useFetchQuizzesByTitle = (title: string) => {
+export const useFetchQuizzesByTitle = (title: string, category: string) => {
   const [data, setData] = useState<QuizType[] | null>(null);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (!title) return;
     const fetchQuizzes = async () => {
       try {
+        const queryParams = new URLSearchParams();
+
+        if (title) queryParams.append("title", title);
+        if (category) queryParams.append("category", category);
+
         const response = await axiosAPI.get<QuizType[]>(
-          `/quiz/by-title/${title}`,
+          `/quiz?${queryParams.toString()}`,
           {
             headers: {
               Authorization: `Bearer ${sessionStorage.getItem("jwt")}`,
@@ -32,6 +36,6 @@ export const useFetchQuizzesByTitle = (title: string) => {
     };
 
     fetchQuizzes();
-  }, []);
+  }, [title, category]);
   return { data, error, isLoading };
 };
