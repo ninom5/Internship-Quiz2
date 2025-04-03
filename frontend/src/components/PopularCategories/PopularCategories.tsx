@@ -1,6 +1,11 @@
 import { useFetchAllCategories } from "@hooks/useFetchAllCategories";
+import { useNavigate } from "react-router-dom";
 
 export const PopularCategories = () => {
+  const navigate = useNavigate();
+  const handleClick = (category: string) => {
+    navigate(`/quizzes?category=${category}`);
+  };
   const { data: categories } = useFetchAllCategories();
 
   return (
@@ -9,7 +14,9 @@ export const PopularCategories = () => {
       <ul className="popular-categories-list">
         {categories &&
           categories.map((category) => (
-            <li key={category.id}>{category.title}</li>
+            <li key={category.id} onClick={() => handleClick(category.title)}>
+              {category.title}
+            </li>
           ))}
       </ul>
     </section>

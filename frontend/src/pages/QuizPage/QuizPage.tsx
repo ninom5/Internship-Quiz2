@@ -3,6 +3,13 @@ import { useFetchQuizById, useFetchAllQuestions } from "@hooks/index";
 import { routes } from "@routes/routes";
 import { Link } from "react-router-dom";
 import { useMemo } from "react";
+import {
+  CheckboxTypeComponent,
+  RadioTypeComponent,
+  SelectTypeComponent,
+  SliderTypeComponent,
+  TextTypeComponent,
+} from "@components/QuestionComponents/QuestionComponents";
 export const QuizPage = () => {
   const { quizId } = useParams();
   const { data, error, isLoading } = useFetchQuizById(quizId as string);
@@ -36,6 +43,14 @@ export const QuizPage = () => {
   if (quizQuestions.length === 0)
     return <div>There are no questions for this quiz</div>;
 
+  const QuestionComponents = {
+    text: TextTypeComponent,
+    checkbox: CheckboxTypeComponent,
+    radio: RadioTypeComponent,
+    slider: SliderTypeComponent,
+    select: SelectTypeComponent,
+  };
+
   return (
     <div>
       <h1>Quiz Page</h1>
@@ -43,12 +58,18 @@ export const QuizPage = () => {
       <img src={data?.imageUrl} alt={data.title} />
       <h5>{data.description}</h5>
       <div>
-        {quizQuestions.map((q) => (
-          <div key={q.id}>
-            <p>{q.text}</p>
-            <h4>{q.answer}</h4>
-          </div>
-        ))}
+        {quizQuestions.map((q) => {
+          const QuestionComponent =
+            QuestionComponents[
+              q.type.toLowerCase() as keyof typeof QuestionComponents
+            ] || (() => <p>Unknown question type</p>);
+
+          return (
+            <div key={q.id}>
+              <QuestionComponent question={q} />
+            </div>
+          );
+        })}
       </div>
     </div>
   );

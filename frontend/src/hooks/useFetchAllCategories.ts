@@ -1,5 +1,5 @@
 import { axiosAPI } from "@constants/axiosAPI";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 
 interface Category {
   id: string;
