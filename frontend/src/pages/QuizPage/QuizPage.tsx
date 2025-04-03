@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { useFetchQuizById, useFetchAllQuestions } from "@hooks/index";
 import { routes } from "@routes/routes";
 import { Link } from "react-router-dom";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import {
   CheckboxTypeComponent,
   RadioTypeComponent,
@@ -12,6 +12,7 @@ import {
 } from "@components/QuestionComponents/QuestionComponents";
 
 export const QuizPage = () => {
+  const [questionIndex, setQuestionIndex] = useState(0);
   const { quizId } = useParams();
   const { data, error, isLoading } = useFetchQuizById(quizId as string);
   const {
@@ -52,6 +53,20 @@ export const QuizPage = () => {
     select: SelectTypeComponent,
   };
 
+  const handleConfirm = () => {
+    if (questionIndex < quizQuestions.length - 1) {
+      setQuestionIndex((prevIndex) => prevIndex + 1);
+    } else {
+      alert("Quiz completed!");
+    }
+  };
+
+  const currentQuestion = quizQuestions[questionIndex];
+  const QuestionComponent =
+    QuestionComponents[
+      currentQuestion.type.toLowerCase() as keyof typeof QuestionComponents
+    ] || (() => <p>Unknown question type</p>);
+
   return (
     <div>
       <h1>Quiz Page</h1>
@@ -59,18 +74,11 @@ export const QuizPage = () => {
       <img src={data?.imageUrl} alt={data.title} />
       <h5>{data.description}</h5>
       <div>
-        {quizQuestions.map((q) => {
-          const QuestionComponent =
-            QuestionComponents[
-              q.type.toLowerCase() as keyof typeof QuestionComponents
-            ] || (() => <p>Unknown question type</p>);
-
-          return (
-            <div key={q.id}>
-              <QuestionComponent question={q} />
-            </div>
-          );
-        })}
+        <div key={currentQuestion.id}>
+          <h3>{currentQuestion.text}</h3>
+          <QuestionComponent question={currentQuestion} />
+          <button onClick={handleConfirm}>Confirm</button>
+        </div>
       </div>
     </div>
   );
