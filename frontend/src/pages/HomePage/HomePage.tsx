@@ -1,5 +1,5 @@
-import { HomePageDescriptions } from "@components/HomePageDescriptions/HomePageDescriptions";
-import { PopularCategories } from "@components/PopularCategories/PopularCategories";
+import { HomePageDescriptions } from "@components/index";
+import { PopularCategories } from "@components/index";
 export const HomePage = () => {
   return (
     <div className="home-page">

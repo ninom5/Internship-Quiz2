@@ -8,8 +8,8 @@ import {
   RegisterPage,
   LoginPage,
 } from "./pages";
-import { HeaderLayout } from "./layouts/HeaderLayout";
-import { NavigationLayout } from "./layouts/NavigationLayout";
+import { HeaderLayout } from "@layouts/index";
+import { NavigationLayout } from "@layouts/index";
 
 export const Router = () => {
   return (

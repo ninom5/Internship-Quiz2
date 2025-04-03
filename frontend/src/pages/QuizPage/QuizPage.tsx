@@ -10,6 +10,7 @@ import {
   SliderTypeComponent,
   TextTypeComponent,
 } from "@components/QuestionComponents/QuestionComponents";
+
 export const QuizPage = () => {
   const { quizId } = useParams();
   const { data, error, isLoading } = useFetchQuizById(quizId as string);
