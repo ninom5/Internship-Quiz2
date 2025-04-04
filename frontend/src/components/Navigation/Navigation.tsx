@@ -42,16 +42,29 @@ export const Navigation = () => {
         name="categorySelect"
         id="category-select"
         onChange={handleCategoryChange}
+        defaultValue=""
+        className="bg-white text-black py-3 rounded-lg"
       >
+        <option value="" disabled>
+          Filter by category
+        </option>
         {data.map((category) => (
           <option key={category.id}>{category.title}</option>
         ))}
       </select>
-      <button type="submit" onClick={handleSubmit}>
+      <button
+        type="submit"
+        onClick={handleSubmit}
+        className="transition duration-[700ms] hover:bg-sky-400"
+      >
         Search
       </button>
 
-      <button type="button" onClick={handleReset}>
+      <button
+        type="button"
+        onClick={handleReset}
+        className="transition duration-[700ms] hover:bg-sky-400"
+      >
         Reset
       </button>
     </nav>

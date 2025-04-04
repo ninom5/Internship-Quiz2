@@ -60,6 +60,16 @@ export class QuizResultController {
     return await this.quizResultService.getResultsByUser(id);
   }
 
+  @Get('/quiz/:id')
+  @ApiOperation({ summary: 'Get results for quiz' })
+  @ApiResponse({
+    status: 200,
+    description: 'Returns all results for provided quiz',
+  })
+  async geResultsByQuiz(@Param('id') id: string) {
+    return await this.quizResultService.getResultsByQuiz(id);
+  }
+
   @Post()
   @UseGuards(UserAuthGuard)
   @ApiOperation({ summary: 'Create new result' })

@@ -64,30 +64,6 @@ export class QuizService {
     }
   }
 
-  async getQuizByTitle(title: string) {
-    try {
-      const quizzes = await this.prisma.quiz.findMany({
-        where: {
-          title: {
-            contains: title,
-            mode: 'insensitive',
-          },
-        },
-      });
-
-      if (quizzes.length === 0)
-        throw new NotFoundException('No quizzes found with the provided title');
-
-      return quizzes;
-    } catch (error) {
-      throw error instanceof NotFoundException
-        ? error
-        : new InternalServerErrorException(
-            `Unknown error getting quiz by title: ${error}`,
-          );
-    }
-  }
-
   async createQuiz(quiz: CreateQuizDto) {
     try {
       validateQuizData(quiz);

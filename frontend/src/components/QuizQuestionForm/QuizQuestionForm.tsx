@@ -6,18 +6,28 @@ import {
   TextTypeComponent,
 } from "@components/QuestionComponents/QuestionComponents";
 import { QuestionType } from "types/questionType";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
+import { useFetchResultsByQuiz } from "@hooks/useFetchResultsByQuiz";
+import { useCreateQuizResult } from "@hooks/useCreateQuizResult";
+import { QuizResultCreateDto } from "types/quizResultCreateDto";
+import { getUserIdFromToken } from "@constants/extractUserInfo";
 
 export const QuizQuestionForm = ({
   quizQuestions,
+  quizId,
 }: {
   quizQuestions: QuestionType[];
+  quizId: string;
 }) => {
   const [questionIndex, setQuestionIndex] = useState(0);
   const [correctAnswerCount, setCorrectAnswerCount] = useState(0);
   const [userAnswer, setUserAnswer] = useState<any>(null);
   const [quizFinished, setQuizFinished] = useState(false);
+  const [placement, setPlacement] = useState(0);
+
+  const { data, error, isLoading } = useFetchResultsByQuiz(quizId);
+  const { submitResult, isSubmitting, submitError } = useCreateQuizResult();
 
   const QuestionComponents = {
     input: TextTypeComponent,
@@ -43,12 +53,37 @@ export const QuizQuestionForm = ({
     else setQuizFinished(true);
   };
 
+  useEffect(() => {
+    if (quizFinished && data && !isLoading && !error) {
+      const scores = data.map((result) => result.score);
+      const sortedScores = [...scores, correctAnswerCount].sort(
+        (a, b) => b - a
+      );
+
+      const userPlacement = sortedScores.indexOf(correctAnswerCount);
+      setPlacement(userPlacement + 1);
+
+      const userId = getUserIdFromToken();
+      if (!userId) {
+        toast.error("Can not get user id to store quiz result");
+        return;
+      }
+
+      const userResult: QuizResultCreateDto = {
+        userId,
+        score: correctAnswerCount,
+        quizId,
+      };
+
+      submitResult(userResult);
+    }
+  }, [quizFinished, data, correctAnswerCount, isLoading, error]);
+
   const currentQuestion = quizQuestions[questionIndex];
   const QuestionComponent =
     QuestionComponents[
       currentQuestion.type.toLowerCase() as keyof typeof QuestionComponents
     ] || (() => <p>Unknown question type</p>);
-  console.log(currentQuestion.type);
 
   return (
     <div className="w-full flex items-center justify-center">
@@ -76,6 +111,7 @@ export const QuizQuestionForm = ({
             Quiz finished. Your score: {correctAnswerCount}/
             {quizQuestions.length}
           </h2>
+          <p>Your placement: {placement}</p>
         </div>
       )}
     </div>

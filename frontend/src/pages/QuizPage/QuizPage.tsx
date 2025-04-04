@@ -44,7 +44,7 @@ export const QuizPage = () => {
       <img src={data?.imageUrl} alt={data.title} />
       <h2 className="text-4xl">About quiz: {data.description}</h2>
 
-      <QuizQuestionForm quizQuestions={quizQuestions} />
+      <QuizQuestionForm quizQuestions={quizQuestions} quizId={data.id} />
     </section>
   );
 };

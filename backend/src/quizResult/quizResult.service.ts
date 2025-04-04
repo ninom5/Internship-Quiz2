@@ -67,6 +67,22 @@ export class QuizResultService {
     }
   }
 
+  async getResultsByQuiz(id: string) {
+    try {
+      return await this.prisma.quizResult.findMany({
+        where: {
+          quizId: { contains: id },
+        },
+      });
+    } catch (error) {
+      throw error instanceof NotFoundException
+        ? error
+        : new InternalServerErrorException(
+            'Unknown error getting results by user',
+          );
+    }
+  }
+
   async createQuizResult(quizResult: CreateQuizResultDto) {
     try {
       quizResultValidation(quizResult);
