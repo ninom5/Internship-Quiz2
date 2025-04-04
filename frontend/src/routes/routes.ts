@@ -6,5 +6,6 @@ export const routes: RouteType = {
   LOGIN: "/login",
   QUIZ_PAGE: "/quiz/:quizId",
   QUIZZES_PAGE: "/quizzes",
+  ADMIN: "/admin",
   NOT_FOUND: "*",
 };

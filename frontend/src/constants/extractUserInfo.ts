@@ -6,15 +6,30 @@ interface Payload {
   role: string;
 }
 
-export const getUserIdFromToken = () => {
+export const getUserDataFromToken = () => {
   const token = sessionStorage.getItem("jwt");
-  if (!token) return null;
+
+  if (!token)
+    return {
+      data: { id: "", email: "", role: "" },
+      loading: false,
+      error: "No token found",
+    };
 
   try {
     const decoded: Payload = jwtDecode<Payload>(token);
-    return decoded.id;
+
+    return {
+      data: { id: decoded.id, email: decoded.email, role: decoded.role },
+      loading: false,
+      error: null,
+    };
   } catch (error) {
     console.error("Invalid token", error);
-    return null;
+    return {
+      data: { id: "", email: "", role: "" },
+      loading: false,
+      error: "No token found",
+    };
   }
 };

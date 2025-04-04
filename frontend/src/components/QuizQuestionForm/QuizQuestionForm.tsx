@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 import { useFetchResultsByQuiz } from "@hooks/useFetchResultsByQuiz";
 import { useCreateQuizResult } from "@hooks/useCreateQuizResult";
 import { QuizResultCreateDto } from "types/quizResultCreateDto";
-import { getUserIdFromToken } from "@constants/extractUserInfo";
+import { useToken } from "@hooks/useToken";
 
 export const QuizQuestionForm = ({
   quizQuestions,
@@ -63,7 +63,7 @@ export const QuizQuestionForm = ({
       const userPlacement = sortedScores.indexOf(correctAnswerCount);
       setPlacement(userPlacement + 1);
 
-      const userId = getUserIdFromToken();
+      const userId = useToken()?.data?.id;
       if (!userId) {
         toast.error("Can not get user id to store quiz result");
         return;
@@ -76,6 +76,11 @@ export const QuizQuestionForm = ({
       };
 
       submitResult(userResult);
+      if (submitError) {
+        toast.error(`Error submitting quiz result`);
+        console.error(`Error: ${submitError}`);
+        return;
+      }
     }
   }, [quizFinished, data, correctAnswerCount, isLoading, error]);
 
