@@ -8,7 +8,6 @@ export const useCreateQuizResult = () => {
 
   const submitResult = async (userResult: QuizResultCreateDto) => {
     try {
-      console.log(userResult);
       setIsSubmitting(true);
       const response = await axiosAPI.post("quizResult", userResult, {
         headers: {

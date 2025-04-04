@@ -1,4 +1,4 @@
-import { getUserDataFromToken } from "@constants/extractUserInfo";
+import { getUserDataFromToken } from "@utils/extractUserInfo";
 import { PropsWithChildren } from "react";
 import { TokenContext } from "./tokenContext";
 import { FC } from "react";

@@ -6,11 +6,15 @@ export const useCreateCategory = () => {
   const [createError, setCreateError] = useState(null);
   const createCategory = async (categoryTitle: string) => {
     try {
-      const response = await axiosAPI.post(`/category`, categoryTitle, {
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem("jwt")}`,
-        },
-      });
+      const response = await axiosAPI.post(
+        `/category`,
+        { title: categoryTitle },
+        {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("jwt")}`,
+          },
+        }
+      );
 
       if (response.status !== 201)
         throw new Error("error creating new category");

@@ -53,6 +53,12 @@ export const QuizQuestionForm = ({
     else setQuizFinished(true);
   };
 
+  const userId = useToken()?.data?.id;
+  if (!userId) {
+    toast.error("Can not get user id to store quiz result");
+    return;
+  }
+
   useEffect(() => {
     if (quizFinished && data && !isLoading && !error) {
       const scores = data.map((result) => result.score);
@@ -62,12 +68,6 @@ export const QuizQuestionForm = ({
 
       const userPlacement = sortedScores.indexOf(correctAnswerCount);
       setPlacement(userPlacement + 1);
-
-      const userId = useToken()?.data?.id;
-      if (!userId) {
-        toast.error("Can not get user id to store quiz result");
-        return;
-      }
 
       const userResult: QuizResultCreateDto = {
         userId,

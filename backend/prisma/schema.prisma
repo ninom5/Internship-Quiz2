@@ -44,20 +44,20 @@ model QuizResult {
 }
 
 model Question {
-  id      Int          @id @default(autoincrement())
-  text    String
-  type    QuestionType
-  quizId  String
-  quiz    Quiz         @relation(fields: [quizId], references: [id])
-  options String[]
-  answer  String
+  id       Int          @id @default(autoincrement())
+  text     String
+  type     QuestionType
+  quizId   String
+  quiz     Quiz         @relation(fields: [quizId], references: [id])
+  options  String[]
+  minValue Int
+  maxValue Int
+  answer   String
 }
 
 enum QuestionType {
   SELECT
   INPUT
-  MATCH
-  ORDER
   SLIDER
   CHECKBOX
   RADIO
