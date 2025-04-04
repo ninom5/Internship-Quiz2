@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom";
 import { useFetchQuizById, useFetchAllQuestions } from "@hooks/index";
-import { routes } from "@routes/routes";
-import { Link } from "react-router-dom";
 import { useMemo } from "react";
 import { QuizQuestionForm } from "@components/QuizQuestionForm/QuizQuestionForm";
+import { useToken } from "@hooks/useToken";
+import { Restricted } from "@components/Restricted";
 
 export const QuizPage = () => {
   const { quizId } = useParams();
@@ -18,16 +18,8 @@ export const QuizPage = () => {
     return questionData?.filter((question) => question.quizId === quizId) || [];
   }, [quizId ?? "", questionData]);
 
-  const token = sessionStorage.getItem("jwt");
-  if (!token) {
-    return (
-      <div className="text-center">
-        <h1 className="text-2xl font-bold">Unauthorized</h1>
-        <p>Please login to access this page.</p>
-        <Link to={routes.LOGIN}>Login</Link>
-      </div>
-    );
-  }
+  const token = useToken().token;
+  if (!token) return <Restricted />;
 
   if (isLoading || questionLoading) return <div>Loading...</div>;
 

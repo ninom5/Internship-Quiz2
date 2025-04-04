@@ -1,7 +1,7 @@
 import { Router } from "./Router";
 import { ErrorBoundary } from "react-error-boundary";
 import { ToastContainer } from "react-toastify";
-import { TokenProvider } from "context/tokenProvider";
+import { TokenProvider } from "context/TokenProvider";
 
 function App() {
   return (

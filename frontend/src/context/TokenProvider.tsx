@@ -1,6 +1,6 @@
 import { getUserDataFromToken } from "@constants/extractUserInfo";
 import { PropsWithChildren } from "react";
-import { TokenContext } from "./tokenContext";
+import { TokenContext } from "./TokenContext";
 import { FC } from "react";
 
 export const TokenProvider: FC<PropsWithChildren> = ({ children }) => {

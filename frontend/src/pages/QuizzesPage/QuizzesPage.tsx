@@ -1,7 +1,9 @@
 import { QuizGrid, Restricted } from "@components/index";
+import { useToken } from "@hooks/useToken";
 
 export const QuizzesPage = () => {
-  const token = sessionStorage.getItem("jwt");
+  const token = useToken();
+  console.log(token);
 
   if (!token) return <Restricted />;
 

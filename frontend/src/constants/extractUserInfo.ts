@@ -1,3 +1,4 @@
+import { useToken } from "@hooks/useToken";
 import { jwtDecode } from "jwt-decode";
 
 interface Payload {
@@ -7,10 +8,11 @@ interface Payload {
 }
 
 export const getUserDataFromToken = () => {
-  const token = sessionStorage.getItem("jwt");
+  const token = useToken()?.token;
 
   if (!token)
     return {
+      token: null,
       data: { id: "", email: "", role: "" },
       loading: false,
       error: "No token found",
@@ -20,6 +22,7 @@ export const getUserDataFromToken = () => {
     const decoded: Payload = jwtDecode<Payload>(token);
 
     return {
+      token: token,
       data: { id: decoded.id, email: decoded.email, role: decoded.role },
       loading: false,
       error: null,
@@ -27,6 +30,7 @@ export const getUserDataFromToken = () => {
   } catch (error) {
     console.error("Invalid token", error);
     return {
+      token: token || null,
       data: { id: "", email: "", role: "" },
       loading: false,
       error: "No token found",
