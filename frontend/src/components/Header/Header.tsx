@@ -12,11 +12,11 @@ export const Header = () => {
 
       <Link to={routes.QUIZZES_PAGE}>Quizzes</Link>
 
+      {role === "admin" && <Link to={routes.ADMIN}>Admin page</Link>}
+
       <Link to={routes.LOGIN}>Login</Link>
 
       <Link to={routes.REGISTER}>Register</Link>
-
-      {role === "admin" && <Link to={routes.ADMIN}>Admin page</Link>}
     </nav>
   );
 };
