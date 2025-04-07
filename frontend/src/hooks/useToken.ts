@@ -1,4 +1,4 @@
-import { TokenContext } from "context/tokenContext";
+import { TokenContext } from "context/TokenContext";
 import { useContext } from "react";
 
 export const useToken = () => {

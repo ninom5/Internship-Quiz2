@@ -4,9 +4,11 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { routes } from "@routes/routes";
 import { Link } from "react-router-dom";
+import { useToken } from "@hooks/useToken";
 
 export const LoginForm = () => {
   const navigate = useNavigate();
+  const { updateToken } = useToken();
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
@@ -27,6 +29,8 @@ export const LoginForm = () => {
 
       const token = response.data.token;
       sessionStorage.setItem("jwt", token);
+      updateToken();
+
       toast.success("Successfully logged in");
       setLoginData({
         email: "",
