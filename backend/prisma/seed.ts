@@ -91,7 +91,73 @@ async function main() {
     },
   });
 
-  // Create some quiz results for the users
+  const questions = await prisma.question.createMany({
+    data: [
+      {
+        text: 'When did World War II end?',
+        type: 'SELECT',
+        options: ['1945', '1944', '1943', '1942'],
+        answer: '1945',
+      },
+      {
+        text: 'Which countries were part of the Axis Powers?',
+        type: 'SELECT',
+        options: ['Germany', 'USA', 'Italy', 'Japan'],
+        answer: 'Germany,Italy,Japan',
+      },
+      {
+        text: 'What is the capital of France?',
+        type: 'SELECT',
+        options: ['Berlin', 'Madrid', 'Paris', 'Rome'],
+        answer: 'Paris',
+      },
+      {
+        text: 'Which continent is Australia located on?',
+        type: 'SELECT',
+        options: ['Asia', 'Europe', 'Oceania', 'Africa'],
+        answer: 'Oceania',
+      },
+      {
+        text: 'How many continents are there?',
+        type: 'SELECT',
+        options: ['5', '6', '7', '8'],
+        answer: '7',
+      },
+      {
+        text: 'Select all prime numbers below 10.',
+        type: 'CHECKBOX',
+        options: ['2', '3', '5', '9'],
+        answer: '2,3,5',
+      },
+      {
+        text: 'Rate your satisfaction with the course.',
+        type: 'SLIDER',
+        options: [],
+        minValue: 1,
+        maxValue: 5,
+        answer: '4',
+      },
+      {
+        text: 'Which of these are programming languages?',
+        type: 'CHECKBOX',
+        options: ['Python', 'HTML', 'CSS', 'JavaScript'],
+        answer: 'Python,JavaScript',
+      },
+      {
+        text: 'What is 5 + 3?',
+        type: 'SELECT',
+        options: ['6', '7', '8', '9'],
+        answer: '8',
+      },
+      {
+        text: 'Select the even numbers.',
+        type: 'RADIO',
+        options: ['1', '2', '3', '4'],
+        answer: '2,4',
+      },
+    ],
+  });
+
   await prisma.quizResult.create({
     data: {
       userId: user1.id,
