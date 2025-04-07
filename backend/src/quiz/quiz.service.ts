@@ -9,6 +9,7 @@ import { CreateQuizDto } from './dto/createQuiz.dto';
 import { validateQuizData, validateUpdateQuizData } from './quiz.validation';
 import { Prisma, Quiz } from '@prisma/client';
 import { UpdateQuizDto } from './dto/updateQuiz.dto';
+import {CreateQuestionDto} from "../question/dto/createQuestion.dto";
 
 @Injectable()
 export class QuizService {
@@ -69,19 +70,18 @@ export class QuizService {
       const response = await this.prisma.quiz.create({
         data: {
           title: quiz.title,
-          imgUrl: quiz.imgUrl,
           description: quiz.description,
+          imgUrl: quiz.imgUrl ?? "",
           category: {
             connect: { id: quiz.categoryId },
           },
-          // questions: {
-          //   create: quiz.questions.map((questionId) => ({
-          //     question: { connect: { id: Number(questionId) } },
-          //   })),
-          // },
-        },
-        include: {
-          questions: true,
+          questions: {
+            create: quiz.questions.map((questionId) => ({
+              questions: {
+                connect: { id: parseInt(questionId) },
+              },
+            })),
+          },
         },
       });
       return response;

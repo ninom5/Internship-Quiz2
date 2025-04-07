@@ -4,6 +4,7 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { CreateQuizDto } from "types/index";
 import { useState } from "react";
 import { useFetchAllCategories } from "@hooks/useFetchAllCategories";
+import { useCreateQuiz } from "@hooks/useCreateQuiz";
 
 export const CreateQuizForm = () => {
   const { data, error, isLoading } = useFetchAllQuestions();
@@ -12,6 +13,7 @@ export const CreateQuizForm = () => {
     error: categoryError,
     isLoading: categoryIsLoading,
   } = useFetchAllCategories();
+  const { createQuiz } = useCreateQuiz();
 
   const [pickedQuestions, setPickedQuestions] = useState<string[]>([]);
   const [quizData, setQuizData] = useState<CreateQuizDto>({
@@ -21,17 +23,22 @@ export const CreateQuizForm = () => {
     questions: [],
   });
 
-  const handlePickQuestion = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    id: string
-  ) => {
-    setPickedQuestions([...pickedQuestions, id]);
-  };
   const handleChange = (e: any) => {
-    setPickedQuestions({ ...pickedQuestions, [e.target.name]: e.target.value });
+    setQuizData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
-  const handleSubmit = () => {
-    console.log(pickedQuestions);
+  const handleSubmit = (e: React.MouseEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const mergedData = { ...quizData, questions: pickedQuestions };
+    createQuiz(mergedData);
+
+    setQuizData({
+      title: "",
+      description: "",
+      categoryId: "",
+      questions: [],
+    });
+    setPickedQuestions([]);
   };
 
   const columns: GridColDef[] = [
@@ -43,23 +50,30 @@ export const CreateQuizForm = () => {
     {
       field: "type",
       headerName: "Question Type",
-      flex: 1,
+      flex: 1.5,
     },
     {
       field: "answer",
       headerName: "Correct answer",
-      flex: 1,
+      flex: 2,
     },
     {
       field: "choose",
       headerName: "Choose question",
-      flex: 1,
+      flex: 1.2,
+      filterable: false,
+      sortable: false,
       renderCell: (params) => (
         <Checkbox
-          onChange={() =>
-            setPickedQuestions(() => [...pickedQuestions, params.row.id])
-          }
-          // onChange={(event) => handlePickQuestion(event, params.row.id)}
+          checked={pickedQuestions.includes(params.row.id)}
+          onChange={(event) => {
+            const isChecked = event.target.checked;
+            const id = params.row.id;
+
+            setPickedQuestions((prev) =>
+              isChecked ? [...prev, id] : prev.filter((qId) => qId !== id)
+            );
+          }}
         />
       ),
     },
@@ -72,7 +86,7 @@ export const CreateQuizForm = () => {
     <section className="flex flex-col p-4 items-center justify-center">
       <div className="flex flex-col items-center justify-center w-2/3 h-auto p-6 border-1 rounded-lg">
         <h3 className="italic text-xl mb-5">Create quiz</h3>
-        <div>
+        <form onSubmit={handleSubmit} className="w-[90%]">
           <input
             type="text"
             className="bg-white text-black border-none rounded-lg py-2 px-4 mr-5"
@@ -95,38 +109,49 @@ export const CreateQuizForm = () => {
             className="bg-white text-black border-none rounded-lg py-2 px-4 mr-4"
             defaultValue=""
             onChange={handleChange}
+            name="categoryId"
           >
             <option value="">Pick quiz category</option>
             {categories.map((category) => (
-              <option key={category.id} value={category.title}>
+              <option key={category.id} value={category.id}>
                 {category.title}
               </option>
             ))}
           </select>
-        </div>
-        <h4 className="mt-5">Pick questions to add to your quiz</h4>
-        <Box sx={{ height: "100%", width: "100%", padding: "20px 50px" }}>
-          <DataGrid
-            columns={columns}
-            rows={data}
-            sx={{ backgroundColor: "lightgray" }}
-            initialState={{
-              pagination: {
-                paginationModel: { pageSize: 10 },
-              },
-            }}
-            pageSizeOptions={[10, 15, 25, 50, 100]}
-          />
-          <Button
-            variant="outlined"
-            onClick={handleSubmit}
-            sx={{ marginTop: "20px", backgroundColor: "white" }}
-          >
-            Submit
-          </Button>
-        </Box>
+
+          <h4 className="mt-5">Pick questions to add to your quiz</h4>
+          <Box sx={{ height: "100%", width: "100%", padding: "20px 0" }}>
+            <DataGrid
+              columns={columns}
+              rows={data}
+              sx={{ backgroundColor: "lightgray" }}
+              initialState={{
+                pagination: {
+                  paginationModel: { pageSize: 10 },
+                },
+              }}
+              pageSizeOptions={[10, 15, 25, 50, 100]}
+            />
+            <Button
+              type="submit"
+              variant="outlined"
+              sx={{ marginTop: "20px", backgroundColor: "white" }}
+            >
+              Submit
+            </Button>
+          </Box>
+        </form>
 
         <h4>Added questions</h4>
+        <ul className="mt-2 text-white list-disc">
+          {data
+            .filter((q) => pickedQuestions.includes(q.id))
+            .map((item) => (
+              <li key={item.id} className="text-sm text-white mb-1">
+                {item.text}
+              </li>
+            ))}
+        </ul>
       </div>
     </section>
   );
