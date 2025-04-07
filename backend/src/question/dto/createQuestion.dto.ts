@@ -19,6 +19,7 @@ export class CreateQuestionDto {
 
   @IsArray()
   @IsString({ each: true })
+  @IsOptional()
   @ApiProperty({
     example: ['4', '5', '6', '8'],
     description:

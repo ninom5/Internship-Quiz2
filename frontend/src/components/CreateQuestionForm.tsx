@@ -10,15 +10,25 @@ export const CreateQuestionForm = () => {
     text: "",
     type: "",
     answer: "",
+    options: [],
+    minValue: undefined,
+    maxValue: undefined,
   });
   const [optionInput, setOptionInput] = useState("");
   const [options, setOptions] = useState<string[]>([]);
-  const [minValue, setMinValue] = useState("");
-  const [maxValue, setMaxValue] = useState("");
 
   const { createQuestion } = useCreateQuestion(formData);
 
   const handleChange = (e: any) => {
+    if (e.target.name === "minValue" || e.target.name === "maxValue") {
+      setFormData({
+        ...formData,
+        [e.target.name]: e.target.value ? Number(e.target.value) : undefined,
+      });
+      console.log(typeof e.target.value);
+      return;
+    }
+
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
   const handleAddOption = () => {
@@ -31,8 +41,10 @@ export const CreateQuestionForm = () => {
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    if (!questionDataValidation(formData)) {
-      toast.error("Invalid provided data");
+    formData.options = options;
+    const message = questionDataValidation(formData);
+    if (message !== "Data is valid") {
+      toast.error(`Invalid provided data: ${message}`);
       return;
     }
 
@@ -65,7 +77,7 @@ export const CreateQuestionForm = () => {
             </option>
             {Object.entries(QuestionTypes).map(([key, value]) => (
               <option key={key} value={value}>
-                {value.charAt(0).toUpperCase() + value.slice(1)}
+                {value.charAt(0) + value.slice(1).toLowerCase()}
               </option>
             ))}
           </select>
@@ -86,7 +98,7 @@ export const CreateQuestionForm = () => {
             Submit
           </button>
 
-          {["select", "checkbox", "radio"].includes(formData.type) && (
+          {["SELECT", "CHECKBOX", "RADIO"].includes(formData.type) && (
             <div className="flex flex-col">
               <div className="flex py-5">
                 <input
@@ -121,15 +133,15 @@ export const CreateQuestionForm = () => {
             </div>
           )}
 
-          {formData.type === "slider" && (
+          {formData.type === "SLIDER" && (
             <div className="flex justify-start items-center p-2 mt-5">
               <input
                 type="number"
                 placeholder="minimum slider value"
                 name="minValue"
                 className="bg-white text-black border-none rounded-lg py-2 px-4 mr-5"
-                onChange={(e) => setMinValue(e.target.value)}
-                value={minValue}
+                onChange={handleChange}
+                value={formData.minValue ?? ""}
                 required
               />
               <input
@@ -137,8 +149,8 @@ export const CreateQuestionForm = () => {
                 placeholder="maximum slider value"
                 name="maxValue"
                 className="bg-white text-black border-none rounded-lg py-2 px-4 mr-5"
-                onChange={(e) => setMaxValue(e.target.value)}
-                value={maxValue}
+                onChange={handleChange}
+                value={formData.maxValue ?? ""}
                 required
               />
             </div>

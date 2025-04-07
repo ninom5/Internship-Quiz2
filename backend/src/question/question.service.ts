@@ -58,7 +58,9 @@ export class QuestionService {
     } catch (error) {
       throw error instanceof BadRequestException
         ? error
-        : new InternalServerErrorException('Unknown error creating question');
+        : new InternalServerErrorException(
+            `Unknown error creating question: ${error}`,
+          );
     }
   }
 

@@ -2,11 +2,11 @@ import { QuestionCreateDto } from "types/questionCreateDto";
 
 export const questionDataValidation = (formData: QuestionCreateDto) => {
   const { text, type, answer, options, minValue, maxValue } = formData;
-  const multipleTypeQuestions = ["select", "checkbox", "radio"];
+  const multipleTypeQuestions = ["SELECT", "CHECKBOX", "RADIO"];
 
   if (!text || text.trim() === "") return "Question field can't be empty";
   if (!type) return "Please pick question type";
-  if (!answer || answer.trim()) return "Answer field can't be empty";
+  if (!answer || answer.trim() === "") return "Answer field can't be empty";
 
   if (multipleTypeQuestions.includes(type)) {
     if (!options || options.length === 0)
@@ -16,7 +16,7 @@ export const questionDataValidation = (formData: QuestionCreateDto) => {
     if (invalidOptions.length > 0) return "Option field can't be empty";
   }
 
-  if (type === "slider") {
+  if (type === "SLIDER") {
     if (
       minValue === null ||
       minValue === undefined ||
@@ -25,7 +25,13 @@ export const questionDataValidation = (formData: QuestionCreateDto) => {
     )
       return "Min and max value must be provided";
 
+    if (isNaN(minValue) || isNaN(maxValue) || isNaN(Number(answer)))
+      return "Min, max values and answer must be numbers for question type slider";
+
     if (minValue > maxValue) return "Min value can't be greater than max value";
+
+    if (Number(answer) < minValue || Number(answer) > maxValue)
+      return "Answer must be in given range";
   }
 
   return "Data is valid";
