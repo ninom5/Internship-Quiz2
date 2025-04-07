@@ -1,11 +1,11 @@
 import { CreateCategoryForm } from "@components/CreateCategoryForm";
-import { CreateQuestion } from "@components/CreateQuestion";
+import { CreateQuestionForm } from "@components/CreateQuestionForm";
 
 export const AdminPage = () => {
   return (
     <>
       <CreateCategoryForm />
-      <CreateQuestion />
+      <CreateQuestionForm />
     </>
   );
 };

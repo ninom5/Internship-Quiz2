@@ -24,9 +24,7 @@ export class QuizService {
     try {
       const whereClause: any = {};
 
-      if (title) {
-        whereClause.title = { contains: title, mode: 'insensitive' };
-      }
+      if (title) whereClause.title = { contains: title, mode: 'insensitive' };
 
       if (category) {
         whereClause.category = {
@@ -35,7 +33,7 @@ export class QuizService {
       }
 
       return await this.prisma.quiz.findMany({
-        where: whereClause, // No filters if title and category are both missing
+        where: whereClause,
       });
     } catch (error: unknown) {
       throw error instanceof Error
@@ -76,11 +74,11 @@ export class QuizService {
           category: {
             connect: { id: quiz.categoryId },
           },
-          questions: {
-            connect: quiz.questions.map((questionId) => ({
-              id: Number(questionId),
-            })),
-          },
+          // questions: {
+          //   create: quiz.questions.map((questionId) => ({
+          //     question: { connect: { id: Number(questionId) } },
+          //   })),
+          // },
         },
         include: {
           questions: true,

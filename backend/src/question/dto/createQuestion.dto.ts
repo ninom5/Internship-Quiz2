@@ -1,4 +1,10 @@
-import { IsArray, IsEnum, IsNumber, IsString } from 'class-validator';
+import {
+  IsArray,
+  IsEnum,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { QuestionType } from '@prisma/client';
 
@@ -11,10 +17,6 @@ export class CreateQuestionDto {
   @ApiProperty({ example: QuestionType.INPUT })
   type: QuestionType;
 
-  @IsString()
-  @ApiProperty({ example: 'quiz-id' })
-  quizId: string;
-
   @IsArray()
   @IsString({ each: true })
   @ApiProperty({
@@ -25,9 +27,11 @@ export class CreateQuestionDto {
   options?: string[];
 
   @IsNumber()
+  @IsOptional()
   minValue?: number;
 
   @IsNumber()
+  @IsOptional()
   maxValue?: number;
 
   @IsString()

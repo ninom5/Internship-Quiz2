@@ -66,7 +66,7 @@ export class QuestionController {
     status: 400,
     description: 'Invalid data provided',
   })
-  async createNewQustion(@Body() question: CreateQuestionDto) {
+  async createNewQuestion(@Body() question: CreateQuestionDto) {
     return await this.questionService.createQuestion(question);
   }
 

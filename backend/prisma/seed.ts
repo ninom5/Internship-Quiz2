@@ -47,22 +47,22 @@ async function main() {
       imgUrl: 'https://example.com/ww2.jpg',
       description: 'A quiz about World War II.',
       categoryId: historyCategory.id,
-      questions: {
-        create: [
-          {
-            text: 'When did World War II end?',
-            type: 'SELECT',
-            options: ['1945', '1944', '1943', '1942'],
-            answer: '1945',
-          },
-          {
-            text: 'Which countries were part of the Axis Powers?',
-            type: 'SELECT',
-            options: ['Germany', 'USA', 'Italy', 'Japan'],
-            answer: 'Germany, Italy, Japan',
-          },
-        ],
-      },
+      // questions: {
+      //   create: [
+      //     {
+      //       text: 'When did World War II end?',
+      //       type: 'SELECT',
+      //       options: ['1945', '1944', '1943', '1942'],
+      //       answer: '1945',
+      //     },
+      //     {
+      //       text: 'Which countries were part of the Axis Powers?',
+      //       type: 'SELECT',
+      //       options: ['Germany', 'USA', 'Italy', 'Japan'],
+      //       answer: 'Germany, Italy, Japan',
+      //     },
+      //   ],
+      // },
     },
   });
 
@@ -72,22 +72,22 @@ async function main() {
       imgUrl: 'https://example.com/geo.jpg',
       description: 'A quiz about basic geography.',
       categoryId: geoCategory.id,
-      questions: {
-        create: [
-          {
-            text: 'What is the capital of France?',
-            type: 'SELECT',
-            options: ['Berlin', 'Madrid', 'Paris', 'Rome'],
-            answer: 'Paris',
-          },
-          {
-            text: 'Which continent is Australia located on?',
-            type: 'SELECT',
-            options: ['Asia', 'Europe', 'Oceania', 'Africa'],
-            answer: 'Oceania',
-          },
-        ],
-      },
+      // questions: {
+      //   create: [
+      //     {
+      //       text: 'What is the capital of France?',
+      //       type: 'SELECT',
+      //       options: ['Berlin', 'Madrid', 'Paris', 'Rome'],
+      //       answer: 'Paris',
+      //     },
+      //     {
+      //       text: 'Which continent is Australia located on?',
+      //       type: 'SELECT',
+      //       options: ['Asia', 'Europe', 'Oceania', 'Africa'],
+      //       answer: 'Oceania',
+      //     },
+      //   ],
+      // },
     },
   });
 

@@ -43,9 +43,12 @@ export const CreateCategoryForm = () => {
   };
 
   return (
-    <section className="flex flex-col p-4 items-center justify-center bg-lightgray">
+    <section className="flex flex-col p-4 items-center justify-center">
       <h1 className="my-7 text-4xl">Admin Page</h1>
-      <div className="flex flex-col items-center justify-center w-2/3 h-auto p-6 border-1 rounded-lg">
+      <div
+        className="flex flex-col items-center justify-center w-2/3 h-auto p-6 border-1 rounded-lg bg-gray-300"
+        style={{ boxShadow: "4px 4px 15px rgba(255, 255, 255, 0.2)" }}
+      >
         <h3 className="italic text-xl mb-5">Create category</h3>
         <form>
           <input
@@ -59,7 +62,7 @@ export const CreateCategoryForm = () => {
           <button
             type="submit"
             onClick={handleSubmit}
-            className="bg-white text-black border-none rounded-lg py-2 px-4 cursor-pointer hover:bg-gray-400"
+            className="bg-sky-400 text-white border-none rounded-lg py-2 px-4 cursor-pointer hover:bg-gray-400"
           >
             Submit
           </button>

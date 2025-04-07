@@ -20,7 +20,7 @@ export const HomePageDescriptions = () => {
           Get Started
         </h2>
         <button
-          className="bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-700 transition duration-300"
+          className="bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-700 transition duration-[300ms]"
           onClick={() => navigate("/quizzes")}
         >
           Start Quiz

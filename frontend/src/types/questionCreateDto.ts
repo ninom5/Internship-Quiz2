@@ -5,5 +5,5 @@ export type QuestionCreateDto = {
   options?: string[];
   minValue?: number;
   maxValue?: number;
-  answer: string[];
+  answer: string;
 };

@@ -10,7 +10,8 @@ import {
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
-  ApiBody, ApiCreatedResponse,
+  ApiBody,
+  ApiCreatedResponse,
   ApiOperation,
   ApiResponse,
   ApiTags,
@@ -63,7 +64,6 @@ export class UserController {
   }
 
   @Get('/email/:email')
-  @UseGuards(UserAuthGuard)
   @ApiOperation({ summary: 'Get user by email' })
   @ApiResponse({ status: 200, description: 'Returns user with same email' })
   @ApiResponse({

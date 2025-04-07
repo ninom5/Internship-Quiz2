@@ -2,10 +2,11 @@ import { Link } from "react-router-dom";
 import { routes } from "@routes/routes";
 import { useState } from "react";
 import { axiosAPI } from "@constants/index";
-import { validateRegisterData } from "@utils/validateRegisterData";
+import { useValidateRegisterData } from "@hooks/useValidateRegisterData";
 import { toast } from "react-toastify";
 
 export const RegisterForm = () => {
+  const { validateRegisterData } = useValidateRegisterData();
   const [formData, setFormData] = useState({
     name: "",
     surname: "",
@@ -20,8 +21,9 @@ export const RegisterForm = () => {
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    if (!validateRegisterData) {
-      toast.error("Invalid register data");
+    const message = await validateRegisterData(formData);
+    if (message !== "Data is valid") {
+      toast.error(`Invalid register data: ${message}`);
       return;
     }
 

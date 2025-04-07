@@ -14,14 +14,14 @@ model Category {
 }
 
 model Quiz {
-  id          String       @id @default(uuid(4))
+  id          String          @id @default(uuid(4))
   title       String
   imgUrl      String
   description String
   categoryId  String
-  category    Category     @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  category    Category        @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   results     QuizResult[]
-  questions   Question[]
+  questions   QuizQuestions[]
 }
 
 model User {
@@ -44,15 +44,24 @@ model QuizResult {
 }
 
 model Question {
-  id       Int          @id @default(autoincrement())
-  text     String
-  type     QuestionType
-  quizId   String
-  quiz     Quiz         @relation(fields: [quizId], references: [id])
-  options  String[]
-  minValue Int
-  maxValue Int
-  answer   String
+  id            Int             @id @default(autoincrement())
+  text          String
+  type          QuestionType
+  options       String[]
+  minValue      Int?
+  maxValue      Int?
+  answer        String
+  QuizQuestions QuizQuestions[]
+}
+
+model QuizQuestions {
+  quizId     String
+  questionId Int
+
+  quiz      Quiz     @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  questions Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@id([quizId, questionId])
 }
 
 enum QuestionType {
