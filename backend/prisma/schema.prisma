@@ -10,13 +10,13 @@ datasource db {
 model Category {
   id      String @id @default(uuid(4))
   title   String @unique
+  imgUrl  String
   quizzes Quiz[]
 }
 
 model Quiz {
   id          String          @id @default(uuid(4))
   title       String
-  imgUrl      String
   description String
   categoryId  String
   category    Category        @relation(fields: [categoryId], references: [id], onDelete: Cascade)

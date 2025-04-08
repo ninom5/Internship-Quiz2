@@ -1,10 +1,10 @@
 import {
-  BadRequestException,
   Body,
   Controller,
   Delete,
   Get,
   Param,
+  ParseIntPipe,
   Patch,
   Post,
   UseGuards,
@@ -47,13 +47,8 @@ export class QuestionController {
     description: 'Returns the question if found',
   })
   @ApiResponse({ status: 404, description: 'Question not found ' })
-  async getQuestionById(@Param('id') id: string) {
-    const questionId = parseInt(id, 10);
-
-    if (isNaN(questionId))
-      throw new BadRequestException('Invalid question ID format');
-
-    return await this.questionService.getById(questionId);
+  async getQuestionById(@Param('id', ParseIntPipe) id: number) {
+    return await this.questionService.getById(+id);
   }
 
   @Post()
@@ -77,10 +72,10 @@ export class QuestionController {
   @ApiResponse({ status: 404, description: 'Question not found' })
   @ApiResponse({ status: 400, description: 'Invalid data provided' })
   async updateUser(
-    @Param('id') id: string,
+    @Param('id', ParseIntPipe) id: number,
     @Body() updateDto: UpdateQuestionDto,
   ) {
-    return await this.questionService.updateQuestion(Number(id), updateDto);
+    return await this.questionService.updateQuestion(+id, updateDto);
   }
 
   @Delete(':id')
@@ -88,7 +83,7 @@ export class QuestionController {
   @ApiOperation({ summary: 'Delete question' })
   @ApiResponse({ status: 200, description: 'Successfully deleted question' })
   @ApiResponse({ status: 404, description: 'Question not found' })
-  async deleteQuestion(@Param('id') id: string) {
-    return await this.questionService.deleteQuestion(Number(id));
+  async deleteQuestion(@Param('id', ParseIntPipe) id: number) {
+    return await this.questionService.deleteQuestion(+id);
   }
 }

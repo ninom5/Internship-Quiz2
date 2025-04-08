@@ -1,4 +1,4 @@
-import { axiosAPI } from "@constants/axiosAPI";
+import { axiosAuthAPI } from "@constants/axiosAPI";
 import { useState, useEffect } from "react";
 
 interface Category {
@@ -12,11 +12,7 @@ export const useFetchAllCategories = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await axiosAPI.get("/category", {
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem("jwt")}`,
-        },
-      });
+      const response = await axiosAuthAPI.get("/category");
 
       setData(Array.isArray(response.data) ? response.data : []);
     } catch (error: Error | any) {

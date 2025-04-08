@@ -112,11 +112,12 @@ export const CreateQuizForm = () => {
             name="categoryId"
           >
             <option value="">Pick quiz category</option>
-            {categories.map((category) => (
-              <option key={category.id} value={category.id}>
-                {category.title}
-              </option>
-            ))}
+            {!categoryError &&
+              categories.map((category) => (
+                <option key={category.id} value={category.title}>
+                  {category.title}
+                </option>
+              ))}
           </select>
 
           <h4 className="mt-5">Pick questions to add to your quiz</h4>

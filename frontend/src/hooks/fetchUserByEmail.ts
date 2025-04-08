@@ -1,8 +1,8 @@
-import { axiosAPI } from "@constants/axiosAPI";
+import { axiosNoAuthAPI } from "@constants/axiosAPI";
 
 export const fetchUserByEmail = async (email: string) => {
   try {
-    const response = await axiosAPI.get(`/user/email/${email}`);
+    const response = await axiosNoAuthAPI.get(`/user/email/${email}`);
     return response.data;
   } catch (error) {
     console.error("Error fetching user by email:", error);

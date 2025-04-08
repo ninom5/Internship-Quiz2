@@ -10,7 +10,6 @@ export function validateQuizData(quiz: CreateQuizDto) {
 
   if (
     title.trim() === '' ||
-    // imgUrl.trim() === '' ||
     description.trim() === '' ||
     categoryId.trim() === ''
   )
@@ -27,9 +26,6 @@ export function validateUpdateQuizData(quiz: UpdateQuizDto) {
 
   if (title !== undefined && title.trim() === '')
     throw new BadRequestException("Title field can't be empty");
-
-  // if (imgUrl !== undefined && imgUrl.trim() === '')
-  //   throw new BadRequestException("Image URL field can't be empty");
 
   if (description !== undefined && description.trim() === '')
     throw new BadRequestException("Description field can't be empty");

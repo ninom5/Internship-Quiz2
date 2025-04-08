@@ -1,4 +1,10 @@
-import {ArrayMinSize, IsArray, IsOptional, IsString, MinLength} from 'class-validator';
+import {
+  ArrayMinSize,
+  IsArray,
+  IsOptional,
+  IsString,
+  MinLength,
+} from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateQuizDto {
@@ -6,11 +12,6 @@ export class CreateQuizDto {
   @MinLength(1)
   @ApiProperty({ example: 'Waterpolo' })
   title: string;
-
-  @IsString()
-  @ApiProperty({ example: 'imgurl' })
-  @IsOptional()
-  imgUrl?: string;
 
   @IsString()
   @ApiProperty({ example: 'basic knowledge waterpolo quiz' })
