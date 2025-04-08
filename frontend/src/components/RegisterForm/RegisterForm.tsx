@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { routes } from "@routes/routes";
 import { useState } from "react";
-import { axiosAPI } from "@constants/index";
+import { axiosNoAuthAPI } from "@constants/index";
 import { useValidateRegisterData } from "@hooks/useValidateRegisterData";
 import { toast } from "react-toastify";
 
@@ -28,7 +28,7 @@ export const RegisterForm = () => {
     }
 
     try {
-      const response = await axiosAPI.post("/user/register", formData);
+      const response = await axiosNoAuthAPI.post("/user/register", formData);
 
       if (response.status !== 201) {
         toast.error("Error registering new user");

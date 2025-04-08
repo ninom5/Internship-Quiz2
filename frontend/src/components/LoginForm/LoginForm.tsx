@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { axiosAPI } from "@constants/index";
+import { axiosNoAuthAPI } from "@constants/index";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { routes } from "@routes/routes";
@@ -20,7 +20,7 @@ export const LoginForm = () => {
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     try {
-      const response = await axiosAPI.post("/user/login", loginData);
+      const response = await axiosNoAuthAPI.post("/user/login", loginData);
 
       if (!response.data?.token) {
         toast.error("Invalid email or password");

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { QuizType } from "types/quizType";
-import { axiosAPI } from "@constants/index";
+import { axiosAuthAPI } from "@constants/index";
 
 export const useFetchQuizById = (quizId: string) => {
   const [data, setData] = useState<QuizType | null>(null);
@@ -12,11 +12,7 @@ export const useFetchQuizById = (quizId: string) => {
   useEffect(() => {
     const fetchQuiz = async () => {
       try {
-        const quiz = await axiosAPI.get<QuizType>(`/quiz/${quizId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const quiz = await axiosAuthAPI.get<QuizType>(`/quiz/${quizId}`);
         if (quiz.status !== 200) throw new Error("Failed to fetch quiz by id");
 
         setData(quiz.data);

@@ -54,6 +54,7 @@ export class CategoryService {
       const response = await this.prisma.category.create({
         data: {
           title: category.title,
+          imgUrl: category.imgUrl,
           // quizzes: category.quizzes,
         },
       });
@@ -80,6 +81,11 @@ export class CategoryService {
       if (!updateDto.title || updateDto.title.trim() === '')
         throw new BadRequestException(
           'Title can not be empty for category update',
+        );
+
+      if (!updateDto.imgUrl || updateDto.imgUrl.trim() === '')
+        throw new BadRequestException(
+          'Img url can not be empty for category update',
         );
 
       return await this.prisma.category.update({

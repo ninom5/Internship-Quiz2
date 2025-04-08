@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { QuestionType } from "types/questionType";
-import { axiosAPI } from "@constants/index";
+import { axiosAuthAPI } from "@constants/index";
 
 export const useFetchAllQuestions = () => {
   const [data, setData] = useState<QuestionType[] | null>(null);
@@ -12,9 +12,7 @@ export const useFetchAllQuestions = () => {
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        const response = await axiosAPI.get("/question", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const response = await axiosAuthAPI.get("/question");
 
         if (response.status !== 200)
           throw new Error("Failed to fetch questions");

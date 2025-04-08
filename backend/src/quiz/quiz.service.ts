@@ -69,7 +69,6 @@ export class QuizService {
       const response = await this.prisma.quiz.create({
         data: {
           title: quiz.title,
-          imgUrl: quiz.imgUrl,
           description: quiz.description,
           category: {
             connect: { id: quiz.categoryId },

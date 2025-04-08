@@ -8,10 +8,6 @@ export class CreateQuizDto {
   title: string;
 
   @IsString()
-  @ApiProperty({ example: 'imgurl' })
-  imgUrl: string;
-
-  @IsString()
   @ApiProperty({ example: 'basic knowledge waterpolo quiz' })
   description: string;
 

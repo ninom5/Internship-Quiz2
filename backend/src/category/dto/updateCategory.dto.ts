@@ -6,4 +6,7 @@ export class UpdateCategoryDto {
   @MinLength(4)
   @ApiProperty({ example: 'Sport' })
   title?: string;
+
+  @IsString()
+  imgUrl: string;
 }
