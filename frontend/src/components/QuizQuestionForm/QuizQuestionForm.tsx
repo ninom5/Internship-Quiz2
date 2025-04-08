@@ -20,6 +20,7 @@ export const QuizQuestionForm = ({
   quizQuestions: QuestionType[];
   quizId: string;
 }) => {
+  console.log(quizQuestions);
   const [questionIndex, setQuestionIndex] = useState(0);
   const [correctAnswerCount, setCorrectAnswerCount] = useState(0);
   const [userAnswer, setUserAnswer] = useState<any>(null);

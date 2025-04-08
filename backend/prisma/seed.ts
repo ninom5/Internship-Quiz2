@@ -6,18 +6,21 @@ async function main() {
   const historyCategory = await prisma.category.create({
     data: {
       title: 'History',
+      imgUrl: 'https://th.bing.com/th/id/OIP.Y9bFo0QzbeMFP4ESguIJCwHaEK?w=308&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7'
     },
   });
 
   const geoCategory = await prisma.category.create({
     data: {
       title: 'Geography',
+      imgUrl: 'https://th.bing.com/th/id/OIP.NFjS-HAHTkMHPSKWboOCLwHaDt?w=311&h=175&c=7&r=0&o=5&dpr=1.5&pid=1.7'
     },
   });
 
   const languageCategory = await prisma.category.create({
     data: {
       title: 'Language',
+      imgUrl: 'https://th.bing.com/th/id/OIP.9zzi4xkvbtUuOFAH2mFZfgHaDx?w=339&h=178&c=7&r=0&o=5&dpr=1.5&pid=1.7'
     },
   });
 
@@ -44,50 +47,16 @@ async function main() {
   const quiz1 = await prisma.quiz.create({
     data: {
       title: 'World War II',
-      imgUrl: 'https://example.com/ww2.jpg',
       description: 'A quiz about World War II.',
       categoryId: historyCategory.id,
-      // questions: {
-      //   create: [
-      //     {
-      //       text: 'When did World War II end?',
-      //       type: 'SELECT',
-      //       options: ['1945', '1944', '1943', '1942'],
-      //       answer: '1945',
-      //     },
-      //     {
-      //       text: 'Which countries were part of the Axis Powers?',
-      //       type: 'SELECT',
-      //       options: ['Germany', 'USA', 'Italy', 'Japan'],
-      //       answer: 'Germany, Italy, Japan',
-      //     },
-      //   ],
-      // },
     },
   });
 
   const quiz2 = await prisma.quiz.create({
     data: {
       title: 'Geography Basics',
-      imgUrl: 'https://example.com/geo.jpg',
       description: 'A quiz about basic geography.',
       categoryId: geoCategory.id,
-      // questions: {
-      //   create: [
-      //     {
-      //       text: 'What is the capital of France?',
-      //       type: 'SELECT',
-      //       options: ['Berlin', 'Madrid', 'Paris', 'Rome'],
-      //       answer: 'Paris',
-      //     },
-      //     {
-      //       text: 'Which continent is Australia located on?',
-      //       type: 'SELECT',
-      //       options: ['Asia', 'Europe', 'Oceania', 'Africa'],
-      //       answer: 'Oceania',
-      //     },
-      //   ],
-      // },
     },
   });
 

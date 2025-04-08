@@ -1,8 +1,10 @@
-// import { QuestionType } from "./questionType";
+import { CategoryType } from "./categoryType";
+import { QuestionType } from "./questionType";
 export type QuizType = {
   id: string;
   title: string;
   description: string;
-  imageUrl: string;
-  // questions: QuestionType[];
+  categoryId: string;
+  questions: { questions: QuestionType }[];
+  category: CategoryType;
 };

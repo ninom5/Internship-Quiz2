@@ -9,7 +9,6 @@ import { CreateQuizDto } from './dto/createQuiz.dto';
 import { validateQuizData, validateUpdateQuizData } from './quiz.validation';
 import { Prisma, Quiz } from '@prisma/client';
 import { UpdateQuizDto } from './dto/updateQuiz.dto';
-import {CreateQuestionDto} from "../question/dto/createQuestion.dto";
 
 @Injectable()
 export class QuizService {
@@ -49,6 +48,14 @@ export class QuizService {
     try {
       const quiz = await this.prisma.quiz.findUnique({
         where: { id },
+        include: {
+          questions: {
+            include: {
+              questions: true,
+            },
+          },
+          category: true,
+        },
       });
 
       if (!quiz) throw new NotFoundException('Quiz with that id not found');
@@ -65,13 +72,12 @@ export class QuizService {
 
   async createQuiz(quiz: CreateQuizDto) {
     try {
-      validateQuizData(quiz);
-
+      // validateQuizData(quiz);
+      console.log('Be: ', quiz);
       const response = await this.prisma.quiz.create({
         data: {
           title: quiz.title,
           description: quiz.description,
-          imgUrl: quiz.imgUrl ?? "",
           category: {
             connect: { id: quiz.categoryId },
           },

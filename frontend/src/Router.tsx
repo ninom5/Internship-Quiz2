@@ -21,13 +21,16 @@ export const Router = () => {
           <Route path={routes.HOME} element={<HomePage />} />
           <Route path={routes.REGISTER} element={<RegisterPage />} />
           <Route path={routes.LOGIN} element={<LoginPage />} />
+
           <Route element={<AdminRoute />}>
             <Route path={routes.ADMIN} element={<AdminPage />} />
           </Route>
+
           <Route element={<NavigationLayout />}>
             <Route path={routes.QUIZ_PAGE} element={<QuizPage />} />
             <Route path={routes.QUIZZES_PAGE} element={<QuizzesPage />} />
           </Route>
+
           <Route path={routes.NOT_FOUND} element={<NotFoundPage />} />
         </Route>
       </Routes>

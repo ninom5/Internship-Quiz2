@@ -5,6 +5,8 @@ import { CreateQuizDto } from "types/index";
 import { useState } from "react";
 import { useFetchAllCategories } from "@hooks/useFetchAllCategories";
 import { useCreateQuiz } from "@hooks/useCreateQuiz";
+import { quizDataValidation } from "@utils/quizDataValidation";
+import { toast } from "react-toastify";
 
 export const CreateQuizForm = () => {
   const { data, error, isLoading } = useFetchAllQuestions();
@@ -30,6 +32,13 @@ export const CreateQuizForm = () => {
     e.preventDefault();
 
     const mergedData = { ...quizData, questions: pickedQuestions };
+    console.log(mergedData);
+    const message = quizDataValidation(mergedData, data);
+    if (message) {
+      toast.error(message);
+      return;
+    }
+
     createQuiz(mergedData);
 
     setQuizData({
@@ -114,7 +123,7 @@ export const CreateQuizForm = () => {
             <option value="">Pick quiz category</option>
             {!categoryError &&
               categories.map((category) => (
-                <option key={category.id} value={category.title}>
+                <option key={category.id} value={category.id}>
                   {category.title}
                 </option>
               ))}
