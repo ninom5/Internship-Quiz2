@@ -6,7 +6,6 @@ import {
 } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { CreateQuizDto } from './dto/createQuiz.dto';
-import { validateQuizData, validateUpdateQuizData } from './quiz.validation';
 import { Prisma, Quiz } from '@prisma/client';
 import { UpdateQuizDto } from './dto/updateQuiz.dto';
 
@@ -104,8 +103,6 @@ export class QuizService {
       const existingQuiz = await this.prisma.quiz.findUnique({ where: { id } });
       if (!existingQuiz)
         throw new NotFoundException('Quiz with provided id not found');
-
-      validateUpdateQuizData(updateDto);
 
       return await this.prisma.quiz.update({
         where: { id },

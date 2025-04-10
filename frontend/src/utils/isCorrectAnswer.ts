@@ -4,12 +4,15 @@ import { toast } from "react-toastify";
 export const isCorrectAnswer = (
   questionType: string,
   quizQuestion: QuestionType,
-  userAnswer: string
+  userAnswer: string | string[]
 ) => {
   const normalizeAnswer = (value: string) => value.trim().toLowerCase();
 
   if (questionType !== "CHECKBOX") {
-    if (normalizeAnswer(userAnswer) === normalizeAnswer(quizQuestion.answer)) {
+    if (
+      typeof userAnswer === "string" &&
+      normalizeAnswer(userAnswer) === normalizeAnswer(quizQuestion.answer)
+    ) {
       toast.success("Correct!");
       return true;
     }
@@ -18,10 +21,12 @@ export const isCorrectAnswer = (
     return false;
   }
 
-  const userAnswers = userAnswer
-    .split(",")
-    .map(normalizeAnswer)
-    .filter(Boolean);
+  if (!Array.isArray(userAnswer)) {
+    toast.error("Invalid answer format for checkbox question.");
+    return false;
+  }
+
+  const userAnswers = userAnswer.map(normalizeAnswer).filter(Boolean);
 
   const correctAnswers = quizQuestion.answer
     .split(",")

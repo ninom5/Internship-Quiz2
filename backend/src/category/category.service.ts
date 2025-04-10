@@ -51,13 +51,12 @@ export class CategoryService {
       if (!category.title || category.title.trim() === '')
         throw new BadRequestException('Category title field missing');
 
-      const response = await this.prisma.category.create({
+      return await this.prisma.category.create({
         data: {
           title: category.title,
           imgUrl: category.imgUrl,
         },
       });
-      return response;
     } catch (error) {
       throw error instanceof BadRequestException ||
         error instanceof ForbiddenException

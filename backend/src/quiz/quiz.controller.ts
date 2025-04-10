@@ -38,8 +38,7 @@ export class QuizController {
     @Query('title') title?: string,
     @Query('category') category?: string,
   ) {
-    const quizzes = await this.quizService.getAll({ title, category });
-    return quizzes;
+    return await this.quizService.getAll({ title, category });
   }
 
   @Get(':id')
@@ -48,8 +47,7 @@ export class QuizController {
   @ApiResponse({ status: 200, description: 'Returns quiz by id if found' })
   @ApiResponse({ status: 404, description: 'Quiz not found' })
   async getQuizById(@Param('id') id: string) {
-    const quiz = await this.quizService.getQuizById(id);
-    return quiz;
+    return await this.quizService.getQuizById(id);
   }
 
   @Post()
@@ -82,7 +80,6 @@ export class QuizController {
   @ApiResponse({ status: 200, description: 'Successfully deleted quiz' })
   @ApiResponse({ status: 404, description: 'Quiz not found' })
   async deleteQuiz(@Param('id') id: string) {
-    const response = await this.quizService.deleteQuiz(id);
-    return response;
+    return await this.quizService.deleteQuiz(id);
   }
 }

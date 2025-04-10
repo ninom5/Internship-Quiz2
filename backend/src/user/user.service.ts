@@ -9,10 +9,7 @@ import { PrismaService } from '../prisma.service';
 import { CreateUserDto } from './dto/createUser.dto';
 import { compare, hash } from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
-import {
-  validateUpdateUserData,
-  validateUserRegisterData,
-} from './user.validation';
+
 import { Prisma } from '@prisma/client';
 import { UpdateUserDataDto } from './dto/updateUserData.dto';
 
@@ -72,8 +69,6 @@ export class UserService {
 
   async register(user: CreateUserDto) {
     try {
-      await validateUserRegisterData(user, this.prisma);
-
       const hashedPassword = await hash(user.password, 10);
 
       const newUser = await this.prisma.user.create({
@@ -146,8 +141,6 @@ export class UserService {
 
       if (!existingUser)
         throw new NotFoundException(`User with ID ${id} not found`);
-
-      validateUpdateUserData(updateDto);
 
       return this.prisma.user.update({
         where: { id },

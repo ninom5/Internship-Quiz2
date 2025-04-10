@@ -6,10 +6,7 @@ import {
 } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { CreateQuestionDto } from './dto/createQuestion.dto';
-import {
-  validateQuestionData,
-  validateUpdateQuestionData,
-} from './question.validation';
+
 import { Prisma } from '@prisma/client';
 import { UpdateQuestionDto } from './dto/updateQuestion.dto';
 
@@ -50,8 +47,6 @@ export class QuestionService {
 
   async createQuestion(question: CreateQuestionDto) {
     try {
-      validateQuestionData(question);
-
       return await this.prisma.question.create({
         data: question,
       });
@@ -71,8 +66,6 @@ export class QuestionService {
       });
       if (!existingQuestion)
         throw new NotFoundException('Question with provided id not found');
-
-      validateUpdateQuestionData(updateDto);
 
       return await this.prisma.question.update({
         where: { id },

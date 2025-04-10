@@ -6,10 +6,7 @@ import {
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
-import {
-  quizResultValidation,
-  validateUpdateQuizResult,
-} from './quizResult.validation';
+
 import { Prisma } from '@prisma/client';
 import { UpdateQuizResultDto } from './dto/updateQuizResult.dto';
 
@@ -73,6 +70,9 @@ export class QuizResultService {
         where: {
           quizId: { contains: id },
         },
+        include: {
+          user: true,
+        },
       });
     } catch (error) {
       throw error instanceof NotFoundException
@@ -85,8 +85,6 @@ export class QuizResultService {
 
   async createQuizResult(quizResult: CreateQuizResultDto) {
     try {
-      quizResultValidation(quizResult);
-
       return await this.prisma.quizResult.create({
         data: quizResult,
       });
@@ -108,8 +106,6 @@ export class QuizResultService {
         throw new NotFoundException(
           'Quiz result with provided id does not exist',
         );
-
-      validateUpdateQuizResult(updateDto);
 
       return await this.prisma.quizResult.update({
         where: { id },

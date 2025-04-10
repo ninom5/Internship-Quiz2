@@ -6,21 +6,24 @@ async function main() {
   const historyCategory = await prisma.category.create({
     data: {
       title: 'History',
-      imgUrl: 'https://th.bing.com/th/id/OIP.Y9bFo0QzbeMFP4ESguIJCwHaEK?w=308&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7'
+      imgUrl:
+        'https://th.bing.com/th/id/OIP.Y9bFo0QzbeMFP4ESguIJCwHaEK?w=308&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7',
     },
   });
 
   const geoCategory = await prisma.category.create({
     data: {
       title: 'Geography',
-      imgUrl: 'https://th.bing.com/th/id/OIP.NFjS-HAHTkMHPSKWboOCLwHaDt?w=311&h=175&c=7&r=0&o=5&dpr=1.5&pid=1.7'
+      imgUrl:
+        'https://th.bing.com/th/id/OIP.NFjS-HAHTkMHPSKWboOCLwHaDt?w=311&h=175&c=7&r=0&o=5&dpr=1.5&pid=1.7',
     },
   });
 
   const languageCategory = await prisma.category.create({
     data: {
       title: 'Language',
-      imgUrl: 'https://th.bing.com/th/id/OIP.9zzi4xkvbtUuOFAH2mFZfgHaDx?w=339&h=178&c=7&r=0&o=5&dpr=1.5&pid=1.7'
+      imgUrl:
+        'https://th.bing.com/th/id/OIP.9zzi4xkvbtUuOFAH2mFZfgHaDx?w=339&h=178&c=7&r=0&o=5&dpr=1.5&pid=1.7',
     },
   });
 

@@ -1,11 +1,15 @@
 import { useParams, Link } from "react-router-dom";
 import { routes } from "@routes/routes";
-import { useFetchQuizById } from "@hooks/index";
+import { useFetchQuizById, useToken } from "@hooks/index";
 import { QuizQuestionForm } from "@components/index";
+import { QuizResult } from "@components/QuizResult";
 
 export const QuizPage = () => {
   const { quizId } = useParams();
   const { data, error, isLoading } = useFetchQuizById(quizId as string);
+  const {
+    data: { role },
+  } = useToken();
 
   const token = sessionStorage.getItem("jwt");
   if (!token) {
@@ -35,7 +39,11 @@ export const QuizPage = () => {
       <img src={data.category.imgUrl} alt={data.title} />
       <h2 className="text-4xl">About quiz: {data.description}</h2>
 
-      <QuizQuestionForm quizQuestions={quizQuestions} quizId={data.id} />
+      {role === "admin" ? (
+        <QuizResult />
+      ) : (
+        <QuizQuestionForm quizQuestions={quizQuestions} quizId={data.id} />
+      )}
     </section>
   );
 };

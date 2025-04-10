@@ -3,4 +3,8 @@ export type QuizResultType = {
   userId: string;
   score: number;
   quizId: string;
+  user: {
+    name: string;
+    surname: string;
+  };
 };

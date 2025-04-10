@@ -14,6 +14,9 @@ export const questionDataValidation = (formData: QuestionCreateDto) => {
 
     const invalidOptions = options.filter((opt) => opt.trim() === "");
     if (invalidOptions.length > 0) return "Option field can't be empty";
+
+    if (!options.includes(answer))
+      return "You must provide option with with correct answer";
   }
 
   if (type === "SLIDER") {
