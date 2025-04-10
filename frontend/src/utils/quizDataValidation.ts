@@ -1,5 +1,4 @@
-import { CreateQuizDto } from "types/createQuizDto";
-import { QuestionType } from "types/questionType";
+import { CreateQuizDto, QuestionType } from "types/index";
 import { validateFields } from "./validateFields";
 
 export const quizDataValidation = (

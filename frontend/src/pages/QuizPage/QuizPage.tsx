@@ -1,8 +1,7 @@
-import { useParams } from "react-router-dom";
-import { useFetchQuizById } from "@hooks/index";
+import { useParams, Link } from "react-router-dom";
 import { routes } from "@routes/routes";
-import { Link } from "react-router-dom";
-import { QuizQuestionForm } from "@components/QuizQuestionForm/QuizQuestionForm";
+import { useFetchQuizById } from "@hooks/index";
+import { QuizQuestionForm } from "@components/index";
 
 export const QuizPage = () => {
   const { quizId } = useParams();

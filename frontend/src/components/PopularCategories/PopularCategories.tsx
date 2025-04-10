@@ -1,5 +1,5 @@
-import { useFetchAllCategories } from "@hooks/useFetchAllCategories";
 import { useNavigate } from "react-router-dom";
+import { useFetchAllCategories } from "@hooks/index";
 
 export const PopularCategories = () => {
   const navigate = useNavigate();

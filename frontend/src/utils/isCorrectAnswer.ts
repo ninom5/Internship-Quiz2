@@ -1,4 +1,4 @@
-import { QuestionType } from "types/questionType";
+import { QuestionType } from "types/index";
 import { toast } from "react-toastify";
 
 export const isCorrectAnswer = (

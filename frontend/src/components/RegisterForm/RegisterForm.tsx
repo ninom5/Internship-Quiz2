@@ -1,9 +1,9 @@
-import { Link } from "react-router-dom";
-import { routes } from "@routes/routes";
 import { useState } from "react";
-import { axiosInstance } from "@constants/index";
-import { useValidateRegisterData } from "@hooks/useValidateRegisterData";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { routes } from "@routes/routes";
+import { axiosInstance } from "@constants/index";
+import { useValidateRegisterData } from "@hooks/index";
 
 export const RegisterForm = () => {
   const { validateRegisterData } = useValidateRegisterData();

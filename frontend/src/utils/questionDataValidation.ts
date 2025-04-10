@@ -1,4 +1,4 @@
-import { QuestionCreateDto } from "types/questionCreateDto";
+import { QuestionCreateDto } from "types/index";
 
 export const questionDataValidation = (formData: QuestionCreateDto) => {
   const { text, type, answer, options, minValue, maxValue } = formData;

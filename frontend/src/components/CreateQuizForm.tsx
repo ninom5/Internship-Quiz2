@@ -1,10 +1,12 @@
-import { useFetchAllQuestions } from "@hooks/useFetchAllQuestions";
+import { useState } from "react";
 import { Box, Button, Checkbox } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import {
+  useFetchAllQuestions,
+  useFetchAllCategories,
+  useCreateQuiz,
+} from "@hooks/index";
 import { CreateQuizDto } from "types/index";
-import { useState } from "react";
-import { useFetchAllCategories } from "@hooks/useFetchAllCategories";
-import { useCreateQuiz } from "@hooks/useCreateQuiz";
 import { quizDataValidation } from "@utils/quizDataValidation";
 import { toast } from "react-toastify";
 

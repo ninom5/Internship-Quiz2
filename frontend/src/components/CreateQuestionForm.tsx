@@ -1,9 +1,9 @@
-import { QuestionTypes } from "@constants/questionTypes";
-import { useCreateQuestion } from "@hooks/useCreateQuestion";
-import { QuestionCreateDto } from "types/questionCreateDto";
-import { questionDataValidation } from "@utils/questionDataValidation";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+import { QuestionTypes } from "@constants/index";
+import { useCreateQuestion } from "@hooks/index";
+import { QuestionCreateDto } from "types/questionCreateDto";
+import { questionDataValidation } from "@utils/questionDataValidation";
 
 export const CreateQuestionForm = () => {
   const [formData, setFormData] = useState<QuestionCreateDto>({

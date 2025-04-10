@@ -1,5 +1,4 @@
-import { HomePageDescriptions } from "@components/index";
-import { PopularCategories } from "@components/index";
+import { HomePageDescriptions, PopularCategories } from "@components/index";
 export const HomePage = () => {
   return (
     <div className="flex flex-col items-center py-12.5 px-5 h-full bg-[#f0f0f0] gap-[30px]">

@@ -8,7 +8,5 @@ export const AdminRoute = () => {
 
   if (userData.loading) return <div>Loading...</div>;
 
-  if (userData.error) return <div>Error: {userData.error}</div>;
-
   return role === "admin" ? <Outlet /> : <Navigate to={routes.HOME} replace />;
 };

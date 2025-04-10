@@ -1,6 +1,6 @@
-import { useFetchAllCategories } from "@hooks/useFetchAllCategories";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useFetchAllCategories } from "@hooks/index";
 
 export const Navigation = () => {
   const [title, setTitle] = useState("");

@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react";
+import { toast } from "react-toastify";
 import {
   CheckboxTypeComponent,
   RadioTypeComponent,
@@ -5,13 +7,13 @@ import {
   SliderTypeComponent,
   TextTypeComponent,
 } from "@components/QuestionComponents/QuestionComponents";
-import { QuestionType } from "types/questionType";
-import { useState, useEffect } from "react";
-import { toast } from "react-toastify";
-import { useFetchResultsByQuiz } from "@hooks/useFetchResultsByQuiz";
-import { useCreateQuizResult } from "@hooks/useCreateQuizResult";
+import { QuestionType } from "types/index";
+import {
+  useFetchResultsByQuiz,
+  useCreateQuizResult,
+  useToken,
+} from "@hooks/index";
 import { QuizResultCreateDto } from "types/quizResultCreateDto";
-import { useToken } from "@hooks/useToken";
 import { isCorrectAnswer } from "@utils/isCorrectAnswer";
 
 export const QuizQuestionForm = ({
