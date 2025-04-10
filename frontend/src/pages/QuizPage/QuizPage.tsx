@@ -34,7 +34,7 @@ export const QuizPage = () => {
   const quizQuestions = data.questions.map((q) => q.questions);
 
   return (
-    <section className="flex flex-col w-full h-auto items-center justify-center gap-[50px]">
+    <section className="flex flex-col w-full h-auto items-center justify-center mb-10 gap-[50px]">
       <h1>Quiz: {data.title}</h1>
       <img src={data.category.imgUrl} alt={data.title} />
       <h2 className="text-4xl">About quiz: {data.description}</h2>

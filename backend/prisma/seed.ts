@@ -63,7 +63,7 @@ async function main() {
     },
   });
 
-  const questions = await prisma.question.createMany({
+  await prisma.question.createMany({
     data: [
       {
         text: 'When did World War II end?',
@@ -130,6 +130,22 @@ async function main() {
     ],
   });
 
+  const allQuestions = await prisma.question.findMany();
+
+  await prisma.quizQuestions.createMany({
+    data: allQuestions.slice(0, 5).map((q) => ({
+      quizId: quiz1.id,
+      questionId: q.id,
+    })),
+  });
+
+  await prisma.quizQuestions.createMany({
+    data: allQuestions.slice(5).map((q) => ({
+      quizId: quiz2.id,
+      questionId: q.id,
+    })),
+  });
+
   await prisma.quizResult.create({
     data: {
       userId: user1.id,
@@ -151,6 +167,7 @@ async function main() {
 
 main()
   .catch((e) => {
+    console.error(`Seeding failed: ${e}`);
     throw e;
   })
   .finally(async () => {
