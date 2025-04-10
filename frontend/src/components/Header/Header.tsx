@@ -7,7 +7,7 @@ export const Header = () => {
   } = useToken();
 
   return (
-    <nav className="header-navigation">
+    <nav className="flex items-center w-full h-auto p-[20px] justify-around text-[25px]">
       <Link to={routes.HOME}>Home</Link>
 
       <Link to={routes.QUIZZES_PAGE}>Quizzes</Link>

@@ -12,6 +12,7 @@ import { useFetchResultsByQuiz } from "@hooks/useFetchResultsByQuiz";
 import { useCreateQuizResult } from "@hooks/useCreateQuizResult";
 import { QuizResultCreateDto } from "types/quizResultCreateDto";
 import { useToken } from "@hooks/useToken";
+import { isCorrectAnswer } from "@utils/isCorrectAnswer";
 
 export const QuizQuestionForm = ({
   quizQuestions,
@@ -40,13 +41,10 @@ export const QuizQuestionForm = ({
   const handleConfirm = () => {
     if (!confirm("Do you really want to lock in your answer?")) return;
 
-    if (
-      userAnswer?.trim()?.toLowerCase() ===
-      quizQuestions[questionIndex].answer.toLowerCase()
-    ) {
+    const question = quizQuestions[questionIndex];
+
+    if (isCorrectAnswer(question.type, question, userAnswer))
       setCorrectAnswerCount((prev) => prev + 1);
-      toast.success("Correct!");
-    }
 
     if (questionIndex < quizQuestions.length - 1)
       setQuestionIndex((prevIndex) => prevIndex + 1);

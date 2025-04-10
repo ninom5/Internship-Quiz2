@@ -29,11 +29,11 @@ export const QuizGrid = () => {
   if (!data) return <div className="text-center">No quizzes available.</div>;
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 quiz-grid">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-[30px]">
       {data.map((quiz: QuizType) => (
         <div
           key={quiz.id}
-          className="bg-white rounded-2xl shadow-lg p-4 hover:shadow-xl transition quiz-grid__card"
+          className="bg-white rounded-2xl shadow-lg p-4 hover:shadow-xl transition text-center cursor-pointer"
           onClick={() => handleQuizClick(quiz.id)}
         >
           <img

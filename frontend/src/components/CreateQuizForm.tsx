@@ -32,7 +32,6 @@ export const CreateQuizForm = () => {
     e.preventDefault();
 
     const mergedData = { ...quizData, questions: pickedQuestions };
-    console.log(mergedData);
     const message = quizDataValidation(mergedData, data);
     if (message) {
       toast.error(message);

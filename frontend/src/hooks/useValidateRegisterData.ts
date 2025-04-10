@@ -30,7 +30,6 @@ export const useValidateRegisterData = () => {
     }
 
     const user = await fetchUserByEmail(email);
-    console.log(user);
     if (user) return "User with provided email already exist";
 
     if (password.length < 8)

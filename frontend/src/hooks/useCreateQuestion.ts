@@ -9,7 +9,6 @@ export const useCreateQuestion = (question: QuestionCreateDto) => {
 
   const createQuestion = async () => {
     try {
-      console.log(question);
       const response = await authAPI.post("/question", question);
 
       if (response.status !== 201) throw new Error("Error creating question");

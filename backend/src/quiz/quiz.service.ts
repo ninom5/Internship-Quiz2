@@ -73,8 +73,6 @@ export class QuizService {
 
   async createQuiz(quiz: CreateQuizDto) {
     try {
-      // validateQuizData(quiz);
-      console.log('Be: ', quiz);
       const response = await this.prisma.quiz.create({
         data: {
           title: quiz.title,

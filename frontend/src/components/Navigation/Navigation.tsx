@@ -30,9 +30,10 @@ export const Navigation = () => {
   if (!data) return <div className="text-center">No categories available.</div>;
 
   return (
-    <nav className="search-navigation">
+    <nav className="flex w-full justify-center items-center py-5 my-[30px] gap-[30px]">
       <input
         type="text"
+        className="bg-white rounded-lg py-2.5 px-5 text-black"
         placeholder="Quiz title"
         value={title}
         onChange={handleChange}
@@ -43,11 +44,9 @@ export const Navigation = () => {
         id="category-select"
         onChange={handleCategoryChange}
         defaultValue=""
-        className="bg-white text-black py-3 rounded-lg"
+        className="bg-white text-black w-auto px-2 py-3 rounded-lg"
       >
-        <option value="" disabled>
-          Filter by category
-        </option>
+        <option value="">All categories</option>
         {data.map((category) => (
           <option key={category.id}>{category.title}</option>
         ))}
@@ -55,7 +54,7 @@ export const Navigation = () => {
       <button
         type="submit"
         onClick={handleSubmit}
-        className="transition duration-[700ms] hover:bg-sky-400"
+        className="cursor-pointer border border-white rounded-lg p-2.5 transition duration-700 hover:bg-sky-400"
       >
         Search
       </button>
@@ -63,7 +62,7 @@ export const Navigation = () => {
       <button
         type="button"
         onClick={handleReset}
-        className="transition duration-[700ms] hover:bg-sky-400"
+        className="cursor-pointer border border-white rounded-lg p-2.5 transition duration-700 hover:bg-sky-400"
       >
         Reset
       </button>
