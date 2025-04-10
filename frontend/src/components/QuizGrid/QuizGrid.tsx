@@ -37,7 +37,7 @@ export const QuizGrid = () => {
           onClick={() => handleQuizClick(quiz.id)}
         >
           <img
-            src={quiz.categoryId}
+            src={quiz.category?.imgUrl}
             alt={quiz.title}
             className="w-full h-40 object-cover rounded-xl mb-4"
           />

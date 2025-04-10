@@ -20,7 +20,6 @@ export const QuizQuestionForm = ({
   quizQuestions: QuestionType[];
   quizId: string;
 }) => {
-  console.log(quizQuestions);
   const [questionIndex, setQuestionIndex] = useState(0);
   const [correctAnswerCount, setCorrectAnswerCount] = useState(0);
   const [userAnswer, setUserAnswer] = useState<any>(null);
@@ -101,6 +100,7 @@ export const QuizQuestionForm = ({
           <h3 className="text-3xl italic">{currentQuestion.text}</h3>
           <QuestionComponent
             question={currentQuestion}
+            userAnswer={userAnswer}
             setUserAnswer={setUserAnswer}
           />
 

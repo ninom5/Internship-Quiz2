@@ -50,6 +50,7 @@ model Question {
   options       String[]
   minValue      Int?
   maxValue      Int?
+  stepValue     Float?          @default(1)
   answer        String
   QuizQuestions QuizQuestions[]
 }

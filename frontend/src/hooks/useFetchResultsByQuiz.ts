@@ -1,4 +1,4 @@
-import { axiosNoAuthAPI } from "@constants/axiosAPI";
+import { axiosInstance } from "@constants/axiosAPI";
 import { useEffect, useState } from "react";
 import { QuizResultType } from "types/quizResultType";
 
@@ -10,7 +10,7 @@ export const useFetchResultsByQuiz = (quizId: string) => {
   useEffect(() => {
     const fetchResults = async () => {
       try {
-        const response = await axiosNoAuthAPI.get(`quizResult/quiz/${quizId}`);
+        const response = await axiosInstance.get(`quizResult/quiz/${quizId}`);
 
         if (response.status !== 200)
           throw new Error("Error fetching quiz results by quiz");

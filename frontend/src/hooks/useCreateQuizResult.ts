@@ -1,15 +1,17 @@
-import { axiosAuthAPI } from "@constants/axiosAPI";
 import { useState } from "react";
 import { QuizResultCreateDto } from "types/quizResultCreateDto";
+import { useAuthenticatedAxiosAPI } from "./useAuthenticatedAxiosAPI";
 
 export const useCreateQuizResult = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
+  const authAPI = useAuthenticatedAxiosAPI();
+
   const submitResult = async (userResult: QuizResultCreateDto) => {
     try {
       setIsSubmitting(true);
-      const response = await axiosAuthAPI.post("quizResult", userResult);
+      const response = await authAPI.post("quizResult", userResult);
 
       if (response.status !== 201)
         throw new Error("Error while creating quiz result");

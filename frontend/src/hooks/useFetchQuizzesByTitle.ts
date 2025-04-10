@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { QuizType } from "types/quizType";
-import { axiosAuthAPI } from "@constants/index";
+import { useAuthenticatedAxiosAPI } from "./useAuthenticatedAxiosAPI";
 
 export const useFetchQuizzesByTitle = (title: string, category: string) => {
   const [data, setData] = useState<QuizType[] | null>(null);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+
+  const authAPI = useAuthenticatedAxiosAPI();
 
   useEffect(() => {
     const fetchQuizzes = async () => {
@@ -15,7 +17,7 @@ export const useFetchQuizzesByTitle = (title: string, category: string) => {
         if (title) queryParams.append("title", title);
         if (category) queryParams.append("category", category);
 
-        const response = await axiosAuthAPI.get<QuizType[]>(
+        const response = await authAPI.get<QuizType[]>(
           `/quiz?${queryParams.toString()}`
         );
         if (response.status !== 200)

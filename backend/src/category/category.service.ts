@@ -55,7 +55,6 @@ export class CategoryService {
         data: {
           title: category.title,
           imgUrl: category.imgUrl,
-          // quizzes: category.quizzes,
         },
       });
       return response;

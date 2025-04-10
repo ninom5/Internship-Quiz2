@@ -1,15 +1,16 @@
-import { axiosAuthAPI } from "@constants/axiosAPI";
 import { QuestionCreateDto } from "types/questionCreateDto";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { useAuthenticatedAxiosAPI } from "./useAuthenticatedAxiosAPI";
 
 export const useCreateQuestion = (question: QuestionCreateDto) => {
   const [error, setError] = useState(null);
-  const token = sessionStorage.getItem("jwt");
+  const authAPI = useAuthenticatedAxiosAPI();
+
   const createQuestion = async () => {
     try {
       console.log(question);
-      const response = await axiosAuthAPI.post("/question", question);
+      const response = await authAPI.post("/question", question);
 
       if (response.status !== 201) throw new Error("Error creating question");
 

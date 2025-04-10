@@ -13,6 +13,7 @@ export const CreateQuestionForm = () => {
     options: [],
     minValue: undefined,
     maxValue: undefined,
+    stepValue: undefined,
   });
   const [optionInput, setOptionInput] = useState("");
   const [options, setOptions] = useState<string[]>([]);
@@ -20,17 +21,21 @@ export const CreateQuestionForm = () => {
   const { createQuestion } = useCreateQuestion(formData);
 
   const handleChange = (e: any) => {
-    if (e.target.name === "minValue" || e.target.name === "maxValue") {
+    if (
+      e.target.name === "minValue" ||
+      e.target.name === "maxValue" ||
+      e.target.name === "stepValue"
+    ) {
       setFormData({
         ...formData,
         [e.target.name]: e.target.value ? Number(e.target.value) : undefined,
       });
-      console.log(typeof e.target.value);
       return;
     }
 
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
   const handleAddOption = () => {
     setOptions([...options, optionInput]);
     setOptionInput("");
@@ -38,6 +43,7 @@ export const CreateQuestionForm = () => {
   const handleRemoveOption = (optionToRemove: string) => {
     setOptions(options.filter((opt) => opt !== optionToRemove));
   };
+
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
@@ -49,6 +55,15 @@ export const CreateQuestionForm = () => {
     }
 
     createQuestion();
+    setFormData({
+      text: "",
+      type: "",
+      answer: "",
+      options: [],
+      minValue: undefined,
+      maxValue: undefined,
+      stepValue: undefined,
+    });
   };
 
   return (
@@ -151,6 +166,15 @@ export const CreateQuestionForm = () => {
                 className="bg-white text-black border-none rounded-lg py-2 px-4 mr-5"
                 onChange={handleChange}
                 value={formData.maxValue ?? ""}
+                required
+              />
+              <input
+                type="number"
+                placeholder="step slider value"
+                name="stepValue"
+                className="bg-white text-black border-none rounded-lg py-2 px-4 mr-5"
+                onChange={handleChange}
+                value={formData.stepValue ?? ""}
                 required
               />
             </div>

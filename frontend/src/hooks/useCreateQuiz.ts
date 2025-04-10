@@ -1,16 +1,15 @@
-import { axiosAuthAPI } from "@constants/axiosAPI";
 import { CreateQuizDto } from "types/createQuizDto";
 import { toast } from "react-toastify";
 import { useState } from "react";
+import { useAuthenticatedAxiosAPI } from "./useAuthenticatedAxiosAPI";
 
 export const useCreateQuiz = () => {
   const [createError, setCreateError] = useState(null);
-  const token = sessionStorage.getItem("jwt");
+  const authAPI = useAuthenticatedAxiosAPI();
 
   const createQuiz = async (quizData: CreateQuizDto) => {
     try {
-      if (!token) throw new Error("Can't find token");
-      const response = await axiosAuthAPI.post("/quiz", quizData);
+      const response = await authAPI.post("/quiz", quizData);
 
       if (response.status !== 201) throw new Error();
 

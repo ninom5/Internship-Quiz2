@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
 import { QuestionType } from "types/questionType";
-import { axiosAuthAPI } from "@constants/index";
+import { useAuthenticatedAxiosAPI } from "./useAuthenticatedAxiosAPI";
 
 export const useFetchAllQuestions = () => {
   const [data, setData] = useState<QuestionType[] | null>(null);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const token = sessionStorage.getItem("jwt");
+  const authAPI = useAuthenticatedAxiosAPI();
 
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        const response = await axiosAuthAPI.get("/question");
+        const response = await authAPI.get("/question");
 
         if (response.status !== 200)
           throw new Error("Failed to fetch questions");

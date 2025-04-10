@@ -1,5 +1,5 @@
-import { axiosAuthAPI } from "@constants/axiosAPI";
 import { useState, useEffect } from "react";
+import { useAuthenticatedAxiosAPI } from "./useAuthenticatedAxiosAPI";
 
 interface Category {
   id: string;
@@ -10,9 +10,11 @@ export const useFetchAllCategories = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  const authAPI = useAuthenticatedAxiosAPI();
+
   const fetchCategories = async () => {
     try {
-      const response = await axiosAuthAPI.get("/category");
+      const response = await authAPI.get("/category");
 
       setData(Array.isArray(response.data) ? response.data : []);
     } catch (error: Error | any) {

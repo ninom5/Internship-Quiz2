@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { QuestionType } from "types/questionType";
 
 export const TextTypeComponent = ({
@@ -28,10 +29,14 @@ export const CheckboxTypeComponent = ({
   question: QuestionType;
   setUserAnswer: (value: string[]) => void;
 }) => {
+  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+
   const handleChange = (option: string, checked: boolean) => {
-    // setUserAnswer((prev: string[] = []) =>
-    //   checked ? [...prev, option] : prev.filter((p) => p !== option)
-    // );
+    let updatedOptions = checked
+      ? [...selectedOptions, option]
+      : selectedOptions?.filter((opt) => opt !== option);
+    setSelectedOptions(updatedOptions);
+    setUserAnswer(updatedOptions);
   };
 
   return (
@@ -81,21 +86,36 @@ export const RadioTypeComponent = ({
 
 export const SliderTypeComponent = ({
   question,
+  userAnswer,
   setUserAnswer,
 }: {
   question: QuestionType;
+  userAnswer: string;
   setUserAnswer: (value: string) => void;
 }) => {
+  const defaultValue =
+    question.minValue && question.maxValue
+      ? ((question.minValue + question.maxValue) / 2).toString()
+      : "0";
+
+  useEffect(() => {
+    setUserAnswer(defaultValue);
+  }, [defaultValue]);
+
   return (
     <div>
       {question.minValue && question.maxValue && (
-        <input
-          type="range"
-          min={question.minValue}
-          max={question.maxValue}
-          defaultValue={(question.maxValue + question.minValue) / 2}
-          onChange={(e) => setUserAnswer(e.target.value)}
-        />
+        <>
+          <input
+            type="range"
+            min={question.minValue}
+            max={question.maxValue}
+            step={question.stepValue}
+            defaultValue={(question.maxValue + question.minValue) / 2}
+            onChange={(e) => setUserAnswer(e.target.value)}
+          />
+          <span>{userAnswer}</span>
+        </>
       )}
     </div>
   );

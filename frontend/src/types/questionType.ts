@@ -6,5 +6,6 @@ export type QuestionType = {
   options?: string[];
   minValue?: number;
   maxValue?: number;
+  stepValue?: number;
   answer: string;
 };

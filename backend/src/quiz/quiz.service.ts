@@ -34,6 +34,7 @@ export class QuizService {
 
       return await this.prisma.quiz.findMany({
         where: whereClause,
+        include: { category: true },
       });
     } catch (error: unknown) {
       throw error instanceof Error

@@ -35,6 +35,10 @@ export class CreateQuestionDto {
   @IsOptional()
   maxValue?: number;
 
+  @IsNumber()
+  @IsOptional()
+  stepValue?: number;
+
   @IsString()
   @ApiProperty({ example: '8' })
   answer: string;

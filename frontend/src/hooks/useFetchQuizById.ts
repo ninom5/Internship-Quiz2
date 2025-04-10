@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
 import { QuizType } from "types/quizType";
-import { axiosAuthAPI } from "@constants/index";
+import { useAuthenticatedAxiosAPI } from "./useAuthenticatedAxiosAPI";
 
 export const useFetchQuizById = (quizId: string) => {
   const [data, setData] = useState<QuizType | null>(null);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const token = sessionStorage.getItem("jwt");
+  const authAPI = useAuthenticatedAxiosAPI();
 
   useEffect(() => {
     const fetchQuiz = async () => {
       try {
-        const quiz = await axiosAuthAPI.get<QuizType>(`/quiz/${quizId}`);
+        const quiz = await authAPI.get<QuizType>(`/quiz/${quizId}`);
         if (quiz.status !== 200) throw new Error("Failed to fetch quiz by id");
 
         setData(quiz.data);

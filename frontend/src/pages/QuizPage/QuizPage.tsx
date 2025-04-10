@@ -1,22 +1,12 @@
 import { useParams } from "react-router-dom";
-import { useFetchQuizById, useFetchAllQuestions } from "@hooks/index";
+import { useFetchQuizById } from "@hooks/index";
 import { routes } from "@routes/routes";
 import { Link } from "react-router-dom";
-// import { useMemo } from "react";
 import { QuizQuestionForm } from "@components/QuizQuestionForm/QuizQuestionForm";
 
 export const QuizPage = () => {
   const { quizId } = useParams();
   const { data, error, isLoading } = useFetchQuizById(quizId as string);
-  // const {
-  //   data: questionData,
-  //   error: questionError,
-  //   isLoading: questionLoading,
-  // } = useFetchAllQuestions();
-
-  // const quizQuestions = useMemo(() => {
-  //   return questionData?.filter((question) => question.quizId === quizId) || [];
-  // }, [quizId ?? "", questionData]);
 
   const token = sessionStorage.getItem("jwt");
   if (!token) {
@@ -39,7 +29,6 @@ export const QuizPage = () => {
     return <div>There are no questions for this quiz</div>;
 
   const quizQuestions = data.questions.map((q) => q.questions);
-  console.log(quizQuestions);
 
   return (
     <section className="flex flex-col w-full h-auto items-center justify-center gap-[50px]">
