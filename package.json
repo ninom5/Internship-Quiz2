@@ -1,0 +1,15 @@
+{
+  "devDependencies": {
+    "turbo": "^2.5.0"
+  },
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "start": "node backend/dist/src/main"
+  },
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "packageManager": "npm@10.5.2"
+}
