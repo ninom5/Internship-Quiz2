@@ -5,4 +5,4 @@ export * from "./NotFoundPage/NotFoundPage";
 export * from "./QuizPage/QuizPage";
 export * from "./QuizzesPage/QuizzesPage";
 export * from "./RegisterPage/RegisterPage";
-export * from "./UserScoresPage/UserScoresPage";
+export * from "./UsersScorePage/UsersScorePage";

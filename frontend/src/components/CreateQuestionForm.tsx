@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { QuestionTypes } from "@constants/index";
-import { useCreateQuestion } from "@hooks/index";
+import { useCreateQuestion } from "@api/index";
 import { QuestionCreateDto } from "types/questionCreateDto";
 import { questionDataValidation } from "@utils/questionDataValidation";
 

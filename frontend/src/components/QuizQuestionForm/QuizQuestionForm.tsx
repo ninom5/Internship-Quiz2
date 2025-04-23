@@ -12,7 +12,7 @@ import {
   useFetchResultsByQuiz,
   useCreateQuizResult,
   useToken,
-} from "@hooks/index";
+} from "@api/index";
 import { QuizResultCreateDto } from "types/quizResultCreateDto";
 import { isCorrectAnswer } from "@utils/isCorrectAnswer";
 
@@ -30,7 +30,7 @@ export const QuizQuestionForm = ({
   const [placement, setPlacement] = useState(0);
 
   const { data, error, isLoading } = useFetchResultsByQuiz(quizId);
-  const { submitResult, isSubmitting, submitError } = useCreateQuizResult();
+  const { submitResult, submitError } = useCreateQuizResult();
 
   const QuestionComponents = {
     input: TextTypeComponent,

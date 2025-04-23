@@ -1,4 +1,4 @@
-import { fetchUserByEmail } from "@hooks/fetchUserByEmail";
+import { fetchUserByEmail } from "api/fetchUserByEmail";
 
 export const useValidateRegisterData = () => {
   const validateRegisterData = async (formData: {

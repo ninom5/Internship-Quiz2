@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { axiosInstance } from "@constants/index";
 import { routes } from "@routes/routes";
-import { useToken } from "@hooks/index";
+import { useToken } from "@api/index";
 
 export const LoginForm = () => {
   const navigate = useNavigate();

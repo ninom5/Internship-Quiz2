@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { routes } from "@routes/routes";
-import { useToken } from "@hooks/index";
+import { useToken } from "@api/index";
 
 export const Header = () => {
   const {

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useFetchAllCategories } from "@hooks/index";
+import { useFetchAllCategories } from "@api/index";
 
 export const Navigation = () => {
   const [title, setTitle] = useState("");
@@ -18,6 +18,7 @@ export const Navigation = () => {
   };
   const handleReset = () => {
     navigate(window.location.pathname, { replace: true });
+    setTitle("");
   };
 
   const { data, error, isLoading } = useFetchAllCategories();

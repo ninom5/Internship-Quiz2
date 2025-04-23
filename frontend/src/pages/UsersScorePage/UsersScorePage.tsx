@@ -2,7 +2,7 @@ import {
   useFetchResultsByQuiz,
   useFetchQuizzesByTitle,
   useFetchAllResults,
-} from "@hooks/index";
+} from "@api/index";
 import { useEffect, useState } from "react";
 import { QuizType, QuizResultType } from "types/index";
 import { groupByUser } from "@utils/groupByUser";
@@ -22,7 +22,7 @@ export const UserScoresPage = () => {
   const {
     data: allResults,
     error: allResultsError,
-    isLoading: allResultsIsLoading,
+    // isLoading: allResultsIsLoading,
   } = useFetchAllResults();
   const { data, error, isLoading } = useFetchResultsByQuiz(quizId as string);
 

@@ -21,5 +21,5 @@ export const useCreateQuestion = (question: QuestionCreateDto) => {
     }
   };
 
-  return { createQuestion };
+  return { createQuestion, error };
 };

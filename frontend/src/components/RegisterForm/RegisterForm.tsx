@@ -3,8 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { routes } from "@routes/routes";
 import { axiosInstance } from "@constants/index";
-import { useValidateRegisterData } from "@hooks/index";
-import { Navigate } from "react-router-dom";
+import { useValidateRegisterData } from "@api/index";
 
 export const RegisterForm = () => {
   const navigate = useNavigate();

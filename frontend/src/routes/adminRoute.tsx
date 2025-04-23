@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { routes } from "./routes";
-import { useToken } from "@hooks/useToken";
+import { useToken } from "api/useToken";
 
 export const AdminRoute = () => {
   const userData = useToken();

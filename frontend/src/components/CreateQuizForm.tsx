@@ -5,7 +5,7 @@ import {
   useFetchAllQuestions,
   useFetchAllCategories,
   useCreateQuiz,
-} from "@hooks/index";
+} from "@api/index";
 import { CreateQuizDto } from "types/index";
 import { quizDataValidation } from "@utils/quizDataValidation";
 import { toast } from "react-toastify";
@@ -90,6 +90,7 @@ export const CreateQuizForm = () => {
   ];
 
   if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error fetching all questions</div>;
   if (!data) return <div>No questions</div>;
 
   return (
@@ -123,10 +124,16 @@ export const CreateQuizForm = () => {
           >
             <option value="">Pick quiz category</option>
             {!categoryError &&
-              categories.map((category) => (
-                <option key={category.id} value={category.id}>
-                  {category.title}
+              (categoryIsLoading ? (
+                <option value="" disabled>
+                  Loading categories
                 </option>
+              ) : (
+                categories.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.title}
+                  </option>
+                ))
               ))}
           </select>
 

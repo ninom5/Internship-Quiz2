@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { useCreateCategory, useFetchAllCategories } from "@hooks/index";
+import { useCreateCategory, useFetchAllCategories } from "@api/index";
 import { validateFields } from "@utils/validateFields";
 
 export const CreateCategoryForm = () => {

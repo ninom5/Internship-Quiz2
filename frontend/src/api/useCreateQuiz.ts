@@ -23,5 +23,5 @@ export const useCreateQuiz = () => {
     }
   };
 
-  return { createQuiz };
+  return { createQuiz, createError };
 };

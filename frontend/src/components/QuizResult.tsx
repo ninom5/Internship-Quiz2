@@ -1,4 +1,4 @@
-import { useFetchResultsByQuiz } from "@hooks/useFetchResultsByQuiz";
+import { useFetchResultsByQuiz } from "@api/index";
 import { useParams } from "react-router-dom";
 
 export const QuizResult = () => {
