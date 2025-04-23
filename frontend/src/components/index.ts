@@ -10,3 +10,4 @@ export * from "./Restricted";
 export * from "./CreateCategoryForm";
 export * from "./CreateQuestionForm";
 export * from "./CreateQuizForm";
+export * from "./QuizResult";

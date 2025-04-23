@@ -1,11 +1,14 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { routes } from "@routes/routes";
 import { axiosInstance } from "@constants/index";
 import { useValidateRegisterData } from "@hooks/index";
+import { Navigate } from "react-router-dom";
 
 export const RegisterForm = () => {
+  const navigate = useNavigate();
+
   const { validateRegisterData } = useValidateRegisterData();
   const [formData, setFormData] = useState({
     name: "",
@@ -44,6 +47,8 @@ export const RegisterForm = () => {
         password: "",
         confirmPassword: "",
       });
+
+      navigate("/login");
     } catch (error) {
       console.error(`Error registering user: ${error}`);
       toast.error("Error registering user");

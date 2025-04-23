@@ -11,5 +11,5 @@
     "frontend",
     "backend"
   ],
-  "packageManager": "npm@10.5.2"
+  "packageManager": "npm@11.3.0"
 }

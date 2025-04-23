@@ -72,6 +72,7 @@ export class QuizResultService {
         },
         include: {
           user: true,
+          Quiz: true,
         },
       });
     } catch (error) {

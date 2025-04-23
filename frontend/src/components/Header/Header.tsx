@@ -20,7 +20,12 @@ export const Header = () => {
 
       <Link to={routes.QUIZZES_PAGE}>Quizzes</Link>
 
-      {role === "admin" && <Link to={routes.ADMIN}>Admin page</Link>}
+      {role === "admin" && (
+        <>
+          <Link to={routes.ADMIN_QUIZ}>Admin - Create Quiz</Link>
+          <Link to={routes.ADMIN_USERS}>Admin - User Scores</Link>
+        </>
+      )}
 
       {token ? (
         <Link to={routes.LOGIN} onClick={handleLogout}>

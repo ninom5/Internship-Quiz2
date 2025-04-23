@@ -8,6 +8,7 @@ import {
   RegisterPage,
   LoginPage,
   AdminPage,
+  UserScoresPage,
 } from "./pages";
 import { HeaderLayout } from "@layouts/index";
 import { NavigationLayout } from "@layouts/index";
@@ -23,7 +24,8 @@ export const Router = () => {
           <Route path={routes.LOGIN} element={<LoginPage />} />
 
           <Route element={<AdminRoute />}>
-            <Route path={routes.ADMIN} element={<AdminPage />} />
+            <Route path={routes.ADMIN_QUIZ} element={<AdminPage />} />
+            <Route path={routes.ADMIN_USERS} element={<UserScoresPage />} />
           </Route>
 
           <Route element={<NavigationLayout />}>

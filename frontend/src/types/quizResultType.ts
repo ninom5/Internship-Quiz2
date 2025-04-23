@@ -4,7 +4,12 @@ export type QuizResultType = {
   score: number;
   quizId: string;
   user: {
+    id: string;
     name: string;
     surname: string;
+  };
+  Quiz: {
+    title: string;
+    description: string;
   };
 };

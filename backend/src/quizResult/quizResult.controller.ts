@@ -66,7 +66,7 @@ export class QuizResultController {
     status: 200,
     description: 'Returns all results for provided quiz',
   })
-  async geResultsByQuiz(@Param('id') id: string) {
+  async getResultsByQuiz(@Param('id') id: string) {
     return await this.quizResultService.getResultsByQuiz(id);
   }
 

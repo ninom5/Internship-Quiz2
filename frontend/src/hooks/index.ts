@@ -6,7 +6,7 @@ export * from "./useCreateQuiz";
 export * from "./useCreateQuizResult";
 export * from "./useFetchAllCategories";
 export * from "./useFetchAllQuestions";
-// export * from "./useFetchAllQuizzes";
+export * from "./useFetchAllResults";
 export * from "./useFetchQuizById";
 export * from "./useFetchQuizzesByTitle";
 export * from "./useFetchResultByUser";
