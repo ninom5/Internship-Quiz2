@@ -150,7 +150,7 @@ async function main() {
     data: {
       userId: user1.id,
       quizId: quiz1.id,
-      score: 90,
+      score: 5,
     },
   });
 
@@ -158,7 +158,7 @@ async function main() {
     data: {
       userId: user2.id,
       quizId: quiz2.id,
-      score: 80,
+      score: 2,
     },
   });
 

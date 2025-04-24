@@ -1,7 +1,6 @@
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, Link } from "react-router-dom";
 import { routes } from "./routes";
 import { useToken } from "@hooks/index";
-import { Link } from "react-router-dom";
 
 export const AdminRoute = () => {
   const userData = useToken();
@@ -15,5 +14,5 @@ export const AdminRoute = () => {
       </div>
     );
 
-  return role === "admin" ? <Outlet /> : <Navigate to={routes.HOME} replace />;
+  return role === "admin" ? <Outlet /> : <Navigate to={routes.LOGIN} replace />;
 };
