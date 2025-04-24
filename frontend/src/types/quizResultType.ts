@@ -1,3 +1,5 @@
+import { QuestionType } from "./questionType";
+
 export type QuizResultType = {
   id: string;
   userId: string;
@@ -11,5 +13,6 @@ export type QuizResultType = {
   Quiz: {
     title: string;
     description: string;
+    questions: QuestionType[];
   };
 };

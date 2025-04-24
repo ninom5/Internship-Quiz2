@@ -6,12 +6,16 @@ import {
 import { useEffect, useState } from "react";
 import { QuizType, QuizResultType } from "types/index";
 import { groupByUser } from "@utils/groupByUser";
+import { QuizResultGrid } from "@components/index";
 
 export const UserScoresPage = () => {
   const [quizId, setQuizId] = useState("");
   const [selectedQuiz, setSelectedQuiz] = useState<QuizType>();
   const [groupedResults, setGroupedResults] = useState<
-    Record<string, { user: QuizResultType["user"]; scores: QuizResultType[] }>
+    Record<
+      string,
+      { user: QuizResultType["user"]; scores: QuizResultType[]; total: number }
+    >
   >({});
 
   const {
@@ -20,7 +24,7 @@ export const UserScoresPage = () => {
     isLoading: quizzesIsLoading,
   } = useFetchQuizzesByTitle("", "");
   const { data: allResults, error: allResultsError } = useFetchAllResults();
-  const { data, error, isLoading } = useFetchResultsByQuiz(quizId as string);
+  // const { data, error, isLoading } = useFetchResultsByQuiz(quizId as string);
 
   useEffect(() => {
     if (allResults) setGroupedResults(groupByUser(allResults));
@@ -28,7 +32,7 @@ export const UserScoresPage = () => {
 
   if (allResultsError) return <div>Error fetching all results</div>;
   if (quizzesError) return <div>Error fetching quizzes</div>;
-  if (error) return <div>Error fetching results </div>;
+  // if (error) return <div>Error fetching results </div>;
 
   return (
     <section>
@@ -46,9 +50,7 @@ export const UserScoresPage = () => {
             }}
             defaultValue=""
           >
-            <option value="" disabled>
-              Pick quiz
-            </option>
+            <option value="">All Quizzes</option>
             {quizzes?.map((quiz) => (
               <option key={quiz.id} value={quiz.id}>
                 {quiz.title}
@@ -58,63 +60,16 @@ export const UserScoresPage = () => {
         )}
       </div>
 
-      {isLoading ? (
+      {false ? (
         <div>Loading data...</div>
       ) : (
-        <>
-          {!quizId && (
-            <div>
-              <h2 className="font-semibold mb-2">All User Results</h2>
-              {Object.values(groupedResults).map((entry) => (
-                <div
-                  key={entry.user.id}
-                  className="mb-4 border p-3 rounded bg-gray-50"
-                >
-                  <p className="font-bold">
-                    {entry.user.name} {entry.user.surname}
-                  </p>
-                  <ul className="ml-4 list-disc">
-                    {entry.scores.map((score) => (
-                      <li key={score.id}>
-                        {score.Quiz.title}: {score.score} /{" "}
-                        {selectedQuiz?.questions.length}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          )}
-
-          {quizId && (
-            <div>
-              <h3 className="font-semibold">
-                Results by quiz: {selectedQuiz?.title}
-              </h3>
-              <p className="text-sm italic mb-3">{selectedQuiz?.description}</p>
-
-              {isLoading ? (
-                <div>Loading results...</div>
-              ) : data && data.length > 0 ? (
-                data.map((d) => (
-                  <div
-                    key={d.id}
-                    className="border p-3 my-2 rounded bg-gray-50"
-                  >
-                    User:{" "}
-                    <strong>
-                      {d.user.name} {d.user.surname}
-                    </strong>{" "}
-                    - Score: <strong>{d.score}</strong> /{" "}
-                    {selectedQuiz?.questions.length}
-                  </div>
-                ))
-              ) : (
-                <div>No results found for this quiz.</div>
-              )}
-            </div>
-          )}
-        </>
+        <QuizResultGrid
+          quizId={quizId}
+          groupedResults={groupedResults}
+          selectedQuiz={selectedQuiz}
+          // data={data}
+          // isLoading={isLoading}
+        />
       )}
     </section>
   );

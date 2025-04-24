@@ -16,7 +16,16 @@ export class QuizResultService {
 
   async getAll() {
     try {
-      return await this.prisma.quizResult.findMany();
+      return await this.prisma.quizResult.findMany({
+        include: {
+          user: true,
+          Quiz: {
+            include: {
+              questions: true,
+            },
+          },
+        },
+      });
     } catch (error) {
       throw error instanceof Error
         ? new Error(`Error getting all users: ${error.message}`)
@@ -133,7 +142,7 @@ export class QuizResultService {
         }
       }
       throw new InternalServerErrorException(
-          `Something went wrong while deleting the user: ${error}`,
+        `Something went wrong while deleting the user: ${error}`,
       );
     }
   }

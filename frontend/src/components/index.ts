@@ -11,3 +11,4 @@ export * from "./QuizQuestionForm/QuizQuestionForm";
 export * from "./QuizResult/QuizResult";
 export * from "./RegisterForm/RegisterForm";
 export * from "./Restricted/Restricted";
+export * from "./QuizResultsGrid/QuzResultsGrid";
