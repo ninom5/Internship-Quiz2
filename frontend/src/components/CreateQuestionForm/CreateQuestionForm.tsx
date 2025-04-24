@@ -64,6 +64,8 @@ export const CreateQuestionForm = () => {
       maxValue: undefined,
       stepValue: undefined,
     });
+    setOptions([]);
+    setOptionInput("");
   };
 
   return (
@@ -76,6 +78,7 @@ export const CreateQuestionForm = () => {
             placeholder="Enter your question"
             name="text"
             required
+            value={formData.text}
             onChange={handleChange}
             className="bg-white text-black border-none rounded-lg py-2 px-4 mr-5"
           />
@@ -83,7 +86,8 @@ export const CreateQuestionForm = () => {
           <select
             name="type"
             id="question-type"
-            defaultValue=""
+            // defaultValue=""
+            value={formData.type}
             onChange={handleChange}
             className="bg-white text-black border-none rounded-lg py-2 px-4 mr-4"
           >
@@ -100,6 +104,7 @@ export const CreateQuestionForm = () => {
           <input
             type="text"
             className="bg-white text-black border-none rounded-lg py-2 px-4 mr-5"
+            value={formData.answer}
             onChange={handleChange}
             name="answer"
             placeholder="Enter answer"

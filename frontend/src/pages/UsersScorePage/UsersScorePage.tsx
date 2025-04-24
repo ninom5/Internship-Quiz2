@@ -19,11 +19,7 @@ export const UserScoresPage = () => {
     error: quizzesError,
     isLoading: quizzesIsLoading,
   } = useFetchQuizzesByTitle("", "");
-  const {
-    data: allResults,
-    error: allResultsError,
-    // isLoading: allResultsIsLoading,
-  } = useFetchAllResults();
+  const { data: allResults, error: allResultsError } = useFetchAllResults();
   const { data, error, isLoading } = useFetchResultsByQuiz(quizId as string);
 
   useEffect(() => {

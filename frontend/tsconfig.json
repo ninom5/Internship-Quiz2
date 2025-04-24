@@ -9,7 +9,8 @@
       "@pages/*": ["src/pages/*"],
       "@constants/*": ["src/constants/*"],
       "@utils/*": ["src/utils/*"],
-      "@layouts/*": ["src/layouts/*"]
+      "@layouts/*": ["src/layouts/*"],
+      "@hooks/": ["src/hooks/*"]
     }
   },
   "files": [],

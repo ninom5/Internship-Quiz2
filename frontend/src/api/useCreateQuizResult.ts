@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { QuizResultCreateDto } from "types/quizResultCreateDto";
-import { useAuthenticatedAxiosAPI } from "./useAuthenticatedAxiosAPI";
+import { useAuthenticatedAxiosAPI } from "../hooks/useAuthenticatedAxiosAPI";
 
 export const useCreateQuizResult = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);

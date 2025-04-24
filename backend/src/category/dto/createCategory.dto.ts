@@ -1,5 +1,4 @@
-import { IsArray, IsString, MinLength } from 'class-validator';
-import { Quiz } from '@prisma/client';
+import { IsString, MinLength } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateCategoryDto {

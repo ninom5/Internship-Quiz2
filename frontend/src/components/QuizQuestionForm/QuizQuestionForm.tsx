@@ -7,13 +7,9 @@ import {
   SliderTypeComponent,
   TextTypeComponent,
 } from "@components/QuestionComponents/QuestionComponents";
-import { QuestionType } from "types/index";
-import {
-  useFetchResultsByQuiz,
-  useCreateQuizResult,
-  useToken,
-} from "@api/index";
-import { QuizResultCreateDto } from "types/quizResultCreateDto";
+import { QuestionType, QuizResultCreateDto } from "types/index";
+import { useFetchResultsByQuiz, useCreateQuizResult } from "@api/index";
+import { useToken } from "@hooks/index";
 import { isCorrectAnswer } from "@utils/isCorrectAnswer";
 
 export const QuizQuestionForm = ({

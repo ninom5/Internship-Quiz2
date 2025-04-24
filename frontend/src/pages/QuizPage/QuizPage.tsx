@@ -1,6 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { routes } from "@routes/routes";
-import { useFetchQuizById, useToken } from "@api/index";
+import { useFetchQuizById } from "@api/index";
+import { useToken } from "@hooks/index";
 import { QuizQuestionForm, QuizResult } from "@components/index";
 
 export const QuizPage = () => {
@@ -8,10 +9,11 @@ export const QuizPage = () => {
   const { data, error, isLoading } = useFetchQuizById(quizId as string);
   const {
     data: { role },
+    token,
+    isExpired,
   } = useToken();
 
-  const token = sessionStorage.getItem("jwt");
-  if (!token) {
+  if (!token || isExpired) {
     return (
       <div className="text-center">
         <h1 className="text-2xl font-bold">Unauthorized</h1>
@@ -25,10 +27,10 @@ export const QuizPage = () => {
 
   if (error) return <div>Error fetching quiz by id</div>;
 
-  if (!data) return <div>Quiz data is empty</div>;
-
-  if (data.questions.length === 0)
-    return <div>There are no questions for this quiz</div>;
+  if (!data || data.questions.length === 0)
+    return (
+      <div>Quiz data is empty and there are no questions for this quiz</div>
+    );
 
   const quizQuestions = data.questions.map((q) => q.questions);
 

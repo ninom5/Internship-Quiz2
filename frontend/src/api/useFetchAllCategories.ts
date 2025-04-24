@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useAuthenticatedAxiosAPI } from "./useAuthenticatedAxiosAPI";
+import { useAuthenticatedAxiosAPI } from "../hooks/useAuthenticatedAxiosAPI";
 
 interface Category {
   id: string;

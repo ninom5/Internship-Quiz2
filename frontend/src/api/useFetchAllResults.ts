@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { QuizResultType } from "types/quizResultType";
-import { useAuthenticatedAxiosAPI } from "./useAuthenticatedAxiosAPI";
+import { useAuthenticatedAxiosAPI } from "../hooks/useAuthenticatedAxiosAPI";
 
 export const useFetchAllResults = () => {
   const [data, setData] = useState<QuizResultType[]>();

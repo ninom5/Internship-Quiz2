@@ -6,6 +6,7 @@ export interface TokenContextType {
   loading: boolean;
   error: string | null;
   token: string | null;
+  isExpired: boolean | null;
   updateToken: () => void;
 }
 export const TokenContext = createContext<TokenContextType>({
@@ -13,5 +14,6 @@ export const TokenContext = createContext<TokenContextType>({
   loading: true,
   error: null,
   token: "",
+  isExpired: true,
   updateToken: () => {},
 });

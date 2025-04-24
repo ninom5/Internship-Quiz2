@@ -25,7 +25,12 @@ export const QuizGrid = () => {
   if (error)
     return <div className="text-center text-red-500">Error: {error}</div>;
 
-  if (!data) return <div className="text-center">No quizzes available.</div>;
+  if (!data || data.length <= 0)
+    return (
+      <div className="text-center">
+        No quizzes available for selected params.
+      </div>
+    );
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-[30px]">

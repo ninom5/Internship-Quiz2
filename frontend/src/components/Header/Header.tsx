@@ -1,16 +1,17 @@
 import { Link } from "react-router-dom";
 import { routes } from "@routes/routes";
-import { useToken } from "@api/index";
+import { useToken } from "@hooks/index";
 
 export const Header = () => {
   const {
     data: { role },
     token,
     updateToken,
+    isExpired,
   } = useToken();
 
   const handleLogout = () => {
-    sessionStorage.removeItem("jwt");
+    localStorage.removeItem("jwt");
     updateToken();
   };
 
@@ -27,7 +28,7 @@ export const Header = () => {
         </>
       )}
 
-      {token ? (
+      {token && !isExpired ? (
         <Link to={routes.LOGIN} onClick={handleLogout}>
           Logout
         </Link>

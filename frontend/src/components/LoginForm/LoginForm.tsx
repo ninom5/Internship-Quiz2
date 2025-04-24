@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { axiosInstance } from "@constants/index";
 import { routes } from "@routes/routes";
-import { useToken } from "@api/index";
+import { useToken } from "@hooks/index";
 
 export const LoginForm = () => {
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ export const LoginForm = () => {
       }
 
       const token = response.data.token;
-      sessionStorage.setItem("jwt", token);
+      localStorage.setItem("jwt", token);
       updateToken();
 
       toast.success("Successfully logged in");

@@ -1,5 +1,4 @@
 export * from "./fetchUserByEmail";
-export * from "./useAuthenticatedAxiosAPI";
 export * from "./useCreateCategory";
 export * from "./useCreateQuestion";
 export * from "./useCreateQuiz";
@@ -11,5 +10,3 @@ export * from "./useFetchQuizById";
 export * from "./useFetchQuizzesByTitle";
 export * from "./useFetchResultByUser";
 export * from "./useFetchResultsByQuiz";
-export * from "./useToken";
-export * from "./useValidateRegisterData";

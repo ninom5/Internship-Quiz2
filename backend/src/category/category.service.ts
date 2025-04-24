@@ -8,8 +8,9 @@ import {
 
 import { PrismaService } from '../prisma.service';
 import { CreateCategoryDto } from './dto/createCategory.dto';
-import { Prisma } from '@prisma/client';
 import { UpdateCategoryDto } from './dto/updateCategory.dto';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
+
 
 @Injectable()
 export class CategoryService {
@@ -106,7 +107,7 @@ export class CategoryService {
         where: { id },
       });
     } catch (error) {
-      if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      if (error instanceof PrismaClientKnownRequestError) {
         if (error.code === 'P2025')
           throw new NotFoundException(`Category with provided id not found`);
       }
