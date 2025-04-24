@@ -1,7 +1,7 @@
 import { CreateQuizDto } from "types/createQuizDto";
 import { toast } from "react-toastify";
 import { useState } from "react";
-import { axiosInstanceAPI } from "../base";
+import { axiosInstanceAPI } from "@api/index";
 
 export const useCreateQuiz = () => {
   const [createError, setCreateError] = useState(null);

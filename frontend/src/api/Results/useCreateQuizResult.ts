@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { QuizResultCreateDto } from "types/quizResultCreateDto";
-import { axiosInstanceAPI } from "../base";
+import { axiosInstanceAPI } from "@api/index";
 
 export const useCreateQuizResult = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);

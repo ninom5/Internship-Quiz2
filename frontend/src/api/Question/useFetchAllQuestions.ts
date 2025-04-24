@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { QuestionType } from "types/questionType";
-import { axiosInstanceAPI } from "../base";
+import { axiosInstanceAPI } from "@api/index";
 
 export const useFetchAllQuestions = () => {
   const [data, setData] = useState<QuestionType[] | null>(null);

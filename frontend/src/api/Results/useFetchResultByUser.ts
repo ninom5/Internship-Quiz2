@@ -1,6 +1,6 @@
 import { QuizResultType } from "types/quizResultType";
 import { useEffect, useState } from "react";
-import { axiosInstanceAPI } from "../base";
+import { axiosInstanceAPI } from "@api/index";
 
 export const useFetchResultByUser = (id: string) => {
   const [data, setData] = useState<QuizResultType | null>(null);

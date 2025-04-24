@@ -1,4 +1,4 @@
-import { axiosInstanceAPI } from "../base";
+import { axiosInstanceAPI } from "@api/index";
 import { useEffect, useState } from "react";
 import { QuizResultType } from "types/quizResultType";
 

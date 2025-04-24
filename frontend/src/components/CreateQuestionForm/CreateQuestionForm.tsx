@@ -86,7 +86,6 @@ export const CreateQuestionForm = () => {
           <select
             name="type"
             id="question-type"
-            // defaultValue=""
             value={formData.type}
             onChange={handleChange}
             className="bg-white text-black border-none rounded-lg py-2 px-4 mr-4"

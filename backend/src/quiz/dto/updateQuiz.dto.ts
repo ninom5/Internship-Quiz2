@@ -14,9 +14,4 @@ export class UpdateQuizDto {
   @IsString()
   @ApiProperty({ example: 'a4f16b72-bcd3-488e-ba47-2e146946fb15' })
   categoryId?: string;
-
-  // @IsArray()
-  // @ArrayMinSize(5)
-  // @IsString({ each: true })
-  // questions?: string[];
 }

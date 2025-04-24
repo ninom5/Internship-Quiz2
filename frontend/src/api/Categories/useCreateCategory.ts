@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { axiosInstanceAPI } from "../base";
+import { axiosInstanceAPI } from "@api/index";
 import { CreateCategoryDto } from "types/categoryType";
 
 export const useCreateCategory = () => {

@@ -1,7 +1,7 @@
 import { QuestionCreateDto } from "types/questionCreateDto";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { axiosInstanceAPI } from "../base";
+import { axiosInstanceAPI } from "@api/index";
 
 export const useCreateQuestion = (question: QuestionCreateDto) => {
   const [error, setError] = useState(null);

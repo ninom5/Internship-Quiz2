@@ -4,13 +4,12 @@ import {
   useFetchAllResults,
 } from "@api/index";
 import { useEffect, useState } from "react";
-import { QuizType, QuizResultType } from "types/index";
+import { QuizResultType } from "types/index";
 import { groupByUser } from "@utils/groupByUser";
 import { QuizResultGrid } from "@components/index";
 
 export const UserScoresPage = () => {
   const [quizId, setQuizId] = useState("");
-  const [selectedQuiz, setSelectedQuiz] = useState<QuizType>();
   const [groupedResults, setGroupedResults] = useState<
     Record<
       string,
@@ -46,7 +45,6 @@ export const UserScoresPage = () => {
             id="quiz-select"
             onChange={(e) => {
               setQuizId(e.target.value);
-              setSelectedQuiz(quizzes?.find((q) => q.id === e.target.value));
             }}
             defaultValue=""
           >
@@ -66,7 +64,6 @@ export const UserScoresPage = () => {
         <QuizResultGrid
           quizId={quizId}
           groupedResults={groupedResults}
-          selectedQuiz={selectedQuiz}
           // data={data}
           // isLoading={isLoading}
         />

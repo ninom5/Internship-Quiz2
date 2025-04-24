@@ -1,10 +1,8 @@
-import { useEffect } from "react";
-import { QuizResultType, QuizType } from "types/index";
+import { QuizResultType } from "types/index";
 
 export const QuizResultGrid = ({
   quizId,
   groupedResults,
-  selectedQuiz,
   //   data,
   //   isLoading,
 }: {
@@ -13,7 +11,6 @@ export const QuizResultGrid = ({
     string,
     { user: QuizResultType["user"]; scores: QuizResultType[]; total: number }
   >;
-  selectedQuiz: QuizType | undefined;
   //   data: QuizResultType[] | null;
   //   isLoading: boolean;
 }) => {
