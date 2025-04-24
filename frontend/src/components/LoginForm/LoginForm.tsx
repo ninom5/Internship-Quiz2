@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import { axiosInstance } from "@constants/index";
+import { axiosInstanceAPI } from "@api/base";
 import { routes } from "@routes/routes";
 import { useToken } from "@hooks/index";
 
@@ -15,6 +15,7 @@ export const LoginForm = () => {
   const handleChange = (e: any) => {
     setLoginData({ ...loginData, [e.target.name]: e.target.value });
   };
+  const axiosInstance = axiosInstanceAPI();
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();

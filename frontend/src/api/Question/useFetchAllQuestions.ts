@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { QuestionType } from "types/questionType";
-import { useAuthenticatedAxiosAPI } from "../hooks/useAuthenticatedAxiosAPI";
+import { axiosInstanceAPI } from "../base";
 
 export const useFetchAllQuestions = () => {
   const [data, setData] = useState<QuestionType[] | null>(null);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const authAPI = useAuthenticatedAxiosAPI();
+  const authAPI = axiosInstanceAPI();
 
   useEffect(() => {
     const fetchQuestions = async () => {

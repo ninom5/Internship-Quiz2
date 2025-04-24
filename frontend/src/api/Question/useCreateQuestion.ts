@@ -1,11 +1,11 @@
 import { QuestionCreateDto } from "types/questionCreateDto";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { useAuthenticatedAxiosAPI } from "../hooks/useAuthenticatedAxiosAPI";
+import { axiosInstanceAPI } from "../base";
 
 export const useCreateQuestion = (question: QuestionCreateDto) => {
   const [error, setError] = useState(null);
-  const authAPI = useAuthenticatedAxiosAPI();
+  const authAPI = axiosInstanceAPI();
 
   const createQuestion = async () => {
     try {

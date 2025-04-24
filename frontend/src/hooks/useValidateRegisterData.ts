@@ -1,13 +1,17 @@
-import { fetchUserByEmail } from "api/fetchUserByEmail";
+import { fetchUserByEmail } from "@api/User/fetchUserByEmail";
+import { AxiosInstance } from "axios";
 
 export const useValidateRegisterData = () => {
-  const validateRegisterData = async (formData: {
-    name: string;
-    surname: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-  }) => {
+  const validateRegisterData = async (
+    formData: {
+      name: string;
+      surname: string;
+      email: string;
+      password: string;
+      confirmPassword: string;
+    },
+    axiosInstance: AxiosInstance
+  ) => {
     const { name, surname, email, password, confirmPassword } = formData;
 
     const fields = [
@@ -29,7 +33,7 @@ export const useValidateRegisterData = () => {
       return "Invalid email format";
     }
 
-    const user = await fetchUserByEmail(email);
+    const user = await fetchUserByEmail(email, axiosInstance);
     if (user) return "User with provided email already exist";
 
     if (password.length < 8)

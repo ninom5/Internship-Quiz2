@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { QuizResultCreateDto } from "types/quizResultCreateDto";
-import { useAuthenticatedAxiosAPI } from "../hooks/useAuthenticatedAxiosAPI";
+import { axiosInstanceAPI } from "../base";
 
 export const useCreateQuizResult = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
-  const authAPI = useAuthenticatedAxiosAPI();
+  const authAPI = axiosInstanceAPI();
 
   const submitResult = async (userResult: QuizResultCreateDto) => {
     try {

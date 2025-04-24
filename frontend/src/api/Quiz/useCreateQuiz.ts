@@ -1,11 +1,11 @@
 import { CreateQuizDto } from "types/createQuizDto";
 import { toast } from "react-toastify";
 import { useState } from "react";
-import { useAuthenticatedAxiosAPI } from "../hooks/useAuthenticatedAxiosAPI";
+import { axiosInstanceAPI } from "../base";
 
 export const useCreateQuiz = () => {
   const [createError, setCreateError] = useState(null);
-  const authAPI = useAuthenticatedAxiosAPI();
+  const authAPI = axiosInstanceAPI();
 
   const createQuiz = async (quizData: CreateQuizDto) => {
     try {

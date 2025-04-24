@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useAuthenticatedAxiosAPI } from "../hooks/useAuthenticatedAxiosAPI";
+import { axiosInstanceAPI } from "../base";
 
 interface Category {
   id: string;
@@ -10,7 +10,7 @@ export const useFetchAllCategories = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const authAPI = useAuthenticatedAxiosAPI();
+  const authAPI = axiosInstanceAPI();
 
   const fetchCategories = async () => {
     try {

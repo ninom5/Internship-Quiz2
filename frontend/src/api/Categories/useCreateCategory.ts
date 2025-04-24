@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { useAuthenticatedAxiosAPI } from "../hooks/useAuthenticatedAxiosAPI";
+import { axiosInstanceAPI } from "../base";
 import { CreateCategoryDto } from "types/categoryType";
 
 export const useCreateCategory = () => {
-  const authAPI = useAuthenticatedAxiosAPI();
+  const authAPI = axiosInstanceAPI();
   const [createError, setCreateError] = useState(null);
   const createCategory = async (categoryData: CreateCategoryDto) => {
     try {

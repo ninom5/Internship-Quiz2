@@ -1,6 +1,9 @@
-import { axiosInstance } from "@constants/axiosAPI";
+import { AxiosInstance } from "axios";
 
-export const fetchUserByEmail = async (email: string) => {
+export const fetchUserByEmail = async (
+  email: string,
+  axiosInstance: AxiosInstance
+) => {
   try {
     const response = await axiosInstance.get(`/user/email/${email}`);
     return response.data;

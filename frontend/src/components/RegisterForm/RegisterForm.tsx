@@ -2,11 +2,12 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { routes } from "@routes/routes";
-import { axiosInstance } from "@constants/index";
+import { axiosInstanceAPI } from "@api/index";
 import { useValidateRegisterData } from "@hooks/index";
 
 export const RegisterForm = () => {
   const navigate = useNavigate();
+  const axiosInstance = axiosInstanceAPI();
 
   const { validateRegisterData } = useValidateRegisterData();
   const [formData, setFormData] = useState({
@@ -23,7 +24,7 @@ export const RegisterForm = () => {
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const message = await validateRegisterData(formData);
+    const message = await validateRegisterData(formData, axiosInstance);
     if (message !== "Data is valid") {
       toast.error(`Invalid register data: ${message}`);
       return;
