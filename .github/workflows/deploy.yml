@@ -35,7 +35,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ghcr.io/${{ github.repository }}:${{ github.sha }},
-            ghcr.io/${{ github.repository }}:${{ github.ref_name }}
+          tags: ghcr.io/ninom5/internship-quiz:${{ github.sha }},
+            ghcr.io/ninom5/internship-quiz:${{ github.ref_name }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
